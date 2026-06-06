@@ -1,0 +1,43 @@
+<div class="container" style="padding-top:60px;padding-bottom:80px;">
+  <h1 style="font-size:28px;font-weight:700;margin-bottom:32px;">Warenkorb</h1>
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty-state" style="padding:60px 0;text-align:center;">
+      <p style="font-size:16px;color:#737373;margin-bottom:24px;">Dein Warenkorb ist leer.</p>
+      <a href="/collections/all" class="btn btn-black">Weiter einkaufen</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post">
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:40px;">
+        <div>
+          {%- for item in cart.items -%}
+            <div class="cart-item" style="display:grid;grid-template-columns:100px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid #e8e8e8;">
+              <a href="{{ item.url }}"><img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" style="width:100%;aspect-ratio:1;object-fit:cover;"></a>
+              <div>
+                <a href="{{ item.url }}" style="font-size:14px;font-weight:500;">{{ item.product.title }}</a>
+                <p style="font-size:13px;color:#737373;margin:4px 0;">{{ item.variant.title }}</p>
+                <p style="font-size:14px;font-weight:500;margin-top:8px;">{{ item.final_line_price | money }}</p>
+                <div style="display:flex;align-items:center;gap:12px;margin-top:12px;">
+                  <div class="ci-qty">
+                    <button type="button" class="qty-btn" data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}">−</button>
+                    <span>{{ item.quantity }}</span>
+                    <button type="button" class="qty-btn" data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}">+</button>
+                  </div>
+                  <a href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0" style="font-size:12px;color:#a3a3a3;text-decoration:underline;">Entfernen</a>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div style="background:#f5f5f5;padding:28px;height:fit-content;">
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:20px;">Bestellübersicht</h3>
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:14px;">
+            <span>Zwischensumme</span><span>{{ cart.total_price | money }}</span>
+          </div>
+          <p style="font-size:12px;color:#737373;margin-bottom:20px;">Versandkosten werden an der Kasse berechnet.</p>
+          <a href="{{ routes.checkout }}" class="btn btn-black" style="width:100%;justify-content:center;display:flex;">Zur Kasse</a>
+          <a href="/collections/all" style="display:block;text-align:center;margin-top:12px;font-size:13px;color:#737373;text-decoration:underline;">Weiter einkaufen</a>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</div>

@@ -1,0 +1,46 @@
+<div class="container" style="padding-top:48px;padding-bottom:80px;">
+  <h1 style="font-size:28px;font-weight:700;margin-bottom:8px;">{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}
+    <div style="font-size:15px;color:#737373;margin-bottom:32px;">{{ collection.description }}</div>
+  {%- endif -%}
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <span style="font-size:13px;color:#737373;">{{ collection.products_count }} Produkte</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <label style="font-size:13px;" for="sort-by">Sortieren:</label>
+      <select id="sort-by" style="font-size:13px;padding:6px 10px;border:1px solid #d4d4d4;background:#fff;" onchange="window.location.href=this.value">
+        <option value="?sort_by=manual"{% if collection.sort_by == 'manual' %} selected{% endif %}>Empfohlen</option>
+        <option value="?sort_by=best-selling"{% if collection.sort_by == 'best-selling' %} selected{% endif %}>Bestseller</option>
+        <option value="?sort_by=created-descending"{% if collection.sort_by == 'created-descending' %} selected{% endif %}>Neueste</option>
+        <option value="?sort_by=price-ascending"{% if collection.sort_by == 'price-ascending' %} selected{% endif %}>Preis aufsteigend</option>
+        <option value="?sort_by=price-descending"{% if collection.sort_by == 'price-descending' %} selected{% endif %}>Preis absteigend</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="products-grid">
+    {%- for product in collection.products -%}
+      {%- render 'product-card', product: product -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if paginate.pages > 1 -%}
+    {%- paginate collection.products by 24 -%}
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:48px;">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="btn btn-black" style="padding:10px 20px;">← Zurück</a>
+        {%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" style="padding:10px 16px;border:1px solid #d4d4d4;font-size:14px;">{{ part.title }}</a>
+          {%- else -%}
+            <span style="padding:10px 16px;border:1px solid #000;background:#000;color:#fff;font-size:14px;">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="btn btn-black" style="padding:10px 20px;">Weiter →</a>
+        {%- endif -%}
+      </div>
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
