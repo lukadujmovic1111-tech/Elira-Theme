@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "hero-slider": {
+      "type": "hero-slider",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Neue Kollektion",
+            "heading": "Made to Move.\nDesigned to Last.",
+            "subtext": "Die neue Summer Edit Collection ist jetzt da.",
+            "content_position": "left",
+            "btn1_label": "Damen shoppen",
+            "btn2_label": "Herren shoppen"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Performance Series",
+            "heading": "Train Without\nLimits.",
+            "subtext": "Technologie, die mit dir arbeitet.",
+            "content_position": "center",
+            "btn1_label": "Collection entdecken"
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2"]
+    },
+    "category-tiles": {
+      "type": "category-tiles",
+      "blocks": {
+        "tile-1": { "type": "tile", "settings": { "title": "Damen", "cta": "Shop Now" } },
+        "tile-2": { "type": "tile", "settings": { "title": "Herren", "cta": "Shop Now" } },
+        "tile-3": { "type": "tile", "settings": { "title": "Accessories", "cta": "Shop Now" } }
+      },
+      "block_order": ["tile-1", "tile-2", "tile-3"],
+      "settings": { "heading": "Shop by Category" }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "Neue Arrivals",
+        "products_count": 8
+      }
+    },
+    "editorial-banner": {
+      "type": "editorial-banner",
+      "settings": {
+        "eyebrow": "Community",
+        "heading": "The Elira Movement",
+        "text": "Millionen von Menschen. Eine Gemeinschaft. Unendliche Möglichkeiten.",
+        "btn_label": "Community entdecken"
+      }
+    },
+    "split-feature": {
+      "type": "split-feature",
+      "blocks": {
+        "item-1": { "type": "item", "settings": { "eyebrow": "Damen", "heading": "Flow State", "text": "Für dein bestes Yoga- und Studio-Erlebnis. Weiche, leichte Materialien.", "btn_label": "Jetzt shoppen" } },
+        "item-2": { "type": "item", "settings": { "eyebrow": "Herren", "heading": "Train Hard", "text": "Konzipiert für die Intensität deines Trainings. Atmungsaktive Technologien.", "btn_label": "Jetzt shoppen" } }
+      },
+      "block_order": ["item-1", "item-2"]
+    },
+    "promo-tiles": {
+      "type": "promo-tiles",
+      "blocks": {
+        "large-1": { "type": "large", "settings": { "title": "Summer Sale", "subtitle": "Bis zu 40% Rabatt", "btn_label": "Jetzt shoppen" } },
+        "small-1": { "type": "small", "settings": { "title": "Accessories", "link_label": "Entdecken" } },
+        "small-2": { "type": "small", "settings": { "title": "Membership", "link_label": "Mehr erfahren" } }
+      },
+      "block_order": ["large-1", "small-1", "small-2"]
+    },
+    "brand-values": {
+      "type": "brand-values",
+      "blocks": {
+        "val-1": { "type": "value", "settings": { "icon": "shield", "title": "Nachhaltige Qualität", "text": "Jedes Stück wird mit besonderem Augenmerk auf Umweltverantwortung entwickelt." } },
+        "val-2": { "type": "value", "settings": { "icon": "chart", "title": "Technologische Innovation", "text": "Proprietäre Gewebe für maximale Performance bei jeder Bewegung." } },
+        "val-3": { "type": "value", "settings": { "icon": "people", "title": "Community First", "text": "Wir sind mehr als eine Marke – eine weltweite Gemeinschaft." } },
+        "val-4": { "type": "value", "settings": { "icon": "truck", "title": "Kostenloser Versand", "text": "Gratis Versand ab €100 und kostenlose Rücksendung innerhalb von 30 Tagen." } }
+      },
+      "block_order": ["val-1", "val-2", "val-3", "val-4"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Als Erstes informiert sein",
+        "text": "Tritt der Elira Community bei und erhalte exklusiven Zugang zu neuen Kollektionen.",
+        "btn_label": "Anmelden"
+      }
+    }
+  },
+  "order": [
+    "hero-slider",
+    "category-tiles",
+    "featured-products",
+    "editorial-banner",
+    "split-feature",
+    "promo-tiles",
+    "brand-values",
+    "newsletter"
+  ]
+}

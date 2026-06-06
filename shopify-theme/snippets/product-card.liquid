@@ -1,0 +1,69 @@
+<div class="prod-card">
+  <div class="prod-img-wrap">
+    {%- if product.available == false -%}
+      <span class="prod-badge badge-sale">Ausverkauft</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      {%- assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+      <span class="prod-badge badge-sale">−{{ savings }}%</span>
+    {%- elsif product.created_at > 'now' | date: '%s' | minus: 2592000 | date: '%Y-%m-%dT%H:%M:%SZ' -%}
+      <span class="prod-badge badge-new">Neu</span>
+    {%- endif -%}
+
+    <a href="{{ product.url }}">
+      {%- if product.images.size > 0 -%}
+        <img src="{{ product.featured_image | image_url: width: 500 }}"
+             alt="{{ product.title | escape }}"
+             class="img-main"
+             loading="lazy"
+             width="500">
+        {%- if product.images.size > 1 -%}
+          <img src="{{ product.images[1] | image_url: width: 500 }}"
+               alt="{{ product.title | escape }}"
+               class="img-alt"
+               loading="lazy"
+               width="500">
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg img-main' }}
+      {%- endif -%}
+    </a>
+
+    <button class="quick-add"
+            data-product-id="{{ product.id }}"
+            data-variant-id="{{ product.first_available_variant.id }}">
+      Schnell hinzufügen
+    </button>
+    <button class="wish-btn" aria-label="Merken">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="prod-info">
+    <p class="prod-name"><a href="{{ product.url }}">{{ product.title }}</a></p>
+
+    {%- if product.variants.size > 1 -%}
+      <div class="prod-colors">
+        {%- assign color_option = product.options_by_name['Farbe'] | default: product.options_by_name['Color'] -%}
+        {%- if color_option -%}
+          {%- for value in color_option.values limit: 3 -%}
+            <span class="cdot" style="background:{{ value | downcase | replace: ' ', '' }}" title="{{ value }}"></span>
+          {%- endfor -%}
+          {%- if color_option.values.size > 3 -%}
+            <span class="cmore">+{{ color_option.values.size | minus: 3 }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <p class="prod-price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="sale-price">{{ product.price | money }}</span>
+        <span class="orig-price">{{ product.compare_at_price | money }}</span>
+      {%- else -%}
+        {{ product.price | money }}
+      {%- endif -%}
+    </p>
+  </div>
+</div>
