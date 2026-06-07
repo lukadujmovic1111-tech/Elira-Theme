@@ -6,97 +6,155 @@
         "slide-1": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Neue Kollektion",
+            "eyebrow": "Neue Kollektion — Summer Edit 2025",
             "heading": "Made to Move.\nDesigned to Last.",
-            "subtext": "Die neue Summer Edit Collection ist jetzt da.",
+            "subtext": "Entdecke Activewear, die so vielseitig ist wie du.",
             "content_position": "left",
             "btn1_label": "Damen shoppen",
-            "btn2_label": "Herren shoppen"
+            "btn1_url": "/collections/damen",
+            "btn2_label": "Neue Arrivals",
+            "btn2_url": "/collections/neuheiten"
           }
         },
         "slide-2": {
           "type": "slide",
           "settings": {
+            "eyebrow": "Flow State Collection",
+            "heading": "Find Your\nFlow.",
+            "subtext": "Premium Yoga- und Pilates-Wear für deinen inneren Rhythmus.",
+            "content_position": "center",
+            "btn1_label": "Collection entdecken",
+            "btn1_url": "/collections/yoga"
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
             "eyebrow": "Performance Series",
             "heading": "Train Without\nLimits.",
-            "subtext": "Technologie, die mit dir arbeitet.",
-            "content_position": "center",
-            "btn1_label": "Collection entdecken"
+            "subtext": "Technologie, die sich deiner Bewegung anpasst – nicht umgekehrt.",
+            "content_position": "right",
+            "btn1_label": "Shop Performance",
+            "btn1_url": "/collections/damen",
+            "btn2_label": "Mehr erfahren",
+            "btn2_url": "/pages/about"
           }
         }
       },
-      "block_order": ["slide-1", "slide-2"]
+      "block_order": ["slide-1", "slide-2", "slide-3"]
+    },
+    "usp-strip": {
+      "type": "usp-strip",
+      "blocks": {
+        "usp-1": { "type": "item", "settings": { "icon": "shipping", "text": "Kostenloser Versand ab €100" } },
+        "usp-2": { "type": "item", "settings": { "icon": "returns",  "text": "30 Tage Rückgaberecht" } },
+        "usp-3": { "type": "item", "settings": { "icon": "leaf",     "text": "Nachhaltige Materialien" } },
+        "usp-4": { "type": "item", "settings": { "icon": "shield",   "text": "Sicher & verschlüsselt bezahlen" } }
+      },
+      "block_order": ["usp-1", "usp-2", "usp-3", "usp-4"]
     },
     "category-tiles": {
       "type": "category-tiles",
       "blocks": {
-        "tile-1": { "type": "tile", "settings": { "title": "Damen", "cta": "Shop Now" } },
-        "tile-2": { "type": "tile", "settings": { "title": "Herren", "cta": "Shop Now" } },
-        "tile-3": { "type": "tile", "settings": { "title": "Accessories", "cta": "Shop Now" } }
+        "tile-1": { "type": "tile", "settings": { "title": "Yoga & Studio",  "cta": "Entdecken", "url": "/collections/yoga" } },
+        "tile-2": { "type": "tile", "settings": { "title": "High Performance","cta": "Entdecken", "url": "/collections/damen" } },
+        "tile-3": { "type": "tile", "settings": { "title": "Lifestyle Sets",  "cta": "Entdecken", "url": "/collections/sets" } }
       },
       "block_order": ["tile-1", "tile-2", "tile-3"],
-      "settings": { "heading": "Shop by Category" }
+      "settings": { "heading": "Shop by Category", "eyebrow": "Kollektionen" }
     },
     "featured-products": {
       "type": "featured-products",
       "settings": {
-        "heading": "Neue Arrivals",
+        "eyebrow": "Neue Arrivals",
+        "heading": "Gerade beliebt",
         "products_count": 8
       }
     },
     "editorial-banner": {
       "type": "editorial-banner",
       "settings": {
-        "eyebrow": "Community",
-        "heading": "The Elira Movement",
-        "text": "Millionen von Menschen. Eine Gemeinschaft. Unendliche Möglichkeiten.",
-        "btn_label": "Community entdecken"
+        "eyebrow": "The Elira Story",
+        "heading": "Movement is\nEverything.",
+        "text": "Wir glauben, dass jede Bewegung zählt. Ob Yoga, Laufen, Pilates oder einfach dein Leben – unsere Kleidung trägt dich durch jeden Moment.",
+        "btn_label": "Unsere Geschichte"
       }
     },
     "split-feature": {
       "type": "split-feature",
       "blocks": {
-        "item-1": { "type": "item", "settings": { "eyebrow": "Damen", "heading": "Flow State", "text": "Für dein bestes Yoga- und Studio-Erlebnis. Weiche, leichte Materialien.", "btn_label": "Jetzt shoppen" } },
-        "item-2": { "type": "item", "settings": { "eyebrow": "Herren", "heading": "Train Hard", "text": "Konzipiert für die Intensität deines Trainings. Atmungsaktive Technologien.", "btn_label": "Jetzt shoppen" } }
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "eyebrow": "Yoga & Pilates",
+            "heading": "Flow State",
+            "text": "Entwickelt für dein bestes Studio-Erlebnis. Ultra-weiche, lichtundurchlässige Materialien, die sich anfühlen wie eine zweite Haut.",
+            "btn_label": "Yoga Collection",
+            "btn_url": "/collections/yoga"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "eyebrow": "High Performance",
+            "heading": "Train Hard,\nLook Amazing.",
+            "text": "Konzipiert für die Intensität deines Trainings. Komprimierende, atmungsaktive Technologien, die mit dir arbeiten.",
+            "btn_label": "Performance Collection",
+            "btn_url": "/collections/damen"
+          }
+        }
       },
       "block_order": ["item-1", "item-2"]
     },
-    "promo-tiles": {
-      "type": "promo-tiles",
+    "testimonials": {
+      "type": "testimonials",
       "blocks": {
-        "large-1": { "type": "large", "settings": { "title": "Summer Sale", "subtitle": "Bis zu 40% Rabatt", "btn_label": "Jetzt shoppen" } },
-        "small-1": { "type": "small", "settings": { "title": "Accessories", "link_label": "Entdecken" } },
-        "small-2": { "type": "small", "settings": { "title": "Membership", "link_label": "Mehr erfahren" } }
+        "r1": { "type": "review", "settings": { "rating": 5, "quote": "Die Leggings sind unglaublich bequem und halten alles an Ort und Stelle. Ich trage sie jeden Tag.", "name": "Sarah M.", "subtitle": "Yoga-Instructorin" } },
+        "r2": { "type": "review", "settings": { "rating": 5, "quote": "Endlich eine Marke, die versteht wie Activewear wirklich sitzen soll. Absolute Kaufempfehlung.", "name": "Lisa K.", "subtitle": "Pilates-Trainerin" } },
+        "r3": { "type": "review", "settings": { "rating": 5, "quote": "Schon beim ersten Anziehen war ich begeistert. Die Materialien sind so weich und die Passform einfach perfekt.", "name": "Anna T.", "subtitle": "Fitness-Enthusiastin" } },
+        "r4": { "type": "review", "settings": { "rating": 5, "quote": "Ich habe viele Marken ausprobiert, aber Elira schlägt alles. Die Qualität ist auf einem ganz anderen Level.", "name": "Jana R.", "subtitle": "Marathon-Läuferin" } }
       },
-      "block_order": ["large-1", "small-1", "small-2"]
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": { "eyebrow": "Kundenstimmen", "heading": "Was unsere Community sagt", "review_count": "2.840" }
     },
     "brand-values": {
       "type": "brand-values",
       "blocks": {
         "val-1": { "type": "value", "settings": { "icon": "shield", "title": "Nachhaltige Qualität", "text": "Jedes Stück wird mit besonderem Augenmerk auf Umweltverantwortung entwickelt." } },
-        "val-2": { "type": "value", "settings": { "icon": "chart", "title": "Technologische Innovation", "text": "Proprietäre Gewebe für maximale Performance bei jeder Bewegung." } },
+        "val-2": { "type": "value", "settings": { "icon": "chart",  "title": "Technologische Innovation", "text": "Proprietäre Gewebe für maximale Performance bei jeder Bewegung." } },
         "val-3": { "type": "value", "settings": { "icon": "people", "title": "Community First", "text": "Wir sind mehr als eine Marke – eine weltweite Gemeinschaft." } },
-        "val-4": { "type": "value", "settings": { "icon": "truck", "title": "Kostenloser Versand", "text": "Gratis Versand ab €100 und kostenlose Rücksendung innerhalb von 30 Tagen." } }
+        "val-4": { "type": "value", "settings": { "icon": "truck",  "title": "Kostenloser Versand", "text": "Gratis Versand ab €100 und kostenlose Rücksendung innerhalb von 30 Tagen." } }
       },
       "block_order": ["val-1", "val-2", "val-3", "val-4"]
+    },
+    "community-gallery": {
+      "type": "community-gallery",
+      "settings": {
+        "eyebrow": "Community",
+        "heading": "#EliraCommunity",
+        "handle": "eliraactivewear",
+        "cta_label": "Uns auf Instagram folgen"
+      }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
         "heading": "Als Erstes informiert sein",
-        "text": "Tritt der Elira Community bei und erhalte exklusiven Zugang zu neuen Kollektionen.",
+        "text": "Tritt der Elira Community bei und erhalte exklusiven Zugang zu neuen Kollektionen, Insider-Drops und Community-Events.",
         "btn_label": "Anmelden"
       }
     }
   },
   "order": [
     "hero-slider",
+    "usp-strip",
     "category-tiles",
     "featured-products",
     "editorial-banner",
     "split-feature",
-    "promo-tiles",
+    "testimonials",
     "brand-values",
+    "community-gallery",
     "newsletter"
   ]
 }

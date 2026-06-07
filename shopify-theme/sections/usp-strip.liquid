@@ -1,0 +1,66 @@
+<div class="usp-strip">
+  <div class="container">
+    <ul class="usp-list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="usp-item" {{ block.shopify_attributes }}>
+          {%- case block.settings.icon -%}
+            {%- when 'shipping' -%}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {%- when 'returns' -%}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>
+            {%- when 'leaf' -%}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            {%- when 'shield' -%}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            {%- else -%}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          {%- endcase -%}
+          <span>{{ block.settings.text }}</span>
+        </li>
+      {%- else -%}
+        <li class="usp-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span>Kostenloser Versand ab €100</span>
+        </li>
+        <li class="usp-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>
+          <span>30 Tage Rückgaberecht</span>
+        </li>
+        <li class="usp-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          <span>Nachhaltige Materialien</span>
+        </li>
+        <li class="usp-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Sicher & verschlüsselt bezahlen</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "USP Strip",
+  "tag": "section",
+  "class": "section-usp",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "USP Item",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "shipping", "label": "Versand" },
+          { "value": "returns", "label": "Rückgabe" },
+          { "value": "leaf", "label": "Nachhaltigkeit" },
+          { "value": "shield", "label": "Sicherheit" },
+          { "value": "check", "label": "Haken" }
+        ], "default": "check" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Dein Vorteil" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "USP Strip" }]
+}
+{% endschema %}

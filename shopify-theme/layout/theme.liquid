@@ -2,202 +2,258 @@
 <html lang="{{ request.locale.iso_code }}">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{{ page_description | escape }}">
-  <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="{{ page_description | default: shop.description | escape }}">
+  <title>{{ page_title }}{% if current_page != 1 %} – Seite {{ current_page }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
 
   {{ content_for_header }}
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   {{ 'elira.css' | asset_url | stylesheet_tag }}
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
+<!-- ═══════════════════════════════════════
+     ANNOUNCEMENT BAR
+     ═══════════════════════════════════════ -->
 <div class="announcement-bar">
   <div class="announcement-track">
     <div class="announcement-items">
-      {%- if settings.announcement_text != blank -%}
-        <span>&#10022; {{ settings.announcement_text }}</span>
-        <span>&#10022; {{ settings.announcement_text_2 }}</span>
-        <span>&#10022; {{ settings.announcement_text_3 }}</span>
-        <span>&#10022; {{ settings.announcement_text }}</span>
-        <span>&#10022; {{ settings.announcement_text_2 }}</span>
-        <span>&#10022; {{ settings.announcement_text_3 }}</span>
-      {%- else -%}
-        <span>&#10022; Kostenloser Versand ab €100 &nbsp;|&nbsp; Kostenlose Rücksendungen</span>
-        <span>&#10022; Neu: Die Summer Edit Collection ist jetzt verfügbar</span>
-        <span>&#10022; Mitglieder: Exklusiver Zugang zu neuen Drops</span>
-        <span>&#10022; Kostenloser Versand ab €100 &nbsp;|&nbsp; Kostenlose Rücksendungen</span>
-        <span>&#10022; Neu: Die Summer Edit Collection ist jetzt verfügbar</span>
-        <span>&#10022; Mitglieder: Exklusiver Zugang zu neuen Drops</span>
-      {%- endif -%}
+      {%- assign t1 = settings.announcement_text   | default: 'Kostenloser Versand ab €100 · Kostenlose Rücksendungen' -%}
+      {%- assign t2 = settings.announcement_text_2 | default: 'Summer Edit Collection – Jetzt entdecken' -%}
+      {%- assign t3 = settings.announcement_text_3 | default: 'Elira Mitglieder erhalten exklusiven Zugang zu neuen Drops' -%}
+      <span>{{ t1 }}</span>
+      <span>{{ t2 }}</span>
+      <span>{{ t3 }}</span>
+      <span>{{ t1 }}</span>
+      <span>{{ t2 }}</span>
+      <span>{{ t3 }}</span>
     </div>
   </div>
 </div>
 
-<!-- HEADER -->
-<header class="site-header" id="site-header">
+<!-- ═══════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════ -->
+<header class="site-header" id="site-header" role="banner">
   <div class="header-inner">
 
-    <button class="hamburger" id="hamburger" aria-label="Menü" aria-expanded="false">
+    <!-- Hamburger (mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-drawer">
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
     </button>
 
-    <nav class="main-nav" id="main-nav">
-      <ul class="nav-list">
+    <!-- Desktop Nav (left) -->
+    <nav class="main-nav" id="main-nav" aria-label="Hauptnavigation">
+      <ul class="nav-list" role="list">
         {%- for link in linklists[settings.main_menu].links -%}
           {%- if link.links != blank -%}
             <li class="nav-item has-mega">
               <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
-              <div class="mega-menu">
+              <div class="mega-menu" role="region">
                 <div class="mega-inner">
-                  {%- for childlink in link.links -%}
-                    {%- if forloop.index <= 4 -%}
-                      <div class="mega-col">
-                        <h4>{{ childlink.title }}</h4>
-                        {%- if childlink.links != blank -%}
-                          <ul>
-                            {%- for grandchild in childlink.links -%}
-                              <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
-                            {%- endfor -%}
-                          </ul>
-                        {%- endif -%}
-                      </div>
-                    {%- endif -%}
+                  {%- for child in link.links limit: 4 -%}
+                    <div class="mega-col">
+                      <h4>{{ child.title }}</h4>
+                      {%- if child.links != blank -%}
+                        <ul>
+                          {%- for grandchild in child.links -%}
+                            <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
                   {%- endfor -%}
+                  {%- assign feat = link.links | last -%}
+                  {%- if feat.object.image != blank -%}
+                    <div class="mega-featured">
+                      <img src="{{ feat.object.image | image_url: width: 280 }}" alt="{{ feat.title | escape }}" loading="lazy" width="280" height="360">
+                      <div>
+                        <span class="mega-feat-label">{{ link.title }}</span>
+                        <strong class="mega-feat-title">{{ feat.title }}</strong>
+                        <a href="{{ feat.url }}" class="mega-feat-link">Entdecken</a>
+                      </div>
+                    </div>
+                  {%- endif -%}
                 </div>
               </div>
             </li>
           {%- else -%}
-            <li class="nav-item{% if link.title == 'Sale' %} nav-sale{% endif %}">
+            <li class="nav-item{% if link.title == 'Sale' %} nav-item--sale{% endif %}">
               <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
             </li>
           {%- endif -%}
         {%- else -%}
-          <li class="nav-item has-mega"><a href="/collections/women" class="nav-link">Damen</a></li>
-          <li class="nav-item has-mega"><a href="/collections/men" class="nav-link">Herren</a></li>
+          <li class="nav-item has-mega">
+            <a href="/collections/damen" class="nav-link">Damen</a>
+            <div class="mega-menu"><div class="mega-inner">
+              <div class="mega-col"><h4>Training</h4><ul>
+                <li><a href="/collections/leggings">Leggings</a></li>
+                <li><a href="/collections/sport-bhs">Sport-BHs</a></li>
+                <li><a href="/collections/shorts">Shorts</a></li>
+                <li><a href="/collections/jacken">Jacken</a></li>
+              </ul></div>
+              <div class="mega-col"><h4>Yoga & Studio</h4><ul>
+                <li><a href="/collections/yoga">Yoga</a></li>
+                <li><a href="/collections/pilates">Pilates</a></li>
+                <li><a href="/collections/sets">Sets</a></li>
+              </ul></div>
+              <div class="mega-col"><h4>Lifestyle</h4><ul>
+                <li><a href="/collections/kleider">Kleider</a></li>
+                <li><a href="/collections/loungewear">Loungewear</a></li>
+                <li><a href="/collections/neuheiten">Neue Arrivals</a></li>
+              </ul></div>
+            </div></div>
+          </li>
           <li class="nav-item"><a href="/collections/accessories" class="nav-link">Accessories</a></li>
           <li class="nav-item"><a href="/pages/community" class="nav-link">Community</a></li>
-          <li class="nav-item nav-sale"><a href="/collections/sale" class="nav-link">Sale</a></li>
+          <li class="nav-item nav-item--sale"><a href="/collections/sale" class="nav-link">Sale</a></li>
         {%- endfor -%}
       </ul>
     </nav>
 
-    <a href="{{ routes.root_url }}" class="site-logo">{{ shop.name }}</a>
+    <!-- Logo (center) -->
+    <a href="{{ routes.root_url }}" class="site-logo" aria-label="{{ shop.name }} – Startseite">{{ shop.name }}</a>
 
+    <!-- Actions (right) -->
     <div class="header-actions">
-      <button class="action-btn" id="search-btn" aria-label="Suche">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <button class="action-btn" id="search-btn" aria-label="Suche" aria-expanded="false">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       </button>
-      <a href="{{ routes.account_url }}" class="action-btn" aria-label="Konto">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <a href="{{ routes.account_url }}" class="action-btn" aria-label="Mein Konto">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </a>
-      <button class="action-btn cart-btn" id="cart-btn" aria-label="Warenkorb">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cart-badge" id="cart-badge">{{ cart.item_count }}</span>
+      <button class="action-btn" id="cart-btn" aria-label="Warenkorb öffnen" aria-expanded="false" aria-controls="cart-drawer">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge{% if cart.item_count > 0 %} show{% endif %}" id="cart-badge">{{ cart.item_count }}</span>
       </button>
     </div>
   </div>
 
-  <div class="search-bar" id="search-bar">
+  <!-- Search bar -->
+  <div class="search-bar" id="search-bar" role="search">
     <div class="search-inner">
-      <form action="{{ routes.search_url }}" method="get" role="search">
-        <input type="text" name="q" placeholder="Suche nach Produkten…" class="search-input" id="search-input" autocomplete="off">
+      <form action="{{ routes.search_url }}" method="get" class="search-form">
+        <input type="text" name="q" placeholder="Produkte, Kollektionen suchen…" class="search-input" id="search-input" autocomplete="off" aria-label="Suche">
       </form>
-      <button class="search-close" id="search-close" aria-label="Schließen">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <button class="search-close action-btn" id="search-close" aria-label="Suche schließen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
   </div>
 </header>
 
-<!-- MOBILE DRAWER -->
-<div class="mobile-overlay" id="mobile-overlay"></div>
-<div class="mobile-drawer" id="mobile-drawer">
+<!-- ═══════════════════════════════════════
+     MOBILE DRAWER
+     ═══════════════════════════════════════ -->
+<div class="overlay" id="mobile-overlay" aria-hidden="true"></div>
+<div class="mobile-drawer" id="mobile-drawer" role="dialog" aria-label="Navigationsmenü" aria-modal="true">
   <div class="drawer-head">
     <a href="{{ routes.root_url }}" class="drawer-logo">{{ shop.name }}</a>
-    <button class="drawer-close" id="drawer-close" aria-label="Schließen">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <button class="drawer-close action-btn" id="drawer-close" aria-label="Menü schließen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
-  <nav class="drawer-nav">
+
+  <nav class="drawer-nav" aria-label="Mobile Navigation">
     {%- for link in linklists[settings.main_menu].links -%}
       <div class="drawer-item">
         {%- if link.links != blank -%}
-          <button class="drawer-toggle">{{ link.title }} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
-          <div class="drawer-sub">
-            {%- for childlink in link.links -%}
-              <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+          <button class="drawer-toggle" aria-expanded="false">
+            {{ link.title }}
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div class="drawer-sub" role="list">
+            {%- for child in link.links -%}
+              <a href="{{ child.url }}" role="listitem">{{ child.title }}</a>
             {%- endfor -%}
           </div>
         {%- else -%}
-          <a href="{{ link.url }}" class="drawer-link{% if link.title == 'Sale' %} sale-txt{% endif %}">{{ link.title }}</a>
+          <a href="{{ link.url }}" class="drawer-link{% if link.title == 'Sale' %} drawer-link--sale{% endif %}">{{ link.title }}</a>
         {%- endif -%}
       </div>
     {%- else -%}
       <div class="drawer-item">
-        <button class="drawer-toggle">Damen <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
-        <div class="drawer-sub"><a href="/collections/leggings">Leggings</a><a href="/collections/sport-bhs">Sport-BHs</a><a href="/collections/shorts">Shorts</a></div>
-      </div>
-      <div class="drawer-item">
-        <button class="drawer-toggle">Herren <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
-        <div class="drawer-sub"><a href="/collections/herren-shorts">Shorts</a><a href="/collections/herren-hosen">Hosen</a></div>
+        <button class="drawer-toggle" aria-expanded="false">Damen <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <div class="drawer-sub">
+          <a href="/collections/leggings">Leggings</a>
+          <a href="/collections/sport-bhs">Sport-BHs</a>
+          <a href="/collections/shorts">Shorts</a>
+          <a href="/collections/sets">Sets</a>
+          <a href="/collections/yoga">Yoga</a>
+        </div>
       </div>
       <div class="drawer-item"><a href="/collections/accessories" class="drawer-link">Accessories</a></div>
-      <div class="drawer-item"><a href="/collections/sale" class="drawer-link sale-txt">Sale</a></div>
+      <div class="drawer-item"><a href="/pages/community" class="drawer-link">Community</a></div>
+      <div class="drawer-item"><a href="/collections/sale" class="drawer-link drawer-link--sale">Sale</a></div>
     {%- endfor -%}
   </nav>
+
   <div class="drawer-foot">
     <a href="{{ routes.account_url }}" class="drawer-account">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Anmelden / Konto erstellen
     </a>
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════════ -->
 <main id="MainContent" role="main" tabindex="-1">
   {{ content_for_layout }}
 </main>
 
-<!-- FOOTER -->
-<footer class="site-footer">
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
+
+      <!-- Brand column -->
       <div class="footer-brand">
         <a href="{{ routes.root_url }}" class="footer-logo">{{ shop.name }}</a>
-        <p>Move in Everything</p>
+        <p>Move in Everything.<br>Designed for your every moment.</p>
         <div class="socials">
           {%- if settings.instagram_url != blank -%}
-            <a href="{{ settings.instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2" stroke-linecap="round"/></svg>
-            </a>
-          {%- endif -%}
-          {%- if settings.facebook_url != blank -%}
-            <a href="{{ settings.facebook_url }}" aria-label="Facebook" target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            <a href="{{ settings.instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5" stroke-linecap="round"/></svg>
             </a>
           {%- endif -%}
           {%- if settings.tiktok_url != blank -%}
-            <a href="{{ settings.tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            <a href="{{ settings.tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.facebook_url != blank -%}
+            <a href="{{ settings.facebook_url }}" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.youtube_url != blank -%}
+            <a href="{{ settings.youtube_url }}" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
             </a>
           {%- endif -%}
         </div>
       </div>
 
+      <!-- Link columns -->
       {%- for i in (1..3) -%}
-        {%- assign footer_menu = 'footer_menu_' | append: i -%}
-        {%- assign footer_title = 'footer_title_' | append: i -%}
-        {%- if linklists[settings[footer_menu]].links != blank -%}
+        {%- assign m_key = 'footer_menu_' | append: i -%}
+        {%- assign t_key = 'footer_title_' | append: i -%}
+        {%- if linklists[settings[m_key]].links != blank -%}
           <div class="footer-col">
-            <h4>{{ settings[footer_title] }}</h4>
+            <h4>{{ settings[t_key] }}</h4>
             <ul>
-              {%- for link in linklists[settings[footer_menu]].links -%}
+              {%- for link in linklists[settings[m_key]].links -%}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {%- endfor -%}
             </ul>
@@ -207,57 +263,103 @@
 
       {%- if linklists[settings.footer_menu_1].links == blank -%}
         <div class="footer-col">
-          <h4>Produkte</h4>
-          <ul><li><a href="/collections/women">Damen</a></li><li><a href="/collections/men">Herren</a></li><li><a href="/collections/accessories">Accessories</a></li><li><a href="/collections/new">Neue Arrivals</a></li><li><a href="/collections/sale">Sale</a></li></ul>
+          <h4>Shoppen</h4>
+          <ul>
+            <li><a href="/collections/neuheiten">Neue Arrivals</a></li>
+            <li><a href="/collections/damen">Damen</a></li>
+            <li><a href="/collections/accessories">Accessories</a></li>
+            <li><a href="/collections/sets">Sets</a></li>
+            <li><a href="/collections/sale">Sale</a></li>
+          </ul>
         </div>
         <div class="footer-col">
           <h4>Hilfe</h4>
-          <ul><li><a href="{{ routes.account_url }}">Mein Konto</a></li><li><a href="/pages/versand">Versand &amp; Lieferung</a></li><li><a href="/pages/rueckgaben">Rückgaben</a></li><li><a href="/pages/groessenberater">Größenberater</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/kontakt">Kontakt</a></li></ul>
+          <ul>
+            <li><a href="{{ routes.account_url }}">Mein Konto</a></li>
+            <li><a href="/pages/versand">Versand & Lieferung</a></li>
+            <li><a href="/pages/rueckgaben">Rückgaben</a></li>
+            <li><a href="/pages/groessenberater">Größenberater</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+          </ul>
         </div>
         <div class="footer-col">
-          <h4>Über uns</h4>
-          <ul><li><a href="/pages/about">Unsere Geschichte</a></li><li><a href="/pages/community">Community</a></li><li><a href="/pages/nachhaltigkeit">Nachhaltigkeit</a></li><li><a href="/pages/karriere">Karriere</a></li></ul>
+          <h4>Elira</h4>
+          <ul>
+            <li><a href="/pages/about">Unsere Geschichte</a></li>
+            <li><a href="/pages/community">Community</a></li>
+            <li><a href="/pages/nachhaltigkeit">Nachhaltigkeit</a></li>
+            <li><a href="/pages/karriere">Karriere</a></li>
+          </ul>
         </div>
       {%- endif -%}
     </div>
 
     <div class="footer-bottom">
       <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Alle Rechte vorbehalten.</span>
-      <div class="pay-icons"><span>VISA</span><span>MC</span><span>PAYPAL</span><span>KLARNA</span><span>APPLE PAY</span></div>
-      <div class="legal-links"><a href="/policies/privacy-policy">Datenschutz</a><a href="/policies/terms-of-service">AGB</a><a href="/policies/refund-policy">Rückgabe</a></div>
+      <div class="pay-icons">
+        <span>VISA</span><span>MC</span><span>PAYPAL</span><span>KLARNA</span><span>APPLE PAY</span>
+      </div>
+      <div class="legal-links">
+        <a href="/policies/privacy-policy">Datenschutz</a>
+        <a href="/policies/terms-of-service">AGB</a>
+        <a href="/policies/refund-policy">Rückgabe</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<!-- CART DRAWER -->
-<div class="cart-overlay" id="cart-overlay"></div>
-<div class="cart-drawer" id="cart-drawer">
+<!-- ═══════════════════════════════════════
+     CART DRAWER
+     ═══════════════════════════════════════ -->
+<div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+<div class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Warenkorb" aria-modal="true">
   <div class="cart-head">
     <h3>Warenkorb <span id="cart-count">({{ cart.item_count }})</span></h3>
-    <button class="cart-close" id="cart-close" aria-label="Schließen">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <button class="cart-close action-btn" id="cart-close" aria-label="Warenkorb schließen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
+
+  <!-- Free shipping progress -->
+  {%- assign free_threshold = 10000 -%}
+  {%- assign remaining = free_threshold | minus: cart.total_price -%}
+  <div class="shipping-bar">
+    {%- if cart.total_price >= free_threshold -%}
+      <div class="shipping-progress"><div class="shipping-fill" style="width:100%"></div></div>
+      <p class="shipping-label">🎉 Du erhältst kostenlosen Versand!</p>
+    {%- elsif cart.item_count > 0 -%}
+      {%- assign pct = cart.total_price | times: 100 | divided_by: free_threshold -%}
+      <div class="shipping-progress"><div class="shipping-fill" style="width:{{ pct }}%"></div></div>
+      <p class="shipping-label">Noch {{ remaining | money }} bis zum kostenlosen Versand</p>
+    {%- endif -%}
+  </div>
+
   <div class="cart-body" id="cart-body">
     {%- if cart.item_count == 0 -%}
-      <div class="cart-empty-state">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <p>Dein Warenkorb ist leer.</p>
-        <a href="/collections/all" class="btn btn-black">Weiter einkaufen</a>
+      <div class="cart-empty">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <p>Dein Warenkorb ist noch leer.</p>
+        <a href="/collections/all" class="btn btn--dark btn--sm">Weiter einkaufen</a>
       </div>
     {%- else -%}
       <div class="cart-items">
         {%- for item in cart.items -%}
           <div class="cart-item">
-            <a href="{{ item.url }}"><img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}"></a>
-            <div class="ci-info">
+            <div class="cart-item-img">
+              <a href="{{ item.url }}">
+                <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" loading="lazy" width="80" height="100">
+              </a>
+            </div>
+            <div>
               <a href="{{ item.url }}" class="ci-name">{{ item.product.title }}</a>
-              <p class="ci-variant">{{ item.variant.title }}</p>
+              {%- unless item.variant.title == 'Default Title' -%}
+                <p class="ci-var">{{ item.variant.title }}</p>
+              {%- endunless -%}
               <div class="ci-row">
                 <div class="ci-qty">
-                  <button class="qty-btn" data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}">−</button>
-                  <span>{{ item.quantity }}</span>
-                  <button class="qty-btn" data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}">+</button>
+                  <button class="qty-btn" data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Menge verringern">−</button>
+                  <span class="qty-val">{{ item.quantity }}</span>
+                  <button class="qty-btn" data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Menge erhöhen">+</button>
                 </div>
                 <span class="ci-price">{{ item.final_line_price | money }}</span>
               </div>
@@ -265,15 +367,37 @@
           </div>
         {%- endfor -%}
       </div>
-      <div class="cart-foot">
-        <div class="cart-subtotal">
-          <span>Zwischensumme</span>
-          <span id="cart-total">{{ cart.total_price | money }}</span>
-        </div>
-        <a href="{{ routes.cart_url }}" class="btn btn-black" style="width:100%;justify-content:center;margin-bottom:10px;">Zur Kasse</a>
-        <p class="cart-note">Versandkosten werden an der Kasse berechnet.</p>
-      </div>
     {%- endif -%}
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <div class="cart-foot">
+      <div class="cart-subtotal">
+        <span>Zwischensumme</span>
+        <span id="cart-total">{{ cart.total_price | money }}</span>
+      </div>
+      <div class="cart-actions">
+        <a href="{{ routes.checkout_url }}" class="btn btn--dark btn--full" style="justify-content:center;">Zur Kasse</a>
+        <a href="{{ routes.cart_url }}" class="btn btn--outline btn--full btn--sm" style="justify-content:center;">Warenkorb ansehen</a>
+      </div>
+      <p class="cart-note">Steuern und Versandkosten werden an der Kasse berechnet.</p>
+    </div>
+  {%- endif -%}
+</div>
+
+<!-- ═══════════════════════════════════════
+     COOKIE BANNER
+     ═══════════════════════════════════════ -->
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie-Einstellungen" aria-live="polite">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <strong>Wir verwenden Cookies</strong>
+      <p>Wir nutzen Cookies, um dir das beste Erlebnis zu bieten. <a href="/policies/privacy-policy">Mehr erfahren</a></p>
+    </div>
+    <div class="cookie-btns">
+      <button class="btn btn--dark btn--sm" id="cookie-accept">Akzeptieren</button>
+      <button class="btn btn--outline btn--sm" id="cookie-decline">Ablehnen</button>
+    </div>
   </div>
 </div>
 

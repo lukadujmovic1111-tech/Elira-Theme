@@ -1,0 +1,81 @@
+<section class="community-section">
+  <div class="container">
+    <div class="ig-head">
+      <div class="sec-head" style="margin-bottom:0">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="sec-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="sec-title">{{ section.settings.heading | default: '#EliraCommunity' }}</h2>
+      </div>
+      {%- if section.settings.instagram_url != blank -%}
+        <a href="{{ section.settings.instagram_url }}" class="ig-handle" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5" stroke-linecap="round"/></svg>
+          @{{ section.settings.handle | default: 'eliraactivewear' }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="ig-grid">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url | default: section.settings.instagram_url | default: '#' }}"
+           class="ig-item reveal"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Community Foto {{ forloop.index }}"
+           {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 400 }}"
+                 alt="{{ block.settings.alt | default: 'Elira Community' | escape }}"
+                 loading="lazy" width="400" height="400">
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <div class="ig-over">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+        </a>
+      {%- else -%}
+        {%- for i in (1..6) -%}
+          <div class="ig-item">
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div style="text-align:center;margin-top:2.5rem">
+        <a href="{{ section.settings.instagram_url | default: '#' }}" class="btn btn--outline" target="_blank" rel="noopener noreferrer">
+          {{ section.settings.cta_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Community Galerie",
+  "tag": "section",
+  "class": "section-community",
+  "settings": [
+    { "type": "text",       "id": "eyebrow",       "label": "Eyebrow",       "default": "Community" },
+    { "type": "text",       "id": "heading",        "label": "Überschrift",   "default": "#EliraCommunity" },
+    { "type": "text",       "id": "handle",         "label": "Instagram Handle (ohne @)", "default": "eliraactivewear" },
+    { "type": "url",        "id": "instagram_url",  "label": "Instagram URL" },
+    { "type": "text",       "id": "cta_label",      "label": "Button Text",   "default": "Uns auf Instagram folgen" }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Bild" },
+        { "type": "text", "id": "alt", "label": "Alt-Text" },
+        { "type": "url",  "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "Community Galerie" }]
+}
+{% endschema %}
