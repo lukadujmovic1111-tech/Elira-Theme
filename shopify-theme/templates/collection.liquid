@@ -1,46 +1,124 @@
-<div class="container" style="padding-top:48px;padding-bottom:80px;">
-  <h1 style="font-size:28px;font-weight:700;margin-bottom:8px;">{{ collection.title }}</h1>
-  {%- if collection.description != blank -%}
-    <div style="font-size:15px;color:#737373;margin-bottom:32px;">{{ collection.description }}</div>
-  {%- endif -%}
+<div class="collection-header">
+  <div class="container">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p>{{ collection.description | strip_html | truncate: 160 }}</p>
+    {%- endif -%}
+  </div>
+</div>
 
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-    <span style="font-size:13px;color:#737373;">{{ collection.products_count }} Produkte</span>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <label style="font-size:13px;" for="sort-by">Sortieren:</label>
-      <select id="sort-by" style="font-size:13px;padding:6px 10px;border:1px solid #d4d4d4;background:#fff;" onchange="window.location.href=this.value">
-        <option value="?sort_by=manual"{% if collection.sort_by == 'manual' %} selected{% endif %}>Empfohlen</option>
-        <option value="?sort_by=best-selling"{% if collection.sort_by == 'best-selling' %} selected{% endif %}>Bestseller</option>
-        <option value="?sort_by=created-descending"{% if collection.sort_by == 'created-descending' %} selected{% endif %}>Neueste</option>
-        <option value="?sort_by=price-ascending"{% if collection.sort_by == 'price-ascending' %} selected{% endif %}>Preis aufsteigend</option>
-        <option value="?sort_by=price-descending"{% if collection.sort_by == 'price-descending' %} selected{% endif %}>Preis absteigend</option>
+<div class="container">
+  <div class="collection-meta">
+    <span class="collection-count">{{ collection.products_count }} Produkte</span>
+    <div class="sort-bar">
+      <span class="sort-label">Sortieren:</span>
+      <select class="sort-select" id="sort-select" aria-label="Produkte sortieren">
+        {%- assign sort_options = "manual,Empfohlen|best-selling,Bestseller|title-ascending,Name A–Z|title-descending,Name Z–A|price-ascending,Preis aufsteigend|price-descending,Preis absteigend|created-descending,Neueste zuerst" | split: '|' -%}
+        {%- for opt in sort_options -%}
+          {%- assign parts = opt | split: ',' -%}
+          <option value="{{ parts[0] }}"{% if collection.sort_by == parts[0] %} selected{% endif %}>{{ parts[1] }}</option>
+        {%- endfor -%}
       </select>
     </div>
   </div>
 
-  <div class="products-grid">
-    {%- for product in collection.products -%}
-      {%- render 'product-card', product: product -%}
-    {%- endfor -%}
-  </div>
+  <div class="collection-body">
 
-  {%- if paginate.pages > 1 -%}
-    {%- paginate collection.products by 24 -%}
-      <div style="display:flex;justify-content:center;gap:8px;margin-top:48px;">
-        {%- if paginate.previous -%}
-          <a href="{{ paginate.previous.url }}" class="btn btn-black" style="padding:10px 20px;">← Zurück</a>
-        {%- endif -%}
-        {%- for part in paginate.parts -%}
-          {%- if part.is_link -%}
-            <a href="{{ part.url }}" style="padding:10px 16px;border:1px solid #d4d4d4;font-size:14px;">{{ part.title }}</a>
-          {%- else -%}
-            <span style="padding:10px 16px;border:1px solid #000;background:#000;color:#fff;font-size:14px;">{{ part.title }}</span>
-          {%- endif -%}
+    <!-- Filters sidebar -->
+    <aside class="filters-sidebar">
+      {%- unless collection.filters == blank -%}
+        {%- for filter in collection.filters -%}
+          <div class="filter-group">
+            <button class="filter-toggle is-open">
+              {{ filter.label }}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="filter-options">
+              {%- for value in filter.values -%}
+                <label class="filter-opt">
+                  <input type="checkbox" name="{{ filter.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}>
+                  <span class="filter-check"></span>
+                  <span>{{ value.label }} ({{ value.count }})</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
         {%- endfor -%}
-        {%- if paginate.next -%}
-          <a href="{{ paginate.next.url }}" class="btn btn-black" style="padding:10px 20px;">Weiter →</a>
+      {%- else -%}
+        <!-- Fallback static filters -->
+        <div class="filter-group">
+          <button class="filter-toggle is-open">
+            Größe
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="filter-options">
+            {%- for size in "XS,S,M,L,XL,XXL" | split: ',' -%}
+              <label class="filter-opt"><input type="checkbox"><span class="filter-check"></span><span>{{ size }}</span></label>
+            {%- endfor -%}
+          </div>
+        </div>
+        <div class="filter-group">
+          <button class="filter-toggle is-open">
+            Preis
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="filter-options">
+            <label class="filter-opt"><input type="checkbox"><span class="filter-check"></span><span>Unter €50</span></label>
+            <label class="filter-opt"><input type="checkbox"><span class="filter-check"></span><span>€50 – €100</span></label>
+            <label class="filter-opt"><input type="checkbox"><span class="filter-check"></span><span>€100 – €150</span></label>
+            <label class="filter-opt"><input type="checkbox"><span class="filter-check"></span><span>Über €150</span></label>
+          </div>
+        </div>
+      {%- endunless -%}
+    </aside>
+
+    <!-- Product grid -->
+    <div>
+      {%- paginate collection.products by 24 -%}
+        <div class="products-grid reveal-group">
+          {%- for product in collection.products -%}
+            <div class="reveal">
+              {%- render 'product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+          {%- if collection.products.size == 0 -%}
+            <p style="grid-column:span 4;text-align:center;padding:4rem;color:var(--ink-40);font-size:0.9375rem;">
+              Keine Produkte in dieser Kollektion gefunden.
+            </p>
+          {%- endif -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="pagination">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="page-btn" aria-label="Vorherige Seite">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="page-btn{% if part.title == paginate.current_page %} is-active{% endif %}">{{ part.title }}</a>
+              {%- else -%}
+                <span class="page-btn is-active">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="page-btn" aria-label="Nächste Seite">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
         {%- endif -%}
-      </div>
-    {%- endpaginate -%}
-  {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+
+  </div>
 </div>
+
+<script>
+  document.getElementById('sort-select')?.addEventListener('change', function() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort_by', this.value);
+    window.location.href = url.toString();
+  });
+</script>

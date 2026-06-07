@@ -1,51 +1,81 @@
-{{ 'elira.css' | asset_url | stylesheet_tag }}
-
-<section class="hero-section">
+<section class="hero">
   <div class="hero-slider" id="hero-slider">
     {%- for block in section.blocks -%}
       {%- if block.type == 'slide' -%}
-        <div class="hero-slide{% if forloop.first %} active{% endif %}"
-             style="background-image:url('{{ block.settings.image | image_url: width: 1920 }}')"
-             {{ block.shopify_attributes }}>
-          <div class="slide-overlay{% if block.settings.overlay_side == 'right' %} slide-overlay-right{% endif %}"></div>
-          <div class="slide-content pos-{{ block.settings.content_position }}">
+        <div class="hero-slide{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+
+          <!-- Background -->
+          <div class="hero-slide-bg">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 1920 }}"
+                   srcset="{{ block.settings.image | image_url: width: 800 }} 800w,
+                           {{ block.settings.image | image_url: width: 1200 }} 1200w,
+                           {{ block.settings.image | image_url: width: 1920 }} 1920w"
+                   sizes="100vw"
+                   alt="{{ block.settings.image.alt | escape }}"
+                   loading="{{ forloop.first | ternary: 'eager', 'lazy' }}"
+                   fetchpriority="{{ forloop.first | ternary: 'high', 'low' }}"
+                   width="1920" height="1080">
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+
+          <!-- Overlay -->
+          {%- assign pos = block.settings.content_position | default: 'left' -%}
+          <div class="hero-overlay{% if pos == 'right' %}--right{% elsif pos == 'center' %}--center{% endif %} hero-overlay"></div>
+
+          <!-- Content -->
+          <div class="hero-content hero-content--{{ pos }}">
             {%- if block.settings.eyebrow != blank -%}
-              <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+              <span class="hero-eyebrow">{{ block.settings.eyebrow }}</span>
             {%- endif -%}
             {%- if block.settings.heading != blank -%}
-              <h1>{{ block.settings.heading }}</h1>
+              <h1 class="hero-title">{{ block.settings.heading | newline_to_br }}</h1>
             {%- endif -%}
             {%- if block.settings.subtext != blank -%}
-              <p>{{ block.settings.subtext }}</p>
+              <p class="hero-sub">{{ block.settings.subtext }}</p>
             {%- endif -%}
-            <div class="slide-btns{% if block.settings.content_position == 'center' %} center{% elsif block.settings.content_position == 'right' %} right{% endif %}">
+            <div class="hero-btns">
               {%- if block.settings.btn1_label != blank -%}
-                <a href="{{ block.settings.btn1_url }}" class="btn btn-white">{{ block.settings.btn1_label }}</a>
+                <a href="{{ block.settings.btn1_url | default: '/collections/all' }}" class="btn btn--light">{{ block.settings.btn1_label }}</a>
               {%- endif -%}
               {%- if block.settings.btn2_label != blank -%}
-                <a href="{{ block.settings.btn2_url }}" class="btn btn-ghost">{{ block.settings.btn2_label }}</a>
+                <a href="{{ block.settings.btn2_url | default: '/collections/all' }}" class="btn btn--ghost">{{ block.settings.btn2_label }}</a>
               {%- endif -%}
             </div>
           </div>
         </div>
       {%- endif -%}
     {%- endfor -%}
+
+    <!-- Scroll hint -->
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
   </div>
 
+  <!-- Slider controls -->
   {%- if section.blocks.size > 1 -%}
-    <div class="slider-controls">
-      <button class="slider-arrow" id="hero-prev" aria-label="Zurück">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+    <div class="slider-controls" aria-label="Slider Navigation">
+      <button class="slider-btn" id="hero-prev" aria-label="Vorheriger Slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="slider-dots" id="hero-dots">
+      <div class="slider-dots" id="hero-dots" role="tablist">
         {%- for block in section.blocks -%}
           {%- if block.type == 'slide' -%}
-            <button class="dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}"></button>
+            <button class="slider-dot{% if forloop.first %} is-active{% endif %}"
+                    data-index="{{ forloop.index0 }}"
+                    role="tab"
+                    aria-label="Slide {{ forloop.index }}"
+                    aria-selected="{{ forloop.first | ternary: 'true', 'false' }}">
+            </button>
           {%- endif -%}
         {%- endfor -%}
       </div>
-      <button class="slider-arrow" id="hero-next" aria-label="Weiter">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+      <button class="slider-btn" id="hero-next" aria-label="Nächster Slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
   {%- endif -%}
@@ -55,7 +85,7 @@
 {
   "name": "Hero Slider",
   "tag": "section",
-  "class": "hero-slider-section",
+  "class": "section-hero",
   "max_blocks": 5,
   "settings": [],
   "blocks": [
@@ -63,27 +93,26 @@
       "type": "slide",
       "name": "Slide",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Bild" },
-        { "type": "text", "id": "eyebrow", "label": "Eyebrow Text", "default": "Neue Kollektion" },
-        { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "Made to Move." },
-        { "type": "text", "id": "subtext", "label": "Untertext", "default": "Die neue Kollektion ist jetzt da." },
-        { "type": "select", "id": "content_position", "label": "Textposition", "options": [{"value":"left","label":"Links"},{"value":"center","label":"Mitte"},{"value":"right","label":"Rechts"}], "default": "left" },
-        { "type": "select", "id": "overlay_side", "label": "Overlay-Seite", "options": [{"value":"left","label":"Links"},{"value":"right","label":"Rechts"}], "default": "left" },
+        { "type": "image_picker", "id": "image",            "label": "Hintergrundbild" },
+        { "type": "text",         "id": "eyebrow",          "label": "Eyebrow Text",    "default": "Neue Kollektion" },
+        { "type": "textarea",     "id": "heading",          "label": "Überschrift",     "default": "Made to Move." },
+        { "type": "text",         "id": "subtext",          "label": "Untertext",       "default": "Entdecke unsere neue Kollektion." },
+        { "type": "select",       "id": "content_position", "label": "Textposition",
+          "options": [
+            { "value": "left",   "label": "Links" },
+            { "value": "center", "label": "Mitte" },
+            { "value": "right",  "label": "Rechts" }
+          ], "default": "left" },
         { "type": "text", "id": "btn1_label", "label": "Button 1 Text", "default": "Jetzt shoppen" },
-        { "type": "url", "id": "btn1_url", "label": "Button 1 Link" },
+        { "type": "url",  "id": "btn1_url",   "label": "Button 1 Link" },
         { "type": "text", "id": "btn2_label", "label": "Button 2 Text" },
-        { "type": "url", "id": "btn2_url", "label": "Button 2 Link" }
+        { "type": "url",  "id": "btn2_url",   "label": "Button 2 Link" }
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Hero Slider",
-      "blocks": [
-        { "type": "slide" },
-        { "type": "slide" }
-      ]
-    }
-  ]
+  "presets": [{
+    "name": "Hero Slider",
+    "blocks": [{ "type": "slide" }, { "type": "slide" }]
+  }]
 }
 {% endschema %}

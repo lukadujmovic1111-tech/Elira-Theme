@@ -1,29 +1,39 @@
 <section class="products-section">
   <div class="container">
-    <div class="section-head-row">
-      <h2 class="section-title">{{ section.settings.heading | default: 'Neue Arrivals' }}</h2>
+    <div class="sec-head sec-row reveal">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="sec-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="sec-title">{{ section.settings.heading | default: 'Neue Arrivals' }}</h2>
+      </div>
       {%- if section.settings.view_all_url != blank -%}
-        <a href="{{ section.settings.view_all_url }}" class="view-all">Alle anzeigen &rarr;</a>
+        <a href="{{ section.settings.view_all_url }}" class="link-arrow">
+          Alle anzeigen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       {%- endif -%}
     </div>
 
-    {%- assign collection = collections[section.settings.collection] -%}
-    {%- assign products_to_show = section.settings.products_count | default: 8 -%}
+    {%- assign col = collections[section.settings.collection] -%}
+    {%- assign count = section.settings.products_count | default: 8 -%}
 
-    <div class="products-grid">
-      {%- if collection != blank and collection.products.size > 0 -%}
-        {%- for product in collection.products limit: products_to_show -%}
-          {%- render 'product-card', product: product -%}
+    <div class="products-grid reveal-group">
+      {%- if col != blank and col.products.size > 0 -%}
+        {%- for product in col.products limit: count -%}
+          <div class="reveal">
+            {%- render 'product-card', product: product -%}
+          </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..8) -%}
-          <div class="prod-card">
+          <div class="prod-card reveal">
             <div class="prod-img-wrap">
-              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg img-main' }}
             </div>
             <div class="prod-info">
-              <p class="prod-name"><a href="#">Beispielprodukt {{ i }}</a></p>
-              <p class="prod-price">€99</p>
+              <p class="prod-name"><a href="#">Premium Activewear {{ i }}</a></p>
+              <p class="prod-price"><span>€{{ 79 | plus: forloop.index | times: 10 }}</span></p>
             </div>
           </div>
         {%- endfor -%}
@@ -36,11 +46,14 @@
 {
   "name": "Featured Products",
   "tag": "section",
+  "class": "section-products",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Neue Arrivals" },
-    { "type": "collection", "id": "collection", "label": "Kollektion" },
-    { "type": "range", "id": "products_count", "min": 4, "max": 12, "step": 4, "label": "Anzahl Produkte", "default": 8 },
-    { "type": "url", "id": "view_all_url", "label": "Alle anzeigen Link" }
+    { "type": "text",       "id": "eyebrow",        "label": "Eyebrow",              "default": "Neue Arrivals" },
+    { "type": "text",       "id": "heading",        "label": "Überschrift",          "default": "Gerade beliebt" },
+    { "type": "collection", "id": "collection",     "label": "Kollektion" },
+    { "type": "range",      "id": "products_count", "label": "Anzahl Produkte",
+      "min": 4, "max": 12, "step": 4, "default": 8 },
+    { "type": "url",        "id": "view_all_url",   "label": "Alle anzeigen Link" }
   ],
   "presets": [{ "name": "Featured Products" }]
 }

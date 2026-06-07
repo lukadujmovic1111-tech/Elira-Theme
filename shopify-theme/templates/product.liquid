@@ -1,94 +1,333 @@
-<div class="container" style="padding-top:48px;padding-bottom:80px;">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;">
+{%- assign current_variant = product.selected_or_first_available_variant -%}
 
-    <!-- Images -->
-    <div>
-      <div style="aspect-ratio:4/5;overflow:hidden;background:#f5f5f5;margin-bottom:10px;">
-        <img id="main-product-img"
-             src="{{ product.featured_image | image_url: width: 900 }}"
-             alt="{{ product.title | escape }}"
-             style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      {%- if product.images.size > 1 -%}
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
-          {%- for image in product.images limit: 4 -%}
-            <button onclick="document.getElementById('main-product-img').src='{{ image | image_url: width: 900 }}'"
-                    style="aspect-ratio:1;overflow:hidden;background:#f5f5f5;border:none;cursor:pointer;">
-              <img src="{{ image | image_url: width: 200 }}" alt="" style="width:100%;height:100%;object-fit:cover;">
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-    </div>
+<!-- Variant data for JS -->
+<script>
+  window.__eliraVariants = {{ product.variants | json }};
+</script>
 
-    <!-- Info -->
-    <div style="padding-top:8px;">
-      {%- if product.vendor != blank -%}
-        <p style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#737373;margin-bottom:8px;">{{ product.vendor }}</p>
-      {%- endif -%}
-      <h1 style="font-size:26px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px;">{{ product.title }}</h1>
+<div class="pdp">
+  <div class="container">
+    <div class="pdp-grid">
 
-      <div style="font-size:20px;font-weight:500;margin-bottom:24px;">
-        {%- if product.compare_at_price > product.price -%}
-          <span class="sale-price">{{ product.price | money }}</span>
-          <span class="orig-price" style="margin-left:8px;">{{ product.compare_at_price | money }}</span>
-        {%- else -%}
-          {{ product.price | money }}
+      <!-- ══════════════════════════════
+           GALLERY
+           ══════════════════════════════ -->
+      <div class="pdp-gallery">
+
+        <!-- Thumbnails -->
+        {%- if product.images.size > 1 -%}
+          <div class="pdp-thumbs">
+            {%- for img in product.images limit: 8 -%}
+              <button class="pdp-thumb{% if forloop.first %} is-active{% endif %}"
+                      data-src="{{ img | image_url: width: 900 }}"
+                      data-src2x="{{ img | image_url: width: 1400 }}"
+                      aria-label="Produktbild {{ forloop.index }}">
+                <img src="{{ img | image_url: width: 120 }}" alt="{{ img.alt | escape }}" loading="{{ forloop.first | ternary: 'eager', 'lazy' }}" width="80" height="80">
+              </button>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
+
+        <!-- Main image -->
+        <div class="pdp-main-wrap">
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            {%- assign savings = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+            <span class="pdp-badge badge--sale">−{{ savings }}%</span>
+          {%- elsif product.created_at > 'now' | date: '%s' | minus: 2592000 | date: '%Y-%m-%dT%H:%M:%SZ' -%}
+            <span class="pdp-badge badge--new">Neu</span>
+          {%- endif -%}
+
+          <img id="pdp-main-img"
+               src="{{ product.featured_image | image_url: width: 900 }}"
+               alt="{{ product.title | escape }}"
+               class="pdp-main"
+               loading="eager"
+               width="900"
+               height="1125">
+
+          <div class="pdp-zoom-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Vergrößern
+          </div>
+        </div>
       </div>
 
-      {%- form 'product', product, id: 'product-form' -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+      <!-- ══════════════════════════════
+           PRODUCT INFO
+           ══════════════════════════════ -->
+      <div class="pdp-info">
 
-        {%- for option in product.options_with_values -%}
-          <div style="margin-bottom:20px;">
-            <label style="font-size:13px;font-weight:600;display:block;margin-bottom:10px;">
-              {{ option.name }}: <span id="opt-val-{{ forloop.index0 }}" style="font-weight:400;">{{ option.selected_value }}</span>
-            </label>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              {%- for value in option.values -%}
-                <button type="button"
-                        class="size-btn"
-                        data-option="{{ forloop.parentloop.index0 }}"
-                        data-value="{{ value | escape }}"
-                        style="padding:8px 16px;border:1.5px solid #d4d4d4;font-size:13px;font-weight:500;background:#fff;cursor:pointer;transition:all .2s;">
-                  {{ value }}
-                </button>
-              {%- endfor -%}
+        {%- if product.vendor != blank -%}
+          <p class="pdp-vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="pdp-title">{{ product.title }}</h1>
+
+        <!-- Rating -->
+        <div class="pdp-rating">
+          <div class="stars" aria-label="4.8 von 5 Sternen">
+            {%- for i in (1..5) -%}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            {%- endfor -%}
+          </div>
+          <a href="#reviews">124 Bewertungen</a>
+        </div>
+
+        <!-- Price -->
+        <div class="pdp-price">
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span class="price--sale" id="pdp-price">{{ current_variant.price | money }}</span>
+            <span class="price--orig" id="pdp-compare-price">{{ current_variant.compare_at_price | money }}</span>
+          {%- else -%}
+            <span id="pdp-price">{{ current_variant.price | money }}</span>
+            <span id="pdp-compare-price" style="display:none"></span>
+          {%- endif -%}
+        </div>
+
+        {%- form 'product', product, id: 'product-form' -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" id="variant-id">
+
+          <!-- Options -->
+          {%- for option in product.options_with_values -%}
+            {%- assign opt_index = forloop.index0 -%}
+            {%- assign opt_name_lower = option.name | downcase -%}
+
+            <div class="pdp-option">
+              <div class="opt-head">
+                <span class="opt-label">
+                  {{ option.name }}: <span id="opt-val-{{ opt_index }}" style="font-weight:400;color:var(--ink-60)">{{ option.selected_value }}</span>
+                </span>
+                {%- if opt_name_lower == 'größe' or opt_name_lower == 'size' -%}
+                  <a href="#" class="size-guide-link" data-open-size-guide>Größenberater</a>
+                {%- endif -%}
+              </div>
+
+              {%- if opt_name_lower == 'farbe' or opt_name_lower == 'color' or opt_name_lower == 'colour' -%}
+                <!-- Color swatches -->
+                <div class="opt-swatches">
+                  {%- for value in option.values -%}
+                    {%- assign is_active = false -%}
+                    {%- if option.selected_value == value %}{%- assign is_active = true -%}{%- endif -%}
+                    <button type="button"
+                            class="swatch{% if is_active %} is-active{% endif %}"
+                            data-option-index="{{ opt_index }}"
+                            data-value="{{ value | escape }}"
+                            title="{{ value }}"
+                            style="background-color: {{ value | downcase | replace: ' ', '' | replace: '/', '' }};"
+                            aria-label="{{ value }}{% if is_active %} – Ausgewählt{% endif %}">
+                    </button>
+                  {%- endfor -%}
+                </div>
+
+              {%- else -%}
+                <!-- Size buttons -->
+                <div class="size-btns">
+                  {%- for value in option.values -%}
+                    {%- assign is_active = false -%}
+                    {%- if option.selected_value == value %}{%- assign is_active = true -%}{%- endif -%}
+                    <button type="button"
+                            class="size-btn{% if is_active %} is-active{% endif %}"
+                            data-option-index="{{ opt_index }}"
+                            data-value="{{ value | escape }}"
+                            aria-label="{{ value }}{% if is_active %} – Ausgewählt{% endif %}">
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+
+          <!-- Quantity -->
+          <div class="pdp-option">
+            <div class="opt-head"><span class="opt-label">Menge</span></div>
+            <div class="ci-qty" style="width:fit-content">
+              <button type="button" class="qty-btn pdp-qty-btn" data-delta="-" aria-label="Menge verringern">−</button>
+              <input type="number" name="quantity" id="pdp-qty" value="1" min="1" class="qty-val" style="border:none;text-align:center;background:transparent;width:44px;" aria-label="Menge">
+              <button type="button" class="qty-btn pdp-qty-btn" data-delta="+" aria-label="Menge erhöhen">+</button>
             </div>
           </div>
-        {%- endfor -%}
 
-        <button type="submit"
-                class="btn btn-black"
-                style="width:100%;justify-content:center;margin-bottom:12px;padding:16px;"
-                {%- unless product.available -%}disabled{%- endunless -%}>
-          {%- if product.available -%}In den Warenkorb{%- else -%}Ausverkauft{%- endif -%}
-        </button>
-        <a href="{{ routes.checkout }}" class="btn btn-ghost" style="width:100%;justify-content:center;color:#000;border-color:#000;padding:16px;">Sofort kaufen</a>
-      {%- endform -%}
+          <!-- ATC anchor (for sticky bar detection) -->
+          <div id="pdp-form-anchor"></div>
 
-      {%- if product.description != blank -%}
-        <div style="margin-top:32px;padding-top:28px;border-top:1px solid #e8e8e8;">
-          <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display=='none'?'block':'none'" style="font-size:14px;font-weight:600;width:100%;display:flex;justify-content:space-between;background:none;border:none;cursor:pointer;padding:0;">
-            Produktbeschreibung <span>+</span>
-          </button>
-          <div style="font-size:14px;line-height:1.7;color:#404040;margin-top:14px;">{{ product.description }}</div>
+          <!-- Add to cart buttons -->
+          <div class="pdp-form-actions">
+            <button type="submit" class="btn-atc" id="atc-btn"
+              {%- unless product.available -%}disabled{%- endunless -%}>
+              {%- if product.available -%}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                In den Warenkorb
+              {%- else -%}
+                Ausverkauft
+              {%- endif -%}
+            </button>
+            <a href="{{ routes.checkout_url }}" class="btn-buy-now">Sofort kaufen</a>
+          </div>
+
+        {%- endform -%}
+
+        <!-- Trust signals -->
+        <div class="pdp-trust">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            <span>Kostenloser Versand ab €100</span>
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            <span>30 Tage kostenloses Rückgaberecht</span>
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            <span>Nachhaltige Materialien</span>
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
+            <span>Sicher bezahlen</span>
+          </div>
         </div>
-      {%- endif -%}
+
+        <!-- Tabs: Description / Materials / Sustainability -->
+        {%- if product.description != blank or product.metafields.custom.materials != blank -%}
+          <div class="pdp-tabs">
+            <div class="tab-list" role="tablist">
+              <button class="tab-btn is-active" data-tab="description" role="tab" aria-selected="true">Beschreibung</button>
+              <button class="tab-btn" data-tab="materials" role="tab" aria-selected="false">Material & Pflege</button>
+              <button class="tab-btn" data-tab="sustainability" role="tab" aria-selected="false">Nachhaltigkeit</button>
+            </div>
+
+            <div class="tab-panel is-active" data-panel="description" role="tabpanel">
+              {%- if product.description != blank -%}
+                <div class="t-body">{{ product.description }}</div>
+              {%- else -%}
+                <p class="t-body">Premium Activewear, entwickelt für maximale Performance und Stil.</p>
+              {%- endif -%}
+            </div>
+
+            <div class="tab-panel" data-panel="materials" role="tabpanel">
+              <p class="t-body">{{ product.metafields.custom.materials | default: 'Hauptmaterial: 78% Nylon, 22% Elasthan. Futter: 100% Polyester. Maschinenwaschbar bei 30°C.' }}</p>
+              <ul class="feature-list">
+                <li>Schnelltrocknend und schweißabweisend</li>
+                <li>UPF 50+ Sonnenschutz</li>
+                <li>Vier-Wege-Stretch für volle Bewegungsfreiheit</li>
+                <li>Nahtfrei verarbeitet für maximalen Komfort</li>
+              </ul>
+            </div>
+
+            <div class="tab-panel" data-panel="sustainability" role="tabpanel">
+              <p class="t-body">Jedes Elira-Stück wird mit Rücksicht auf unsere Umwelt entwickelt.</p>
+              <ul class="feature-list">
+                <li>Recyceltes Nylon aus Fischernetzen (ECONYL®)</li>
+                <li>Bluesign®-zertifizierte Herstellung</li>
+                <li>CO₂-neutrale Lieferung</li>
+                <li>Plastikfreie Verpackung</li>
+              </ul>
+            </div>
+          </div>
+        {%- endif -%}
+
+      </div><!-- / pdp-info -->
+    </div><!-- / pdp-grid -->
+  </div><!-- / container -->
+
+  <!-- ══════════════════════════════
+       UPSELL / YOU MAY ALSO LIKE
+       ══════════════════════════════ -->
+  {%- if product.collections.first != blank -%}
+    <div class="pdp-upsell">
+      <div class="container">
+        <h2 class="sec-title" style="margin-bottom:1.75rem;">Das könnte dir auch gefallen</h2>
+        <div class="products-grid">
+          {%- assign upsell_collection = product.collections.first -%}
+          {%- for p in upsell_collection.products limit: 4 -%}
+            {%- unless p.id == product.id -%}
+              {%- render 'product-card', product: p -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
     </div>
+  {%- endif -%}
+
+</div><!-- / pdp -->
+
+<!-- ══════════════════════════════
+     STICKY ATC BAR
+     ══════════════════════════════ -->
+<div class="sticky-atc" id="sticky-atc" aria-hidden="true">
+  <div class="sticky-prod-name">{{ product.title }}</div>
+  <div class="sticky-price" id="sticky-price">{{ current_variant.price | money }}</div>
+  <button type="button" class="btn btn--dark btn--sm" id="sticky-atc-submit" style="flex-shrink:0"
+    {%- unless product.available -%}disabled{%- endunless -%}>
+    {%- if product.available -%}In den Warenkorb{%- else -%}Ausverkauft{%- endif -%}
+  </button>
+</div>
+
+<!-- ══════════════════════════════
+     SIZE GUIDE MODAL
+     ══════════════════════════════ -->
+<div class="cart-overlay" id="size-guide-overlay" aria-hidden="true" style="z-index:490"></div>
+<div id="size-guide-modal" style="
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:min(640px,95vw); max-height:85vh; overflow-y:auto;
+  background:var(--canvas); z-index:500; padding:2.5rem;
+  display:none; box-shadow:var(--shadow-xl);"
+  role="dialog" aria-label="Größenberater" aria-modal="true">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+    <h2 style="font-family:var(--serif);font-size:1.5rem;font-weight:500">Größenberater</h2>
+    <button class="modal-close action-btn" aria-label="Schließen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
   </div>
+  <table style="width:100%;border-collapse:collapse;font-size:.875rem">
+    <thead>
+      <tr style="border-bottom:2px solid var(--ink-10)">
+        <th style="text-align:left;padding:.75rem 0;font-weight:600">Größe</th>
+        <th style="text-align:center;padding:.75rem 0;font-weight:600">Brust (cm)</th>
+        <th style="text-align:center;padding:.75rem 0;font-weight:600">Taille (cm)</th>
+        <th style="text-align:center;padding:.75rem 0;font-weight:600">Hüfte (cm)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for row in "XS,77-82,60-65,85-90|S,83-88,66-71,91-96|M,89-94,72-77,97-102|L,95-100,78-83,103-108|XL,101-106,84-89,109-114" | split: '|' -%}
+        {%- assign cols = row | split: ',' -%}
+        <tr style="border-bottom:1px solid var(--ink-10)">
+          <td style="padding:.75rem 0;font-weight:600">{{ cols[0] }}</td>
+          <td style="text-align:center;padding:.75rem 0;color:var(--ink-60)">{{ cols[1] }}</td>
+          <td style="text-align:center;padding:.75rem 0;color:var(--ink-60)">{{ cols[2] }}</td>
+          <td style="text-align:center;padding:.75rem 0;color:var(--ink-60)">{{ cols[3] }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+  <p style="margin-top:1.25rem;font-size:.8125rem;color:var(--ink-40)">Alle Maßangaben sind Körpermaße. Bei Unsicherheit empfehlen wir die nächstgrößere Größe.</p>
 </div>
 
 <script>
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const opt = this.dataset.option;
-      document.querySelectorAll(`.size-btn[data-option="${opt}"]`).forEach(b => {
-        b.style.borderColor = '#d4d4d4'; b.style.background = '#fff';
+  // Wire up the size guide modal visibility (CSS-free approach)
+  (function() {
+    const modal = document.getElementById('size-guide-modal');
+    const overlay = document.getElementById('size-guide-overlay');
+    if (!modal || !overlay) return;
+    modal.style.display = 'none';
+    overlay.style.display = 'none';
+
+    document.querySelectorAll('[data-open-size-guide]').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
+        overlay.classList.add('is-show');
+        document.body.style.overflow = 'hidden';
       });
-      this.style.borderColor = '#000'; this.style.background = '#000'; this.style.color = '#fff';
-      document.getElementById('opt-val-' + opt).textContent = this.dataset.value;
     });
-  });
+    function close() {
+      modal.style.display = 'none';
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-show');
+      document.body.style.overflow = '';
+    }
+    overlay.addEventListener('click', close);
+    modal.querySelector('.modal-close')?.addEventListener('click', close);
+  })();
 </script>

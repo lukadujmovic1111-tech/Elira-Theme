@@ -1,0 +1,118 @@
+<section class="testimonials-section">
+  <div class="container">
+
+    <!-- Rating summary -->
+    <div class="rating-summary reveal">
+      <div class="rating-number">4.9</div>
+      <div class="rating-stars" aria-label="4.9 von 5 Sternen">
+        {%- for i in (1..5) -%}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        {%- endfor -%}
+      </div>
+      <p class="rating-count">{{ section.settings.review_count | default: '2.840' }} verifizierte Bewertungen</p>
+    </div>
+
+    <div class="sec-head sec-head--center reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="sec-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="sec-title">{{ section.settings.heading | default: 'Was unsere Community sagt' }}</h2>
+    </div>
+
+    <!-- Slider -->
+    <div class="testimonials-slider" style="overflow:hidden">
+      <div class="testimonials-track" id="testimonials-track">
+        {%- for block in section.blocks -%}
+          <div class="testimonial-card reveal" {{ block.shopify_attributes }}>
+            <div class="t-stars" aria-label="{{ block.settings.rating }} von 5 Sternen">
+              {%- for i in (1..block.settings.rating) -%}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              {%- endfor -%}
+            </div>
+            <blockquote class="t-quote">"{{ block.settings.quote }}"</blockquote>
+            <div class="t-author">
+              {%- if block.settings.avatar != blank -%}
+                <div class="t-avatar">
+                  <img src="{{ block.settings.avatar | image_url: width: 88 }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="44" height="44">
+                </div>
+              {%- else -%}
+                <div class="t-avatar" aria-hidden="true" style="background:var(--warm-200);display:flex;align-items:center;justify-content:center;color:var(--ink-40);font-weight:600;font-size:1rem">
+                  {{ block.settings.name | slice: 0 }}
+                </div>
+              {%- endif -%}
+              <div>
+                <p class="t-name">{{ block.settings.name }}</p>
+                <p class="t-title">{{ block.settings.subtitle | default: 'Verifizierter Kauf' }}</p>
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          {%- assign defaults = "Sarah M.,Yoga-Instructorin,Die Leggings sind unglaublich bequem und halten alles an Ort und Stelle. Ich trage sie jeden Tag – zum Training und auch einfach so.|Lisa K.,Pilates-Trainerin,Endlich eine Marke, die versteht wie Activewear wirklich sitzen soll. Die Qualität ist auf einem ganz anderen Level.|Anna T.,Fitness Enthusiastin,Schon beim ersten Anziehen war ich begeistert. Die Materialien sind so weich und die Passform einfach perfekt.|Jana R.,Marathon-Läuferin,Ich habe viele Marken ausprobiert, aber Elira schlägt alles. Das Preis-Leistungs-Verhältnis ist unschlagbar." | split: '|' -%}
+          {%- for item in defaults -%}
+            {%- assign parts = item | split: ',' -%}
+            <div class="testimonial-card">
+              <div class="t-stars">
+                {%- for i in (1..5) -%}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {%- endfor -%}
+              </div>
+              <blockquote class="t-quote">"{{ parts[2] }}"</blockquote>
+              <div class="t-author">
+                <div class="t-avatar" style="background:var(--warm-200);display:flex;align-items:center;justify-content:center;color:var(--ink-40);font-weight:600;font-size:1rem">{{ parts[0] | slice: 0 }}</div>
+                <div>
+                  <p class="t-name">{{ parts[0] }}</p>
+                  <p class="t-title">{{ parts[1] }}</p>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="testimonials-nav">
+      <button class="t-nav-btn" id="t-prev" aria-label="Vorherige Bewertung">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="t-nav-btn" id="t-next" aria-label="Nächste Bewertung">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section-testimonials",
+  "settings": [
+    { "type": "text",    "id": "eyebrow",      "label": "Eyebrow",           "default": "Kundenstimmen" },
+    { "type": "text",    "id": "heading",       "label": "Überschrift",       "default": "Was unsere Community sagt" },
+    { "type": "text",    "id": "review_count",  "label": "Bewertungsanzahl",  "default": "2.840" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Bewertung",
+      "settings": [
+        { "type": "range",  "id": "rating",   "label": "Sterne",   "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea","id": "quote",   "label": "Zitat",    "default": "Absolut begeistert von der Qualität und dem Komfort!" },
+        { "type": "text",   "id": "name",     "label": "Name",     "default": "Marie M." },
+        { "type": "text",   "id": "subtitle", "label": "Untertitel","default": "Verifizierter Kauf" },
+        { "type": "image_picker", "id": "avatar", "label": "Profilbild" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Testimonials",
+    "blocks": [
+      { "type": "review", "settings": { "quote": "Die Leggings sind unglaublich bequem und sitzen perfekt. Ich kaufe nie wieder woanders!", "name": "Sarah M.", "subtitle": "Yoga-Instructorin" } },
+      { "type": "review", "settings": { "quote": "Endlich eine Marke, die versteht wie Activewear wirklich sitzen soll. Absolute Kaufempfehlung.", "name": "Lisa K.", "subtitle": "Pilates-Trainerin" } },
+      { "type": "review", "settings": { "quote": "Schon beim ersten Anziehen war ich begeistert. Die Passform ist einfach perfekt.", "name": "Anna T.", "subtitle": "Fitness-Enthusiastin" } }
+    ]
+  }]
+}
+{% endschema %}
