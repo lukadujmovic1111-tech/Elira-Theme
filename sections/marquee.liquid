@@ -1,0 +1,59 @@
+<div class="marquee" style="--marquee-duration: {{ section.settings.speed }}s">
+  <div class="marquee__track">
+    {%- for i in (1..2) -%}
+      <div class="marquee__group"{% if i == 2 %} aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <span class="marquee__item" {{ block.shopify_attributes }}>
+            {% render 'icon', name: 'sparkle', size: 14 %}
+            {{ block.settings.text }}
+          </span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lauftext",
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Durchlaufzeit",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Begriff",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Buttery-Soft"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lauftext",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Buttery-Soft" } },
+        { "type": "item", "settings": { "text": "Squat-Proof" } },
+        { "type": "item", "settings": { "text": "Atmungsaktiv" } },
+        { "type": "item", "settings": { "text": "Second-Skin Feel" } },
+        { "type": "item", "settings": { "text": "Entworfen für jede Bewegung" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

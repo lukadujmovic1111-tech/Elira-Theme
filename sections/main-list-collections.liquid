@@ -1,0 +1,40 @@
+<section class="section list-collections-page">
+  <div class="container container--wide">
+    <div class="section-head section-head--center">
+      <div>
+        <h1 class="section-title">{{ 'collections.general.all_title' | t }}</h1>
+      </div>
+    </div>
+
+    {%- paginate collections by 12 -%}
+      <div class="category-grid__grid category-grid__grid--6">
+        {%- for collection in collections -%}
+          {%- assign pidx = forloop.index0 | modulo: 4 | plus: 1 -%}
+          <a href="{{ collection.url }}" class="category-tile">
+            <div class="category-tile__media">
+              {%- if collection.featured_image -%}
+                {{ collection.featured_image
+                  | image_url: width: 900
+                  | image_tag: widths: '400, 600, 900', sizes: '(min-width: 990px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                {{ 'collection-apparel-' | append: pidx | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="category-tile__label">
+              <span class="category-tile__title">{{ collection.title }}</span>
+              <span class="category-tile__arrow">{% render 'icon', name: 'arrow-right', size: 16 %}</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Kollektionsliste",
+  "settings": []
+}
+{% endschema %}

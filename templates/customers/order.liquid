@@ -1,0 +1,70 @@
+<section class="section account-page">
+  <div class="container">
+    <div class="account-head">
+      <div>
+        <h1 class="page-title">{{ 'customer.order.title' | t: name: order.name }}</h1>
+        <p class="section-sub">{{ order.created_at | date: '%d.%m.%Y' }}</p>
+      </div>
+      <a href="{{ routes.account_url }}" class="link-underline">{{ 'customer.order.back' | t }}</a>
+    </div>
+
+    <div class="account-grid">
+      <div class="account-main">
+        <div class="orders-table-wrap">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>{{ 'customer.order.product' | t }}</th>
+                <th>{{ 'cart.general.quantity' | t }}</th>
+                <th>{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for line_item in order.line_items -%}
+                <tr>
+                  <td>
+                    {{ line_item.title }}
+                    {%- if line_item.variant.title != 'Default Title' -%}
+                      <br><small>{{ line_item.variant.title }}</small>
+                    {%- endif -%}
+                  </td>
+                  <td>{{ line_item.quantity }}</td>
+                  <td>{{ line_item.final_line_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">{{ 'cart.general.subtotal' | t }}</td>
+                <td>{{ order.line_items_subtotal_price | money }}</td>
+              </tr>
+              {%- for shipping_method in order.shipping_methods -%}
+                <tr>
+                  <td colspan="2">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</td>
+                  <td>{{ shipping_method.price | money }}</td>
+                </tr>
+              {%- endfor -%}
+              {%- for tax_line in order.tax_lines -%}
+                <tr>
+                  <td colspan="2">{{ tax_line.title }} ({{ tax_line.rate | times: 100 }} %)</td>
+                  <td>{{ tax_line.price | money }}</td>
+                </tr>
+              {%- endfor -%}
+              <tr class="orders-table__total">
+                <td colspan="2">{{ 'customer.orders.total' | t }}</td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <aside class="account-aside">
+        <h2 class="cart-summary__title">{{ 'customer.order.billing_address' | t }}</h2>
+        <p class="account-aside__address">{{ order.billing_address | format_address }}</p>
+        <h2 class="cart-summary__title">{{ 'customer.order.shipping_address' | t }}</h2>
+        <p class="account-aside__address">{{ order.shipping_address | format_address }}</p>
+      </aside>
+    </div>
+  </div>
+</section>

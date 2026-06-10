@@ -1,0 +1,7 @@
+# Theme-Check-Konfiguration für Elira Studio
+#
+# RemoteAsset: Google Fonts (Archivo + Cormorant Garamond) werden bewusst über
+# fonts.googleapis.com geladen (preconnect + display=swap). Die Schriften sind
+# Teil der Markenidentität und nicht über Shopifys font_picker verfügbar.
+RemoteAsset:
+  enabled: false
