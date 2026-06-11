@@ -1,0 +1,20 @@
+{
+  "current": {
+    "logo_width": 110,
+    "color_ink": "#141414",
+    "color_body": "#3D3B37",
+    "color_accent": "#141414",
+    "color_bg": "#F7F5F0",
+    "color_bone": "#EFECE4",
+    "color_sale": "#9F2D24",
+    "free_shipping_threshold": 100,
+    "shipping_note": "Lieferung in 2–4 Werktagen",
+    "returns_note": "30 Tage kostenlose Rückgabe",
+    "card_show_secondary_image": true,
+    "card_show_swatches": true,
+    "card_show_quick_add": true,
+    "cart_drawer_enabled": true,
+    "social_instagram": "https://instagram.com",
+    "social_tiktok": "https://tiktok.com"
+  }
+}

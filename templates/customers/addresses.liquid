@@ -1,0 +1,43 @@
+<section class="section account-page">
+  <div class="container">
+    <div class="account-head">
+      <h1 class="page-title">{{ 'customer.addresses.title' | t }}</h1>
+      <a href="{{ routes.account_url }}" class="link-underline">{{ 'customer.order.back' | t }}</a>
+    </div>
+
+    <details class="auth-card auth-card--toggle">
+      <summary class="btn btn--primary">{{ 'customer.addresses.add_new' | t }}</summary>
+      {%- form 'customer_address', customer.new_address, class: 'auth-form address-form' -%}
+        {% render 'address-form-fields', form: form %}
+        <button type="submit" class="btn btn--primary">{{ 'customer.addresses.save' | t }}</button>
+      {%- endform -%}
+    </details>
+
+    <div class="addresses-grid">
+      {%- paginate customer.addresses by 6 -%}
+        {%- for address in customer.addresses -%}
+          <div class="address-card">
+            {%- if address == customer.default_address -%}
+              <p class="eyebrow">{{ 'customer.addresses.default' | t }}</p>
+            {%- endif -%}
+            <p class="account-aside__address">{{ address | format_address }}</p>
+
+            <details class="address-card__edit">
+              <summary class="link-underline">{{ 'customer.addresses.edit' | t }}</summary>
+              {%- form 'customer_address', address, class: 'auth-form address-form' -%}
+                {% render 'address-form-fields', form: form %}
+                <button type="submit" class="btn btn--primary">{{ 'customer.addresses.save' | t }}</button>
+              {%- endform -%}
+            </details>
+
+            <form method="post" action="{{ routes.account_addresses_url }}/{{ address.id }}" onsubmit="return confirm('{{ 'customer.addresses.delete_confirm' | t }}');">
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="link-underline address-card__delete">{{ 'customer.addresses.delete' | t }}</button>
+            </form>
+          </div>
+        {%- endfor -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endpaginate -%}
+    </div>
+  </div>
+</section>

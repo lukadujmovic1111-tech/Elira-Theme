@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Wir sind für dich da",
+        "text": "Fragen zu Größe, Bestellung oder Rückgabe? Wir antworten in der Regel innerhalb von 24 Stunden."
+      }
+    }
+  },
+  "order": ["main"]
+}

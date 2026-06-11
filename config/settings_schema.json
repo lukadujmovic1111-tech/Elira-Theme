@@ -1,0 +1,173 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Elira Studio",
+    "theme_version": "1.0.0",
+    "theme_author": "Elira",
+    "theme_documentation_url": "https://github.com/lukadujmovic1111-tech/Elira-Theme",
+    "theme_support_url": "https://github.com/lukadujmovic1111-tech/Elira-Theme/issues"
+  },
+  {
+    "name": "Marke & Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Empfohlen: transparentes PNG oder SVG. Ohne Logo wird der Shopname als Wortmarke angezeigt."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 70,
+        "max": 240,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo-Breite",
+        "default": 110
+      }
+    ]
+  },
+  {
+    "name": "Farben",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Elira nutzt eine reduzierte skandinavische Palette: Schwarz, Weiß, Creme und dezente Grautöne. Rot ausschließlich funktional für Sale-Preise."
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Ink (Text & Buttons)",
+        "default": "#141414"
+      },
+      {
+        "type": "color",
+        "id": "color_body",
+        "label": "Fließtext",
+        "default": "#3D3B37"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Akzent",
+        "default": "#141414"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Seitenhintergrund (Creme)",
+        "default": "#F7F5F0"
+      },
+      {
+        "type": "color",
+        "id": "color_bone",
+        "label": "Soft-Panel (Creme dunkler)",
+        "default": "#EFECE4"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale / Reduziert",
+        "default": "#9F2D24"
+      }
+    ]
+  },
+  {
+    "name": "Versand & Trust",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Gratisversand ab (in €)",
+        "info": "Wird für den Fortschrittsbalken im Warenkorb verwendet. 0 = Balken ausblenden.",
+        "default": 100
+      },
+      {
+        "type": "text",
+        "id": "shipping_note",
+        "label": "Versandhinweis (Produktseite)",
+        "default": "Lieferung in 2–4 Werktagen"
+      },
+      {
+        "type": "text",
+        "id": "returns_note",
+        "label": "Rückgabehinweis (Produktseite)",
+        "default": "30 Tage kostenlose Rückgabe"
+      }
+    ]
+  },
+  {
+    "name": "Produktkarten",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "card_show_secondary_image",
+        "label": "Zweites Bild bei Hover zeigen",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_swatches",
+        "label": "Farb-Swatches anzeigen",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_quick_add",
+        "label": "Schnell-Kaufen aktivieren",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Warenkorb",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_drawer_enabled",
+        "label": "Warenkorb-Drawer verwenden",
+        "info": "Deaktiviert: Klick auf das Warenkorb-Icon öffnet die Warenkorbseite.",
+        "default": true
+      },
+      {
+        "type": "collection",
+        "id": "cart_upsell_collection",
+        "label": "Upsell-Kollektion im Drawer",
+        "info": "Es werden bis zu 2 passende Produkte als \"Dazu passt\" angezeigt."
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "default": "https://instagram.com"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL",
+        "default": "https://tiktok.com"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      }
+    ]
+  }
+]

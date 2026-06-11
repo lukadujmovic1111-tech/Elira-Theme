@@ -1,0 +1,86 @@
+<section class="section newsletter-section{% if section.settings.background == 'bone' %} section--bone{% endif %}">
+  <div class="container container--narrow">
+    <div class="newsletter-section__inner" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-sub">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {%- form 'customer', class: 'newsletter-form newsletter-form--center' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="form-success">{% render 'icon', name: 'check', size: 16 %} {{ 'general.newsletter.success' | t }}</p>
+        {%- else -%}
+          <div class="newsletter-form__row">
+            <input
+              type="email"
+              name="contact[email]"
+              class="newsletter-form__input"
+              placeholder="{{ 'general.newsletter.placeholder' | t }}"
+              required
+              autocomplete="email"
+              aria-label="{{ 'general.newsletter.placeholder' | t }}">
+            <button type="submit" class="btn btn--primary">{{ 'general.newsletter.submit' | t }}</button>
+          </div>
+          {%- if form.errors -%}
+            <p class="form-error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+
+      {%- if section.settings.note != blank -%}
+        <p class="newsletter-section__note">{{ section.settings.note }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Hintergrund",
+      "options": [
+        { "value": "white", "label": "Creme (hell)" },
+        { "value": "bone", "label": "Creme (Panel)" }
+      ],
+      "default": "bone"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Werde Teil der Community"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Überschrift",
+      "default": "10 % auf deine erste Bestellung"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Früher Zugang zu Drops, exklusive Member-Angebote und Flows für deine Praxis — direkt in dein Postfach."
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Hinweis",
+      "default": "Abmeldung jederzeit möglich. Kein Spam — versprochen."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

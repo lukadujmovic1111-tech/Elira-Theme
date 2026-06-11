@@ -1,0 +1,48 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'gift_card.title' | t: shop: shop.name }}</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="template-gift-card">
+  <section class="password-page">
+    <div class="password-page__inner">
+      <p class="password-page__logo">{{ shop.name }}</p>
+      <h1 class="section-title">{{ 'gift_card.heading' | t }}</h1>
+
+      <div class="gift-card__amount">
+        {%- if gift_card.balance != gift_card.initial_value -%}
+          {%- assign balance_money = gift_card.balance | money -%}
+          <p class="section-sub">{{ 'gift_card.remaining_html' | t: balance: balance_money }}</p>
+        {%- endif -%}
+        <p class="gift-card__value">{{ gift_card.initial_value | money }}</p>
+      </div>
+
+      <div class="gift-card__code-box">
+        <p class="eyebrow">{{ 'gift_card.code_label' | t }}</p>
+        <p class="gift-card__code">{{ gift_card.code | format_code }}</p>
+      </div>
+
+      {%- if gift_card.expired -%}
+        <p class="form-error">{{ 'gift_card.expired' | t }}</p>
+      {%- elsif gift_card.expires_on -%}
+        {%- assign expiry = gift_card.expires_on | date: '%d.%m.%Y' -%}
+        <p class="section-sub">{{ 'gift_card.expires_on' | t: date: expiry }}</p>
+      {%- endif -%}
+
+      <div class="error-page__actions">
+        <a href="{{ shop.url }}" class="btn btn--primary">{{ 'gift_card.shop_link' | t }}</a>
+        <button type="button" class="btn btn--secondary" onclick="window.print();">{{ 'gift_card.print' | t }}</button>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

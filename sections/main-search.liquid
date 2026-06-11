@@ -1,0 +1,69 @@
+<section class="section search-page">
+  <div class="container container--wide">
+    <div class="search-page__head">
+      <h1 class="page-title">
+        {%- if search.performed and search.terms != blank -%}
+          {{ 'general.search.results_title' | t: terms: search.terms }}
+        {%- else -%}
+          {{ 'general.search.title' | t }}
+        {%- endif -%}
+      </h1>
+
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form search-form--page">
+        {% render 'icon', name: 'search', size: 20 %}
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          class="search-form__input"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          aria-label="{{ 'general.search.placeholder' | t }}">
+        <button type="submit" class="btn btn--primary">{{ 'general.search.submit' | t }}</button>
+      </form>
+
+      {%- if search.performed -%}
+        <p class="search-page__count">{{ 'general.search.result_count' | t: count: search.results_count }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        {%- paginate search.results by 24 -%}
+          <div class="product-grid product-grid--collection">
+            {%- for item in search.results -%}
+              {%- case item.object_type -%}
+                {%- when 'product' -%}
+                  {% render 'product-card', card_product: item, placeholder_index: forloop.index0, sizes: '(min-width: 990px) 24vw, 50vw' %}
+                {%- when 'article' -%}
+                  <article class="search-result-card">
+                    <p class="eyebrow">{{ 'blogs.article.label' | t }}</p>
+                    <h3 class="card-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+                    <p class="card-type">{{ item.content | strip_html | truncate: 120 }}</p>
+                  </article>
+                {%- when 'page' -%}
+                  <article class="search-result-card">
+                    <p class="eyebrow">{{ 'general.search.page_label' | t }}</p>
+                    <h3 class="card-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+                    <p class="card-type">{{ item.content | strip_html | truncate: 120 }}</p>
+                  </article>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+          {% render 'pagination', paginate: paginate %}
+        {%- endpaginate -%}
+      {%- else -%}
+        <div class="collection-empty">
+          <p class="collection-empty__title">{{ 'general.search.no_results_long' | t: terms: search.terms }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--secondary">{{ 'cart.general.continue_shopping' | t }}</a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Suchergebnisse",
+  "settings": []
+}
+{% endschema %}

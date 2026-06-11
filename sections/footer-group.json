@@ -1,0 +1,34 @@
+{
+  "type": "footer",
+  "name": "Footer-Gruppe",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu-shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "menu-help": {
+          "type": "menu",
+          "settings": {
+            "heading": "Hilfe",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": ["menu-shop", "menu-help"],
+      "settings": {
+        "tagline": "Bewegung, die sich wie du anfühlt.",
+        "show_newsletter": true,
+        "newsletter_heading": "Bleib in Bewegung",
+        "newsletter_text": "10 % auf deine erste Bestellung — plus früher Zugang zu neuen Drops.",
+        "show_payment_icons": true
+      }
+    }
+  },
+  "order": ["footer"]
+}

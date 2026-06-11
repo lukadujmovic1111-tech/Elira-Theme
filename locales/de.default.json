@@ -1,0 +1,258 @@
+{
+  "general": {
+    "meta": {
+      "page": "Seite {{ page }}"
+    },
+    "accessibility": {
+      "skip_to_content": "Direkt zum Inhalt",
+      "announcement": "Ankündigung",
+      "open_menu": "Menü öffnen",
+      "close": "Schließen",
+      "main_menu": "Hauptmenü"
+    },
+    "navigation": {
+      "view_all": "Alle ansehen"
+    },
+    "search": {
+      "title": "Suche",
+      "placeholder": "Wonach suchst du?",
+      "popular": "Beliebte Suchanfragen",
+      "submit": "Suchen",
+      "no_results": "Keine Ergebnisse gefunden",
+      "no_results_long": "Für „{{ terms }}“ wurden keine Ergebnisse gefunden. Versuch es mit einem anderen Begriff.",
+      "view_all": "Alle Ergebnisse ansehen",
+      "results_title": "Ergebnisse für „{{ terms }}“",
+      "result_count": {
+        "one": "{{ count }} Ergebnis",
+        "other": "{{ count }} Ergebnisse"
+      },
+      "page_label": "Seite"
+    },
+    "newsletter": {
+      "placeholder": "Deine E-Mail-Adresse",
+      "submit": "Anmelden",
+      "success": "Willkommen in der Community! Bitte bestätige deine E-Mail."
+    },
+    "footer": {
+      "rights": "Alle Rechte vorbehalten.",
+      "payment_methods": "Zahlungsarten"
+    },
+    "pagination": {
+      "label": "Seitennavigation",
+      "previous": "Vorherige Seite",
+      "next": "Nächste Seite"
+    },
+    "slider": {
+      "previous": "Zurück",
+      "next": "Weiter"
+    },
+    "breadcrumb": {
+      "label": "Brotkrumen-Navigation",
+      "home": "Home"
+    },
+    "forms": {
+      "error": "Bitte überprüfe deine Eingaben und versuche es erneut.",
+      "name": "Name",
+      "email": "E-Mail"
+    },
+    "password": {
+      "coming_soon": "Bald geht es los",
+      "text": "Wir feilen noch an den letzten Details. Trag dich ein und sei beim Launch dabei.",
+      "placeholder": "Passwort",
+      "submit": "Eingeben",
+      "error": "Falsches Passwort — bitte erneut versuchen.",
+      "admin_hint": "Shop-Inhaberin? Melde dich im Adminbereich an."
+    }
+  },
+  "onboarding": {
+    "product_title": "Beispielprodukt",
+    "product_type": "Leggings · High-Rise",
+    "collection_title": "Kategorie"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "In den Warenkorb",
+      "sold_out": "Ausverkauft",
+      "unavailable": "Nicht verfügbar",
+      "added": "Hinzugefügt ✓",
+      "quick_add": "Schnell kaufen",
+      "choose_options": "Auswählen",
+      "badge_new": "Neu",
+      "badge_bestseller": "Bestseller",
+      "color_count": {
+        "one": "{{ count }} Farbe",
+        "other": "{{ count }} Farben"
+      },
+      "from_price_html": "Ab {{ price }}",
+      "taxes_note_html": "inkl. MwSt., zzgl. Versandkosten",
+      "size_guide": "Größentabelle",
+      "low_stock": "Nur noch wenige verfügbar — schnell sein!",
+      "secure_checkout": "Sicherer Checkout mit SSL"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Warenkorb",
+      "error": "Das hat leider nicht geklappt. Bitte versuche es erneut.",
+      "empty": "Dein Warenkorb ist noch leer",
+      "empty_hint": "Entdecke unsere Bestseller und finde dein neues Lieblingsteil.",
+      "continue_shopping": "Weiter einkaufen",
+      "subtotal": "Zwischensumme",
+      "taxes_note": "Inkl. MwSt. Versandkosten werden an der Kasse berechnet.",
+      "checkout": "Zur Kasse",
+      "view_cart": "Warenkorb ansehen",
+      "remove": "Entfernen",
+      "decrease": "Menge verringern",
+      "increase": "Menge erhöhen",
+      "quantity": "Menge",
+      "note_label": "Anmerkung zur Bestellung",
+      "note_placeholder": "z. B. Geschenkverpackung, Lieferhinweise …",
+      "summary": "Übersicht",
+      "update": "Warenkorb aktualisieren"
+    },
+    "shipping_bar": {
+      "remaining_html": "Noch <strong>{{ amount }}</strong> bis zum kostenlosen Versand",
+      "unlocked": "Yay — dein Versand ist kostenlos!"
+    },
+    "upsell": {
+      "heading": "Dazu passt"
+    }
+  },
+  "collections": {
+    "general": {
+      "all_title": "Alle Kategorien",
+      "product_count": {
+        "one": "{{ count }} Produkt",
+        "other": "{{ count }} Produkte"
+      },
+      "no_matches": "Keine Produkte gefunden. Passe deine Filter an."
+    },
+    "filters": {
+      "title": "Filter",
+      "clear_all": "Alle zurücksetzen",
+      "apply": "Anwenden"
+    },
+    "sorting": {
+      "title": "Sortieren"
+    }
+  },
+  "blogs": {
+    "general": {
+      "eyebrow": "Journal",
+      "read_more": "Weiterlesen",
+      "empty": "Hier erscheinen bald Beiträge rund um Movement, Stil und Community."
+    },
+    "article": {
+      "label": "Artikel"
+    },
+    "comments": {
+      "title": {
+        "one": "{{ count }} Kommentar",
+        "other": "{{ count }} Kommentare"
+      },
+      "form_title": "Kommentar schreiben",
+      "message": "Kommentar",
+      "submit": "Absenden",
+      "success": "Danke! Dein Kommentar wurde übermittelt."
+    }
+  },
+  "contact": {
+    "eyebrow": "Kontakt",
+    "subject": "Betreff",
+    "message": "Deine Nachricht",
+    "submit": "Nachricht senden",
+    "success": "Danke für deine Nachricht — wir melden uns schnellstmöglich."
+  },
+  "customer": {
+    "account": {
+      "title": "Mein Konto",
+      "welcome": "Schön, dich zu sehen, {{ name }}!",
+      "logout": "Abmelden",
+      "details": "Kontodaten"
+    },
+    "login": {
+      "title": "Anmelden",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "forgot": "Passwort vergessen?"
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "text": "Bestellungen verfolgen, schneller bestellen und exklusive Member-Vorteile sichern.",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "submit": "Konto erstellen",
+      "have_account": "Du hast schon ein Konto? Anmelden"
+    },
+    "recover": {
+      "title": "Passwort zurücksetzen",
+      "text": "Wir senden dir einen Link zum Zurücksetzen deines Passworts.",
+      "submit": "Link senden",
+      "success": "Wenn ein Konto mit dieser E-Mail existiert, haben wir dir einen Link geschickt.",
+      "back": "Zurück zur Anmeldung"
+    },
+    "orders": {
+      "title": "Bestellungen",
+      "order": "Bestellung",
+      "date": "Datum",
+      "payment_status": "Zahlung",
+      "fulfillment_status": "Versand",
+      "total": "Gesamt",
+      "empty": "Du hast noch keine Bestellungen aufgegeben."
+    },
+    "order": {
+      "title": "Bestellung {{ name }}",
+      "back": "Zurück zum Konto",
+      "product": "Produkt",
+      "shipping": "Versand",
+      "billing_address": "Rechnungsadresse",
+      "shipping_address": "Lieferadresse"
+    },
+    "addresses": {
+      "title": "Adressen",
+      "manage": "Adressen verwalten",
+      "add_new": "Neue Adresse hinzufügen",
+      "save": "Adresse speichern",
+      "default": "Standardadresse",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "delete_confirm": "Adresse wirklich löschen?",
+      "address1": "Straße und Hausnummer",
+      "address2": "Adresszusatz (optional)",
+      "zip": "PLZ",
+      "city": "Stadt",
+      "country": "Land",
+      "phone": "Telefon (optional)",
+      "set_default": "Als Standardadresse festlegen"
+    },
+    "reset_password": {
+      "title": "Neues Passwort festlegen",
+      "text": "Lege ein neues Passwort für dein Konto fest.",
+      "password": "Neues Passwort",
+      "password_confirm": "Passwort bestätigen",
+      "submit": "Passwort speichern"
+    },
+    "activate_account": {
+      "title": "Konto aktivieren",
+      "text": "Erstelle ein Passwort, um dein Konto zu aktivieren.",
+      "submit": "Konto aktivieren",
+      "decline": "Ablehnen"
+    }
+  },
+  "gift_card": {
+    "title": "Geschenkkarte für {{ shop }}",
+    "heading": "Deine Geschenkkarte",
+    "remaining_html": "Verbleibendes Guthaben: {{ balance }}",
+    "code_label": "Dein Code",
+    "expired": "Diese Geschenkkarte ist abgelaufen.",
+    "expires_on": "Gültig bis {{ date }}",
+    "shop_link": "Jetzt einlösen",
+    "print": "Drucken"
+  },
+  "404": {
+    "title": "Diese Seite ist gerade im Flow",
+    "text": "Die Seite, die du suchst, existiert nicht (mehr). Atme tief durch — und finde hier zurück.",
+    "back_home": "Zur Startseite",
+    "shop_all": "Alle Produkte shoppen"
+  }
+}

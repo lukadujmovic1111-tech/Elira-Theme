@@ -1,0 +1,39 @@
+{
+  "type": "header",
+  "name": "Header-Gruppe",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg-1": {
+          "type": "message",
+          "settings": {
+            "text": "Kostenloser Versand ab 100 € — kostenlose Rücksendung"
+          }
+        },
+        "msg-2": {
+          "type": "message",
+          "settings": {
+            "text": "Neu: Die Studio Collection ist da"
+          }
+        },
+        "msg-3": {
+          "type": "message",
+          "settings": {
+            "text": "30 Tage Probetragen auf alle Leggings"
+          }
+        }
+      },
+      "block_order": ["msg-1", "msg-2", "msg-3"],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "popular_searches": "Leggings, Sport-BH, Yoga Set, Pilates, Kleid"
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}
