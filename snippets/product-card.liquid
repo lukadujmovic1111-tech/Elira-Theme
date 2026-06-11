@@ -116,8 +116,8 @@
             {%- capture swatch_bg %}{% render 'color-swatch', value: value %}{% endcapture -%}
             <span class="swatch swatch--xs" title="{{ value | escape }}" style="background: {{ swatch_bg | strip }};"></span>
           {%- endfor -%}
-          {%- if color_option.values.size > 4 -%}
-            <span class="card-swatches__more">+{{ color_option.values.size | minus: 4 }}</span>
+          {%- if color_option.values.size > 1 -%}
+            <span class="card-swatches__more">{{ 'products.product.color_count' | t: count: color_option.values.size }}</span>
           {%- endif -%}
         </div>
       {%- endif -%}

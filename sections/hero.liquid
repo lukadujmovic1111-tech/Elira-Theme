@@ -35,7 +35,12 @@
         <p class="eyebrow eyebrow--light">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
-        <h1 class="hero__heading">{{ section.settings.heading | newline_to_br }}</h1>
+        <h1 class="hero__heading">
+          {{- section.settings.heading | newline_to_br -}}
+          {%- if section.settings.heading_accent != blank -%}
+            <em class="accent-serif">{{ section.settings.heading_accent }}</em>
+          {%- endif -%}
+        </h1>
       {%- endif -%}
       {%- if section.settings.subheading != blank -%}
         <p class="hero__sub">{{ section.settings.subheading }}</p>
@@ -112,7 +117,13 @@
       "type": "textarea",
       "id": "heading",
       "label": "Überschrift",
-      "default": "Bewegung, die sich\nwie du anfühlt."
+      "default": "Bewegung, die sich"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Akzentzeile (kursive Serife)",
+      "default": "wie du anfühlt."
     },
     {
       "type": "text",

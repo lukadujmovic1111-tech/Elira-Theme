@@ -79,6 +79,10 @@
       "choose_options": "Auswählen",
       "badge_new": "Neu",
       "badge_bestseller": "Bestseller",
+      "color_count": {
+        "one": "{{ count }} Farbe",
+        "other": "{{ count }} Farben"
+      },
       "from_price_html": "Ab {{ price }}",
       "taxes_note_html": "inkl. MwSt., zzgl. Versandkosten",
       "size_guide": "Größentabelle",
