@@ -4,8 +4,8 @@
 {%- endcomment -%}
 {%- assign c = value | downcase | strip -%}
 {%- case c -%}
-  {%- when 'schwarz', 'black' -%}background:#1F1D1A;
-  {%- when 'weiß', 'weiss', 'white', 'ivory', 'creme', 'cream' -%}background:#F4F0E8;
+  {%- when 'schwarz', 'black' -%}background:#111111;
+  {%- when 'weiß', 'weiss', 'white', 'ivory', 'creme', 'cream' -%}background:#FFFFFF;
   {%- when 'grau', 'grey', 'gray', 'heather' -%}background:#A8A39B;
   {%- when 'sand', 'beige', 'tan' -%}background:#C5B49C;
   {%- when 'taupe', 'mocha', 'mokka', 'braun', 'brown', 'pecan' -%}background:#8A6F5C;
@@ -20,5 +20,5 @@
   {%- when 'lavendel', 'lavender', 'lila', 'purple', 'flieder' -%}background:#A998B5;
   {%- when 'rot', 'red' -%}background:#A4392F;
   {%- when 'orange', 'apricot', 'peach' -%}background:#DCA273;
-  {%- else -%}background:linear-gradient(135deg,#C5B49C,#8A6F5C);
+  {%- else -%}background:linear-gradient(135deg,#DDDDDD,#9A9A9A);
 {%- endcase -%}

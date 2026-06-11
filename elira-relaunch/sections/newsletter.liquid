@@ -6,7 +6,7 @@
 
     {% form 'customer', class: 'nlx__form-wrap' %}
       {%- if form.posted_successfully? -%}
-        <p class="form-success" style="background:rgba(246,241,236,.12); border-color:rgba(246,241,236,.4); color:#F6F1EC;">Danke! Du bist dabei. ✓</p>
+        <p class="form-success" style="background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.4); color:#FFFFFF;">Danke! Du bist dabei. ✓</p>
       {%- else -%}
         {%- if form.errors -%}
           <p class="form-errors">{{ form.errors.messages.email }}</p>

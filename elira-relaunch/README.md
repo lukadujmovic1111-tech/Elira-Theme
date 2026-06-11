@@ -1,9 +1,10 @@
 # ELIRA — Soft Performance · Shopify Theme
 
 Kompletter Marken-Relaunch für **Elira**. Eigenständiges Online Store 2.0 Theme —
-warm, editorial, feminin. Designsprache orientiert an moderner Premium-Activewear
-(Referenz: Exercere): Creme-Töne, gedeckte Erdfarben, cleane Grotesk-Typografie,
-viel Weißraum, softe Animationen.
+clean, monochrom, editorial. Designsprache orientiert an moderner Premium-Activewear
+(Referenz: Exercere): **Schwarz & Weiß**, cleane Grotesk-Typografie, viel Weißraum,
+feine Hairlines, softe Animationen. Editorial-Bilder laufen standardmäßig durch
+einen S/W-Filter (abschaltbar), Produktbilder bleiben farbecht.
 
 ## Highlights
 

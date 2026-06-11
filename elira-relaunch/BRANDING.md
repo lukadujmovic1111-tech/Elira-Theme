@@ -9,24 +9,26 @@
 | | |
 |---|---|
 | **Claim** | *Soft performance — designed to move with you.* |
-| **Gefühl** | Ruhig, warm, feminin, hochwertig. Ein Editorial, kein Katalog. |
+| **Gefühl** | Ruhig, clean, feminin, hochwertig. Ein Editorial, kein Katalog. |
 | **Sprache** | Deutsch im UI, englische Kollektions- & Kampagnennamen (*The Soft Sculpt Edit, Aura, Drift, Join the Club*). Kurze Sätze. Kein Ausrufezeichen-Marketing. |
 | **Welt** | Yoga · Pilates · Running · Studio · Vacation · Everyday |
 
-## 2. Farben
+## 2. Farben — Monochrom (Schwarz & Weiß)
 
 | Token | Hex | Verwendung |
 |---|---|---|
-| Creme (`--c-bg`) | `#F7F4EF` | Seitenhintergrund — nie reines Weiß als Fläche |
-| Bone (`--c-bone`) | `#ECE7DE` | Sekundärflächen, Footer, Bild-Platzhalter |
-| Ink (`--c-ink`) | `#1F1D1A` | Text, primäre Buttons — warmes Fast-Schwarz |
-| Grape (`--c-grape`) | `#4E3B49` | Markenakzent: Sale, Newsletter-Block, Hover |
-| Olive (`--c-olive`) | `#6C6C52` | Positive Zustände (z. B. Gratisversand-Bar) |
-| Sand (`--c-sand`) | `#C5B49C` | Dekorative Akzente, Swatches |
-| Muted | `#767067` | Sekundärtext |
-| Line | `#E1DBD1` | Hairlines, Rahmen |
+| Weiß (`--c-bg`) | `#FFFFFF` | Seitenhintergrund |
+| Hellgrau (`--c-bone`) | `#F4F4F4` | Sekundärflächen, Footer, Bild-Platzhalter |
+| Schwarz (`--c-ink`) | `#111111` | Text, Buttons, Announcement-Bar, Newsletter-Block |
+| Grau dunkel (`--c-olive`) | `#3D3D3D` | Sekundäre Zustände, Hover-Abstufungen |
+| Grau hell (`--c-sand`) | `#D6D6D6` | Dekorative Akzente |
+| Muted | `#6E6E6E` | Sekundärtext |
+| Line | `#E5E5E5` | Hairlines, Rahmen |
 
-Regel: **max. 1 Akzentfarbe pro Section.** Bilder tragen die Farbe, das UI bleibt ruhig.
+Regeln:
+- **Keine Buntfarbe im UI.** Kontrast entsteht über Schwarz/Weiß-Flächenwechsel (z. B. schwarzer Newsletter-Block auf weißer Seite) und Grauabstufungen.
+- Hover auf Schwarz = `#2E2E2E` (nie Farbe).
+- Einzige Ausnahme: Produkt-Farbswatches zeigen die **echten Produktfarben** (kaufrelevant) und ein funktionales Rot für Formularfehler.
 
 ## 3. Typografie
 
@@ -47,9 +49,10 @@ Regel: **max. 1 Akzentfarbe pro Section.** Bilder tragen die Farbe, das UI bleib
 
 ## 5. Bildsprache
 
-- Natürliches, warmes Licht; Creme-, Sand- und Erdtöne; weiche Bewegung statt Action-Posen
-- Lifestyle > Studio-Freisteller: Reise, Studio-Momente, Stadt
-- Keine harten Filter, keine Neonfarben, kein „Fitness-Stock-Look“
+- **Editorial-/Kampagnenbilder in Schwarz-Weiß** (Theme-Setting „Editorial-Bilder in Schwarz-Weiß“, standardmäßig aktiv) — Hero, Showcases, Editorial-Karten, Community-Grid
+- **Produktbilder bleiben farbecht** — Kund:innen müssen die reale Produktfarbe sehen
+- Natürliches Licht, weiche Bewegung statt Action-Posen; Lifestyle > Studio-Freisteller
+- Keine Neonfarben, kein „Fitness-Stock-Look“
 
 ## 6. Stimme & Copy-Beispiele
 

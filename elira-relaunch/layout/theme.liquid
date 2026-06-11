@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_bg | default: '#F7F4EF' }}">
+  <meta name="theme-color" content="{{ settings.color_bg | default: '#FFFFFF' }}">
 
   <title>
     {{- page_title -}}
@@ -24,17 +24,17 @@
 
   <style>
     :root {
-      --c-bg: {{ settings.color_bg | default: '#F7F4EF' }};
-      --c-bone: {{ settings.color_bone | default: '#ECE7DE' }};
-      --c-ink: {{ settings.color_ink | default: '#1F1D1A' }};
-      --c-grape: {{ settings.color_accent | default: '#4E3B49' }};
-      --c-olive: {{ settings.color_olive | default: '#6C6C52' }};
-      --c-sand: {{ settings.color_sand | default: '#C5B49C' }};
+      --c-bg: {{ settings.color_bg | default: '#FFFFFF' }};
+      --c-bone: {{ settings.color_bone | default: '#F4F4F4' }};
+      --c-ink: {{ settings.color_ink | default: '#111111' }};
+      --c-grape: {{ settings.color_accent | default: '#111111' }};
+      --c-olive: {{ settings.color_olive | default: '#3D3D3D' }};
+      --c-sand: {{ settings.color_sand | default: '#D6D6D6' }};
     }
   </style>
 </head>
 
-<body class="template-{{ request.page_type | handleize }}">
+<body class="template-{{ request.page_type | handleize }}{% if settings.bw_imagery %} img-bw{% endif %}">
 
   <a class="skip-link" href="#MainContent">Zum Inhalt springen</a>
 
