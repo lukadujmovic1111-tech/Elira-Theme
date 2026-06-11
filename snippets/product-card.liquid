@@ -102,6 +102,7 @@
             </div>
           {%- else -%}
             <a class="card-quick__btn" href="{{ card_product.url }}">
+              {% render 'icon', name: 'plus', size: 14 %}
               <span>{{ 'products.product.choose_options' | t }}</span>
             </a>
           {%- endif -%}

@@ -33,37 +33,43 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Elira nutzt eine reduzierte Black-&-White-Palette: Schwarz, Weiß und neutrale Grautöne. Rot ausschließlich funktional für Sale-Preise."
+        "content": "Elira nutzt eine reduzierte skandinavische Palette: Schwarz, Weiß, Creme und dezente Grautöne. Rot ausschließlich funktional für Sale-Preise."
       },
       {
         "type": "color",
         "id": "color_ink",
         "label": "Ink (Text & Buttons)",
-        "default": "#111111"
+        "default": "#141414"
       },
       {
         "type": "color",
         "id": "color_body",
         "label": "Fließtext",
-        "default": "#3F3F3F"
+        "default": "#3D3B37"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Akzent",
-        "default": "#111111"
+        "default": "#141414"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Seitenhintergrund (Creme)",
+        "default": "#F7F5F0"
       },
       {
         "type": "color",
         "id": "color_bone",
-        "label": "Soft-Hintergrund (Hellgrau)",
-        "default": "#F5F5F5"
+        "label": "Soft-Panel (Creme dunkler)",
+        "default": "#EFECE4"
       },
       {
         "type": "color",
         "id": "color_sale",
         "label": "Sale / Reduziert",
-        "default": "#B3261E"
+        "default": "#9F2D24"
       }
     ]
   },
