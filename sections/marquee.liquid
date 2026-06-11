@@ -4,7 +4,6 @@
       <div class="marquee__group"{% if i == 2 %} aria-hidden="true"{% endif %}>
         {%- for block in section.blocks -%}
           <span class="marquee__item" {{ block.shopify_attributes }}>
-            {% render 'icon', name: 'sparkle', size: 14 %}
             {{ block.settings.text }}
           </span>
         {%- endfor -%}

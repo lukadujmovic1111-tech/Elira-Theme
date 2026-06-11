@@ -1,11 +1,11 @@
 {
   "current": {
     "logo_width": 110,
-    "color_ink": "#1B1A18",
-    "color_body": "#4A463F",
-    "color_accent": "#5E6B53",
-    "color_bone": "#F5F2EC",
-    "color_sale": "#A8472F",
+    "color_ink": "#111111",
+    "color_body": "#3F3F3F",
+    "color_accent": "#111111",
+    "color_bone": "#F5F5F5",
+    "color_sale": "#B3261E",
     "free_shipping_threshold": 100,
     "shipping_note": "Lieferung in 2–4 Werktagen",
     "returns_note": "30 Tage kostenlose Rückgabe",

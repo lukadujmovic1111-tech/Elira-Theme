@@ -32,34 +32,38 @@
     "name": "Farben",
     "settings": [
       {
+        "type": "paragraph",
+        "content": "Elira nutzt eine reduzierte Black-&-White-Palette: Schwarz, Weiß und neutrale Grautöne. Rot ausschließlich funktional für Sale-Preise."
+      },
+      {
         "type": "color",
         "id": "color_ink",
         "label": "Ink (Text & Buttons)",
-        "default": "#1B1A18"
+        "default": "#111111"
       },
       {
         "type": "color",
         "id": "color_body",
         "label": "Fließtext",
-        "default": "#4A463F"
+        "default": "#3F3F3F"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Akzent (Sage)",
-        "default": "#5E6B53"
+        "label": "Akzent",
+        "default": "#111111"
       },
       {
         "type": "color",
         "id": "color_bone",
-        "label": "Soft-Hintergrund (Bone)",
-        "default": "#F5F2EC"
+        "label": "Soft-Hintergrund (Hellgrau)",
+        "default": "#F5F5F5"
       },
       {
         "type": "color",
         "id": "color_sale",
         "label": "Sale / Reduziert",
-        "default": "#A8472F"
+        "default": "#B3261E"
       }
     ]
   },

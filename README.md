@@ -3,9 +3,11 @@
 Maßgeschneidertes Online Store 2.0 Theme für **Elira** — hochwertige Damen-Activewear
 für Yoga, Pilates, Fitness und einen aktiven Lifestyle.
 
-Designphilosophie: warm-minimalistisch, viel Weißraum, ruhige Typografie (Archivo +
-Cormorant-Akzente), Pill-Buttons, dezente Mikro-Animationen — Premium-Feel auf dem
-Niveau führender Athleisure-DTC-Brands, aber als eigenständige Marke.
+Designphilosophie: **Black & White Premium** — Schwarz, Weiß und neutrale Grautöne,
+großzügiger Weißraum, editoriale Typografie (Archivo + Cormorant-Italic-Akzente),
+Pill-Buttons, dezente Mikro-Animationen. Rot ausschließlich funktional für
+Sale-Preise. Premium-Feel auf dem Niveau führender Athleisure-DTC-Brands,
+aber als eigenständige Marke.
 
 ---
 
