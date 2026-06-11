@@ -1,0 +1,135 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Elira",
+    "theme_version": "1.0.0",
+    "theme_author": "Elira Studio",
+    "theme_documentation_url": "https://github.com/lukadujmovic1111-tech/Elira-Theme",
+    "theme_support_url": "https://github.com/lukadujmovic1111-tech/Elira-Theme"
+  },
+  {
+    "name": "Branding",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (optional)",
+        "info": "Ohne Logo wird der Elira-Schriftzug verwendet."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo-Breite",
+        "min": 60,
+        "max": 240,
+        "step": 10,
+        "unit": "px",
+        "default": 120
+      },
+      {
+        "type": "text",
+        "id": "brand_tagline",
+        "label": "Markenclaim",
+        "default": "Soft performance — designed to move with you."
+      }
+    ]
+  },
+  {
+    "name": "Farben",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Hintergrund (Creme)",
+        "default": "#F7F4EF"
+      },
+      {
+        "type": "color",
+        "id": "color_bone",
+        "label": "Flächen (Bone)",
+        "default": "#ECE7DE"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Text (Ink)",
+        "default": "#1F1D1A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Akzent (Grape)",
+        "default": "#4E3B49"
+      },
+      {
+        "type": "color",
+        "id": "color_olive",
+        "label": "Akzent (Olive)",
+        "default": "#6C6C52"
+      },
+      {
+        "type": "color",
+        "id": "color_sand",
+        "label": "Akzent (Sand)",
+        "default": "#C5B49C"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "default": "https://instagram.com"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL",
+        "default": "https://tiktok.com"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      }
+    ]
+  },
+  {
+    "name": "Warenkorb",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Gratisversand ab (€)",
+        "info": "Wird im Warenkorb als Fortschritt angezeigt. 0 = ausblenden.",
+        "default": 100
+      },
+      {
+        "type": "text",
+        "id": "cart_note_text",
+        "label": "Hinweis im Warenkorb",
+        "default": "Versand & Steuern werden im Checkout berechnet."
+      }
+    ]
+  },
+  {
+    "name": "Cookie-Hinweis",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cookie_banner_enabled",
+        "label": "Einfachen Cookie-Hinweis anzeigen",
+        "info": "Deaktivieren, falls eine Consent-App (z. B. Cookiebot) verwendet wird.",
+        "default": true
+      }
+    ]
+  }
+]

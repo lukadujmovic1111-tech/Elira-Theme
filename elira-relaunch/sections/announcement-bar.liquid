@@ -1,0 +1,24 @@
+<div class="ann-bar" role="region" aria-label="Ankündigung">
+  {%- assign m1 = section.settings.message_1 -%}
+  {%- assign m2 = section.settings.message_2 -%}
+  {%- assign m3 = section.settings.message_3 -%}
+  {%- if m1 == blank and m2 == blank and m3 == blank -%}
+    {%- assign m1 = 'Kostenloser Versand ab 100 €' -%}
+    {%- assign m2 = 'Lieferung in 2–4 Werktagen' -%}
+    {%- assign m3 = 'Kostenlose Rücksendung innerhalb von 30 Tagen' -%}
+  {%- endif -%}
+  {%- if m1 != blank -%}<span class="ann-msg active">{{ m1 }}</span>{%- endif -%}
+  {%- if m2 != blank -%}<span class="ann-msg">{{ m2 }}</span>{%- endif -%}
+  {%- if m3 != blank -%}<span class="ann-msg">{{ m3 }}</span>{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Ankündigungsleiste",
+  "settings": [
+    { "type": "text", "id": "message_1", "label": "Nachricht 1", "default": "Kostenloser Versand ab 100 €" },
+    { "type": "text", "id": "message_2", "label": "Nachricht 2", "default": "Lieferung in 2–4 Werktagen" },
+    { "type": "text", "id": "message_3", "label": "Nachricht 3", "default": "Kostenlose Rücksendung innerhalb von 30 Tagen" }
+  ]
+}
+{% endschema %}

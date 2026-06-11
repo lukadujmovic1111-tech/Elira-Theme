@@ -1,0 +1,19 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "message_1": "Kostenloser Versand ab 100 €",
+        "message_2": "Lieferung in 2–4 Werktagen",
+        "message_3": "Kostenlose Rücksendung innerhalb von 30 Tagen"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    }
+  },
+  "order": ["announcement", "header"]
+}

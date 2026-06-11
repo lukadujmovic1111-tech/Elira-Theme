@@ -1,0 +1,170 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "fallback_id": "1518611012118-696072aa579a",
+            "eyebrow": "Now Live — Summer '26",
+            "heading": "The Soft\nSculpt Edit",
+            "subtext": "Federleichte Essentials für Studio, Straße und alles dazwischen.",
+            "position": "left",
+            "btn1_label": "Jetzt shoppen",
+            "btn2_label": "Kollektionen"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "fallback_id": "1571019614242-c5c5dee9f50b",
+            "eyebrow": "Studio Series",
+            "heading": "Form follows\nFlow.",
+            "subtext": "Buttersoft-Stoffe, die jede Bewegung mitmachen.",
+            "position": "left",
+            "btn1_label": "Neu entdecken",
+            "btn2_label": ""
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2"]
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Now Live",
+        "heading": "The Soft Sculpt Edit",
+        "products_count": 8
+      }
+    },
+    "statement": {
+      "type": "statement",
+      "settings": {
+        "eyebrow": "Die Marke"
+      }
+    },
+    "editorial": {
+      "type": "editorial-trio",
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "fallback_id": "1547592180-85f173990554",
+            "label": "Journal",
+            "title": "Studio Diaries",
+            "text": "Einblicke aus dem Elira Studio — Routinen, Rituale, Looks.",
+            "link_label": "Zum Journal"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "fallback_id": "1556906781-9a412961a28c",
+            "label": "Styling",
+            "title": "Summer Looks",
+            "text": "Unsere Lieblings-Kombinationen für warme Tage.",
+            "link_label": "Looks entdecken"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "fallback_id": "1536766820879-059fec98ec0a",
+            "label": "Event",
+            "title": "Berlin Pop-Up",
+            "text": "Save the Date — wir kommen nach Berlin-Mitte.",
+            "link_label": "Mehr erfahren"
+          }
+        }
+      },
+      "block_order": ["card-1", "card-2", "card-3"],
+      "settings": {
+        "eyebrow": "Elira World",
+        "heading": "Mehr als Activewear"
+      }
+    },
+    "showcase": {
+      "type": "collection-showcase",
+      "blocks": {
+        "banner-1": {
+          "type": "banner",
+          "settings": {
+            "fallback_id": "1538805060514-97d9cc17730c",
+            "label": "Kollektion",
+            "title": "Aura",
+            "cta": "Explore"
+          }
+        },
+        "banner-2": {
+          "type": "banner",
+          "settings": {
+            "fallback_id": "1588392382834-a891154bca4d",
+            "label": "Kollektion",
+            "title": "Drift",
+            "cta": "Explore"
+          }
+        }
+      },
+      "block_order": ["banner-1", "banner-2"]
+    },
+    "by-activity": {
+      "type": "shop-by",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "title": "Yoga", "fallback_id": "1506629082955-511b1aa562c8" } },
+        "t2": { "type": "tile", "settings": { "title": "Pilates", "fallback_id": "1534258936459-347d08ab1be8" } },
+        "t3": { "type": "tile", "settings": { "title": "Running", "fallback_id": "1552196527-1b7fe3569e0d" } },
+        "t4": { "type": "tile", "settings": { "title": "Studio", "fallback_id": "1571019613454-1cb2f99b2d8b" } },
+        "t5": { "type": "tile", "settings": { "title": "Vacation", "fallback_id": "1556906781-9a412961a28c" } },
+        "t6": { "type": "tile", "settings": { "title": "Everyday", "fallback_id": "1583454155184-870a1f63aebc" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6"],
+      "settings": {
+        "eyebrow": "Finde deinen Flow",
+        "heading": "Shop by Activity"
+      }
+    },
+    "by-category": {
+      "type": "shop-by",
+      "blocks": {
+        "c1": { "type": "tile", "settings": { "title": "Leggings", "fallback_id": "1584735935682-2f2b69dff9d2" } },
+        "c2": { "type": "tile", "settings": { "title": "Sport-BHs", "fallback_id": "1571019614242-c5c5dee9f50b" } },
+        "c3": { "type": "tile", "settings": { "title": "Tops", "fallback_id": "1554284126-aa88f22d8b74" } },
+        "c4": { "type": "tile", "settings": { "title": "Shorts", "fallback_id": "1549476464-37392f717d84" } },
+        "c5": { "type": "tile", "settings": { "title": "Accessoires", "fallback_id": "1517836357463-d25dfeac3438" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"],
+      "settings": {
+        "eyebrow": "Essentials",
+        "heading": "Shop by Category"
+      }
+    },
+    "community": {
+      "type": "community-grid",
+      "settings": {
+        "eyebrow": "Community",
+        "heading": "Elira + Du",
+        "handle": "@elira"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Newsletter",
+        "heading": "Join the Club",
+        "button_label": "Anmelden"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured",
+    "statement",
+    "editorial",
+    "showcase",
+    "by-activity",
+    "by-category",
+    "community",
+    "newsletter"
+  ]
+}

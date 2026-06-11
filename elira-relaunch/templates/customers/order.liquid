@@ -1,0 +1,58 @@
+<div class="container account-wrap">
+  <span class="eyebrow">Bestellung</span>
+  <h1>{{ order.name }}</h1>
+  <p style="color: var(--c-muted);">Aufgegeben am {{ order.created_at | date: '%d.%m.%Y' }} — {{ order.financial_status_label }}</p>
+
+  <div class="account-grid">
+    <div>
+      <table class="account-table">
+        <thead>
+          <tr><th>Produkt</th><th>Menge</th><th>Preis</th></tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr>
+              <td>
+                {{ line_item.title }}
+                {%- if line_item.fulfillment -%}
+                  <br><small style="color:var(--c-muted);">Versendet {{ line_item.fulfillment.created_at | date: '%d.%m.%Y' }}</small>
+                {%- endif -%}
+              </td>
+              <td>{{ line_item.quantity }}</td>
+              <td>{{ line_item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div style="max-width: 360px; margin-left: auto; margin-top: 20px;">
+        <div class="sum-row"><span>Zwischensumme</span><span>{{ order.line_items_subtotal_price | money }}</span></div>
+        {%- for discount_application in order.cart_level_discount_applications -%}
+          <div class="sum-row"><span>Rabatt ({{ discount_application.title }})</span><span>−{{ discount_application.total_allocated_amount | money }}</span></div>
+        {%- endfor -%}
+        {%- for shipping_method in order.shipping_methods -%}
+          <div class="sum-row"><span>Versand</span><span>{{ shipping_method.price | money }}</span></div>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <div class="sum-row"><span>{{ tax_line.title }} ({{ tax_line.rate | times: 100 | round }} %)</span><span>{{ tax_line.price | money }}</span></div>
+        {%- endfor -%}
+        <div class="sum-row sum-row--total"><span>Gesamt</span><span>{{ order.total_price | money }}</span></div>
+      </div>
+    </div>
+
+    <aside class="account-side">
+      <h3>Lieferadresse</h3>
+      {%- if order.shipping_address -%}
+        <p>
+          {{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}<br>
+          {{ order.shipping_address.address1 }}<br>
+          {{ order.shipping_address.zip }} {{ order.shipping_address.city }}<br>
+          {{ order.shipping_address.country_name }}
+        </p>
+      {%- else -%}
+        <p>—</p>
+      {%- endif -%}
+      <p style="margin-top: 14px;"><a href="{{ routes.account_url }}">Zurück zum Konto</a></p>
+    </aside>
+  </div>
+</div>

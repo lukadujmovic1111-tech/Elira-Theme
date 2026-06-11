@@ -1,0 +1,64 @@
+<section class="comm-section">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <span class="eyebrow">{{ section.settings.eyebrow | default: 'Community' }}</span>
+      <h2 class="section-title">{{ section.settings.heading | default: 'Elira + Du' }}</h2>
+      {%- if section.settings.handle != blank -%}
+        <p class="section-sub">Zeig uns deinen Look mit <strong>{{ section.settings.handle }}</strong></p>
+      {%- endif -%}
+    </div>
+
+    <div class="comm__grid reveal">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.link | default: settings.social_instagram | default: '#' }}" class="comm__item" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+            {%- if block.settings.image -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Community-Beitrag" loading="lazy">
+            {%- else -%}
+              <img src="https://images.unsplash.com/photo-{{ block.settings.fallback_id | default: '1518611012118-696072aa579a' }}?auto=format&fit=crop&w=600&h=600&q=80" alt="" loading="lazy">
+            {%- endif -%}
+            <span class="comm__over">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+              {{ section.settings.handle | default: '@elira' }}
+            </span>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign demo = '1518611012118-696072aa579a,1583454155184-870a1f63aebc,1571019614242-c5c5dee9f50b,1549476464-37392f717d84,1556906781-9a412961a28c,1601412436969-da06c7d40e1b' | split: ',' -%}
+        {%- for id in demo -%}
+          <a href="{{ settings.social_instagram | default: '#' }}" class="comm__item" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-{{ id }}?auto=format&fit=crop&w=600&h=600&q=80" alt="" loading="lazy">
+            <span class="comm__over">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+              {{ section.settings.handle | default: '@elira' }}
+            </span>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Community-Grid",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Community" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Elira + Du" },
+    { "type": "text", "id": "handle", "label": "Instagram-Handle", "default": "@elira" }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Bild",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Bild" },
+        { "type": "text", "id": "fallback_id", "label": "Unsplash-Fallback-ID" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Community-Grid" }]
+}
+{% endschema %}

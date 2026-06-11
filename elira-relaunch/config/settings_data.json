@@ -1,0 +1,19 @@
+{
+  "current": {
+    "logo_width": 120,
+    "brand_tagline": "Soft performance — designed to move with you.",
+    "color_bg": "#F7F4EF",
+    "color_bone": "#ECE7DE",
+    "color_ink": "#1F1D1A",
+    "color_accent": "#4E3B49",
+    "color_olive": "#6C6C52",
+    "color_sand": "#C5B49C",
+    "social_instagram": "https://instagram.com",
+    "social_tiktok": "https://tiktok.com",
+    "social_pinterest": "",
+    "social_facebook": "",
+    "free_shipping_threshold": 100,
+    "cart_note_text": "Versand & Steuern werden im Checkout berechnet.",
+    "cookie_banner_enabled": true
+  }
+}

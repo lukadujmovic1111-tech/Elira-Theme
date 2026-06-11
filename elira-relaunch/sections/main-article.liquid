@@ -1,0 +1,23 @@
+<article>
+  <div class="page-hero">
+    <div class="container">
+      <span class="eyebrow">{{ article.published_at | date: '%d. %B %Y' }}</span>
+      <h1>{{ article.title }}</h1>
+    </div>
+  </div>
+  {%- if article.image -%}
+    <div class="container" style="max-width: 1000px;">
+      <img src="{{ article.image | image_url: width: 1800 }}" alt="{{ article.title | escape }}" style="border-radius: var(--radius);">
+    </div>
+  {%- endif -%}
+  <div class="page-narrow">
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Artikel",
+  "settings": []
+}
+{% endschema %}

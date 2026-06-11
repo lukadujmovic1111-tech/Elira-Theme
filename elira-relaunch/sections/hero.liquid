@@ -1,0 +1,104 @@
+<section class="hero" role="region" aria-label="Hero">
+  {%- assign slide_count = section.blocks.size -%}
+
+  {%- if slide_count > 0 -%}
+    {%- for block in section.blocks -%}
+      <div class="hero__slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image -%}
+          <img class="hero__img" src="{{ block.settings.image | image_url: width: 2400 }}"
+            srcset="{{ block.settings.image | image_url: width: 1100 }} 1100w, {{ block.settings.image | image_url: width: 1800 }} 1800w, {{ block.settings.image | image_url: width: 2400 }} 2400w"
+            sizes="100vw"
+            alt="{{ block.settings.heading | escape }}"
+            {% unless forloop.first %}loading="lazy"{% endunless %}>
+        {%- else -%}
+          <img class="hero__img" src="https://images.unsplash.com/photo-{{ block.settings.fallback_id | default: '1518611012118-696072aa579a' }}?auto=format&fit=crop&w=2200&q=80" alt="" {% unless forloop.first %}loading="lazy"{% endunless %}>
+        {%- endif -%}
+        <div class="hero__veil"></div>
+
+        <div class="hero__content{% if block.settings.position == 'center' %} hero__content--center{% endif %}">
+          {%- if block.settings.eyebrow != blank -%}
+            <span class="eyebrow">{{ block.settings.eyebrow }}</span>
+          {%- endif -%}
+          <h1 class="hero__title">{{ block.settings.heading | newline_to_br }}</h1>
+          {%- if block.settings.subtext != blank -%}
+            <p class="hero__sub">{{ block.settings.subtext }}</p>
+          {%- endif -%}
+          <div class="hero__ctas">
+            {%- if block.settings.btn1_label != blank -%}
+              <a href="{{ block.settings.btn1_link | default: routes.all_products_collection_url }}" class="btn btn--light">{{ block.settings.btn1_label }}</a>
+            {%- endif -%}
+            {%- if block.settings.btn2_label != blank -%}
+              <a href="{{ block.settings.btn2_link | default: routes.collections_url }}" class="btn btn--ghost-light">{{ block.settings.btn2_label }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+
+    {%- if slide_count > 1 -%}
+      <div class="hero__nav">
+        <span class="hero__count">01 / {{ slide_count | prepend: '0' | slice: -2, 2 }}</span>
+        <div class="hero__dots">
+          {%- for block in section.blocks -%}
+            <button class="hero__dot{% if forloop.first %} active{% endif %}" aria-label="Slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  {%- else -%}
+    <div class="hero__slide active">
+      <img class="hero__img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=2200&q=80" alt="">
+      <div class="hero__veil"></div>
+      <div class="hero__content">
+        <span class="eyebrow">Now Live — Summer '26</span>
+        <h1 class="hero__title">The Soft<br>Sculpt Edit</h1>
+        <p class="hero__sub">Federleichte Essentials für Studio, Straße und alles dazwischen.</p>
+        <div class="hero__ctas">
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--light">Jetzt shoppen</a>
+          <a href="{{ routes.collections_url }}" class="btn btn--ghost-light">Kollektionen</a>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Bild" },
+        { "type": "text", "id": "fallback_id", "label": "Unsplash-Fallback-ID", "info": "Nur für die Vorschau ohne eigenes Bild." },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Now Live — Summer '26" },
+        { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "The Soft\nSculpt Edit" },
+        { "type": "text", "id": "subtext", "label": "Untertitel", "default": "Federleichte Essentials für Studio, Straße und alles dazwischen." },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Ausrichtung",
+          "options": [
+            { "value": "left", "label": "Links" },
+            { "value": "center", "label": "Zentriert" }
+          ],
+          "default": "left"
+        },
+        { "type": "text", "id": "btn1_label", "label": "Button 1 — Text", "default": "Jetzt shoppen" },
+        { "type": "url", "id": "btn1_link", "label": "Button 1 — Link" },
+        { "type": "text", "id": "btn2_label", "label": "Button 2 — Text" },
+        { "type": "url", "id": "btn2_link", "label": "Button 2 — Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [{ "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

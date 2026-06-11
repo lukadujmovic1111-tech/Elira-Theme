@@ -1,0 +1,47 @@
+<style>
+  #RecoverBox { display: none; }
+  #RecoverBox:target { display: block; }
+  #RecoverBox:target ~ #LoginBox { display: none; }
+</style>
+
+<div class="auth-wrap">
+  <div id="RecoverBox">
+    <h1>Passwort zurücksetzen</h1>
+    <p>Wir senden dir einen Link zum Zurücksetzen.</p>
+    {% form 'recover_customer_password' %}
+      {%- if form.posted_successfully? -%}
+        <p class="form-success">E-Mail gesendet — bitte prüfe dein Postfach.</p>
+      {%- endif -%}
+      {%- if form.errors -%}<div class="form-errors">Bitte überprüfe deine E-Mail-Adresse.</div>{%- endif -%}
+      <div class="field">
+        <label for="RecoverEmail">E-Mail</label>
+        <input type="email" id="RecoverEmail" name="email" autocomplete="email" required>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Link senden</button>
+    {% endform %}
+    <p class="auth-links"><a href="#LoginBox">Zurück zur Anmeldung</a></p>
+  </div>
+
+  <div id="LoginBox">
+    <h1>Willkommen zurück</h1>
+    <p>Melde dich mit deinem Elira-Konto an.</p>
+    {% form 'customer_login' %}
+      {%- if form.errors -%}
+        <div class="form-errors">E-Mail oder Passwort ist nicht korrekt.</div>
+      {%- endif -%}
+      <div class="field">
+        <label for="CustomerEmail">E-Mail</label>
+        <input type="email" id="CustomerEmail" name="customer[email]" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="CustomerPassword">Passwort</label>
+        <input type="password" id="CustomerPassword" name="customer[password]" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Anmelden</button>
+    {% endform %}
+    <p class="auth-links">
+      <a href="#RecoverBox">Passwort vergessen?</a> &nbsp;·&nbsp;
+      <a href="{{ routes.account_register_url }}">Konto erstellen</a>
+    </p>
+  </div>
+</div>

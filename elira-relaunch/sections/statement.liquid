@@ -1,0 +1,30 @@
+<section class="statement">
+  <div class="container reveal">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <div class="statement__text">
+      {%- if section.settings.text != blank -%}
+        {{ section.settings.text }}
+      {%- else -%}
+        <p>Elira ist <em>Soft Performance</em> — Activewear für Frauen, entworfen von Frauen. Gemacht für Bewegung, gemacht für dich.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Statement",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Die Marke" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Elira ist <em>Soft Performance</em> — Activewear für Frauen, entworfen von Frauen. Gemacht für Bewegung, gemacht für dich.</p>"
+    }
+  ],
+  "presets": [{ "name": "Statement" }]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+{
+  "general": {
+    "meta": {
+      "page": "Seite {{ page }}",
+      "tags": "Getaggt mit „{{ tags }}“"
+    },
+    "404": {
+      "title": "Seite nicht gefunden"
+    },
+    "search": {
+      "title": "Suche",
+      "placeholder": "Wonach suchst du?"
+    },
+    "accessibility": {
+      "skip_to_content": "Zum Inhalt springen",
+      "close": "Schließen"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "In den Warenkorb",
+      "sold_out": "Ausverkauft",
+      "unavailable": "Nicht verfügbar",
+      "quantity": "Menge",
+      "on_sale": "Sale",
+      "new": "Neu"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Warenkorb",
+      "empty": "Dein Warenkorb ist noch leer.",
+      "subtotal": "Zwischensumme",
+      "checkout": "Zur Kasse",
+      "continue_shopping": "Weiter einkaufen",
+      "remove": "Entfernen"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Anmelden",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "forgot_password": "Passwort vergessen?",
+      "sign_in": "Anmelden",
+      "create_account": "Konto erstellen"
+    },
+    "account": {
+      "title": "Mein Konto",
+      "orders": "Bestellungen",
+      "logout": "Abmelden"
+    }
+  },
+  "footer": {
+    "payment_methods": "Zahlungsarten"
+  }
+}

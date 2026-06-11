@@ -1,0 +1,19 @@
+<div class="auth-wrap">
+  <h1>Konto aktivieren</h1>
+  <p>Erstelle ein Passwort, um dein Konto zu aktivieren.</p>
+  {% form 'activate_customer_password' %}
+    {%- if form.errors -%}
+      <div class="form-errors">{{ form.errors | default_errors }}</div>
+    {%- endif -%}
+    <div class="field">
+      <label for="ActivatePassword">Passwort</label>
+      <input type="password" id="ActivatePassword" name="customer[password]" autocomplete="new-password" required>
+    </div>
+    <div class="field">
+      <label for="ActivatePasswordConfirm">Passwort bestätigen</label>
+      <input type="password" id="ActivatePasswordConfirm" name="customer[password_confirmation]" autocomplete="new-password" required>
+    </div>
+    <button type="submit" class="btn btn--primary btn--full">Aktivieren</button>
+    <button type="submit" class="btn btn--ghost btn--full" style="margin-top: 8px;" name="decline">Ablehnen</button>
+  {% endform %}
+</div>

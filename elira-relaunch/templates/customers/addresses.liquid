@@ -1,0 +1,47 @@
+<div class="container account-wrap">
+  <span class="eyebrow">Mein Konto</span>
+  <h1>Adressen</h1>
+  <p style="color: var(--c-muted);"><a href="{{ routes.account_url }}" style="text-decoration: underline;">Zurück zum Konto</a></p>
+
+  <div class="account-grid">
+    <div>
+      {%- for address in customer.addresses -%}
+        <div class="addr-card">
+          {%- if address == customer.default_address -%}
+            <span class="eyebrow" style="margin-bottom: 8px; display:block;">Standard</span>
+          {%- endif -%}
+          <p>
+            {{ address.first_name }} {{ address.last_name }}<br>
+            {{ address.address1 }}<br>
+            {%- if address.address2 != blank -%}{{ address.address2 }}<br>{%- endif -%}
+            {{ address.zip }} {{ address.city }}<br>
+            {{ address.country_name }}
+          </p>
+          <form method="post" action="/account/addresses/{{ address.id }}" onsubmit="return confirm('Adresse wirklich löschen?');">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="ci__remove" style="margin-top: 10px;">Löschen</button>
+          </form>
+        </div>
+      {%- else -%}
+        <p style="color: var(--c-muted); margin-bottom: 20px;">Noch keine Adressen hinterlegt.</p>
+      {%- endfor -%}
+    </div>
+
+    <aside>
+      <h3 style="font-size:12px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; margin-bottom:16px;">Neue Adresse</h3>
+      {% form 'customer_address', customer.new_address %}
+        <div class="field"><label>Vorname</label><input type="text" name="address[first_name]"></div>
+        <div class="field"><label>Nachname</label><input type="text" name="address[last_name]"></div>
+        <div class="field"><label>Straße &amp; Nr.</label><input type="text" name="address[address1]"></div>
+        <div class="field"><label>Zusatz</label><input type="text" name="address[address2]"></div>
+        <div class="field"><label>PLZ</label><input type="text" name="address[zip]"></div>
+        <div class="field"><label>Stadt</label><input type="text" name="address[city]"></div>
+        <div class="field">
+          <label>Land</label>
+          <select name="address[country]">{{ country_option_tags }}</select>
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Adresse speichern</button>
+      {% endform %}
+    </aside>
+  </div>
+</div>

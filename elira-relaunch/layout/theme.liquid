@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg | default: '#F7F4EF' }}">
+
+  <title>
+    {{- page_title -}}
+    {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+    {%- if current_page != 1 %} &ndash; Seite {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <style>
+    :root {
+      --c-bg: {{ settings.color_bg | default: '#F7F4EF' }};
+      --c-bone: {{ settings.color_bone | default: '#ECE7DE' }};
+      --c-ink: {{ settings.color_ink | default: '#1F1D1A' }};
+      --c-grape: {{ settings.color_accent | default: '#4E3B49' }};
+      --c-olive: {{ settings.color_olive | default: '#6C6C52' }};
+      --c-sand: {{ settings.color_sand | default: '#C5B49C' }};
+    }
+  </style>
+</head>
+
+<body class="template-{{ request.page_type | handleize }}">
+
+  <a class="skip-link" href="#MainContent">Zum Inhalt springen</a>
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {% section 'cart-drawer' %}
+
+  <div class="ov" id="PageOverlay" aria-hidden="true"></div>
+
+  {%- if settings.cookie_banner_enabled -%}
+    {% render 'cookie-banner' %}
+  {%- endif -%}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>
