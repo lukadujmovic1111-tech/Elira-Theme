@@ -1,0 +1,38 @@
+{%- paginate collections by 12 -%}
+<div class="container">
+  <div class="page-hero">
+    <h1>Kollektionen</h1>
+  </div>
+  <div class="colls-grid">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" class="coll-card reveal">
+        {%- if collection.image -%}
+          <img src="{{ collection.image | image_url: width: 900 }}" alt="{{ collection.title | escape }}" loading="lazy">
+        {%- elsif collection.products.first.featured_media -%}
+          <img src="{{ collection.products.first.featured_media.preview_image | image_url: width: 900 }}" alt="{{ collection.title | escape }}" loading="lazy">
+        {%- endif -%}
+        <span class="coll-card__veil"></span>
+        <span class="coll-card__name">{{ collection.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+  {%- if paginate.pages > 1 -%}
+    <nav class="pagination" aria-label="Seiten">
+      {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">←</a>{%- endif -%}
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>
+        {%- elsif part.title == paginate.current_page -%}<span class="current">{{ part.title }}</span>
+        {%- else -%}<span>{{ part.title }}</span>{%- endif -%}
+      {%- endfor -%}
+      {%- if paginate.next -%}<a href="{{ paginate.next.url }}">→</a>{%- endif -%}
+    </nav>
+  {%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Kollektionsliste",
+  "settings": []
+}
+{% endschema %}

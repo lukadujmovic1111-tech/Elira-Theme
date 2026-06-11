@@ -1,0 +1,126 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "fallback_id": "1518611012118-696072aa579a",
+            "kicker": "Now Live",
+            "title": "Soft Sculpt",
+            "subtext": "",
+            "position": "center",
+            "btn_label": "Buy now"
+          }
+        }
+      },
+      "block_order": ["slide-1"]
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Soft Sculpt Collection",
+        "link_label": "Alle ansehen",
+        "products_count": 8
+      }
+    },
+    "bricks-editorial": {
+      "type": "bricks",
+      "blocks": {
+        "brick-1": {
+          "type": "brick",
+          "settings": {
+            "width": "half",
+            "fallback_id": "1556906781-9a412961a28c",
+            "title": "Summer Looks",
+            "btn_label": "Explore"
+          }
+        },
+        "brick-2": {
+          "type": "brick",
+          "settings": {
+            "width": "half",
+            "fallback_id": "1536766820879-059fec98ec0a",
+            "title": "Berlin Pop-Up",
+            "btn_label": "Mehr erfahren"
+          }
+        }
+      },
+      "block_order": ["brick-1", "brick-2"]
+    },
+    "bricks-aura": {
+      "type": "bricks",
+      "blocks": {
+        "brick-1": {
+          "type": "brick",
+          "settings": {
+            "width": "full",
+            "fallback_id": "1538805060514-97d9cc17730c",
+            "title": "Aura",
+            "btn_label": "Explore"
+          }
+        }
+      },
+      "block_order": ["brick-1"]
+    },
+    "by-activity": {
+      "type": "shop-by",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "title": "Yoga", "fallback_id": "1506629082955-511b1aa562c8" } },
+        "t2": { "type": "tile", "settings": { "title": "Pilates", "fallback_id": "1534258936459-347d08ab1be8" } },
+        "t3": { "type": "tile", "settings": { "title": "Running", "fallback_id": "1552196527-1b7fe3569e0d" } },
+        "t4": { "type": "tile", "settings": { "title": "Studio", "fallback_id": "1571019613454-1cb2f99b2d8b" } },
+        "t5": { "type": "tile", "settings": { "title": "Vacation", "fallback_id": "1556906781-9a412961a28c" } },
+        "t6": { "type": "tile", "settings": { "title": "Everyday", "fallback_id": "1583454155184-870a1f63aebc" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Shop by Activity"
+      }
+    },
+    "by-category": {
+      "type": "shop-by",
+      "blocks": {
+        "c1": { "type": "tile", "settings": { "title": "Leggings", "fallback_id": "1584735935682-2f2b69dff9d2" } },
+        "c2": { "type": "tile", "settings": { "title": "Sport-BHs", "fallback_id": "1571019614242-c5c5dee9f50b" } },
+        "c3": { "type": "tile", "settings": { "title": "Tops", "fallback_id": "1554284126-aa88f22d8b74" } },
+        "c4": { "type": "tile", "settings": { "title": "Shorts", "fallback_id": "1549476464-37392f717d84" } },
+        "c5": { "type": "tile", "settings": { "title": "Accessoires", "fallback_id": "1517836357463-d25dfeac3438" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Shop by Category"
+      }
+    },
+    "community": {
+      "type": "community-grid",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Elira + You",
+        "handle": "@elira"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Join the Club",
+        "text": "10 % auf deine erste Bestellung — und Zugang zu neuen Drops vor allen anderen.",
+        "button_label": "Anmelden"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured",
+    "bricks-editorial",
+    "bricks-aura",
+    "by-activity",
+    "by-category",
+    "community",
+    "newsletter"
+  ]
+}

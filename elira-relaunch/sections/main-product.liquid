@@ -1,0 +1,180 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="container">
+  <div class="pdp" data-product-root>
+
+    <div class="pdp__gallery">
+      {%- if product.media.size > 0 -%}
+        {%- for media in product.media -%}
+          <div class="pdp__shot">
+            <img src="{{ media.preview_image | image_url: width: 1200 }}"
+              srcset="{{ media.preview_image | image_url: width: 720 }} 720w, {{ media.preview_image | image_url: width: 1200 }} 1200w, {{ media.preview_image | image_url: width: 1600 }} 1600w"
+              sizes="(max-width: 880px) 86vw, 58vw"
+              alt="{{ media.preview_image.alt | default: product.title | escape }}"
+              {% unless forloop.first %}loading="lazy"{% endunless %}>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="pdp__shot">{{ 'product-apparel-1' | placeholder_svg_tag }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="pdp__info">
+      <nav class="pdp__crumbs" aria-label="Brotkrumen">
+        <a href="{{ routes.root_url }}">Home</a>
+        {%- if collection -%}
+          &nbsp;/&nbsp;<a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- endif -%}
+      </nav>
+
+      <h1 class="pdp__title">{{ product.title }}</h1>
+
+      <div class="pdp__price" data-pdp-price>
+        {% render 'price', target: current_variant %}
+      </div>
+      <p class="pdp__tax">inkl. MwSt. — <a href="/pages/versand-rueckgabe">Versand</a> wird im Checkout berechnet</p>
+
+      {%- if section.settings.promo_text != blank -%}
+        <span class="promo-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor"/></svg>
+          {{ section.settings.promo_text }}
+        </span>
+      {%- endif -%}
+
+      {% form 'product', product, data-product-form: '' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign opt_index = forloop.index0 -%}
+            {%- assign current_value = current_variant.options[opt_index] -%}
+            {%- assign oname = option.name | downcase -%}
+            {%- assign is_color = false -%}
+            {%- if oname == 'farbe' or oname == 'color' or oname == 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+
+            <fieldset class="opt-group" data-option-group>
+              <legend class="opt-label" style="width:100%; display:flex;">
+                <span>{{ option.name }} — <span class="opt-current">{{ current_value }}</span></span>
+                {%- assign sname = option.name | downcase -%}
+                {%- if sname == 'größe' or sname == 'grösse' or sname == 'size' -%}
+                  <a href="/pages/groessenguide" class="size-guide">Größenguide</a>
+                {%- endif -%}
+              </legend>
+              <div class="opt-values">
+                {%- for value in option.values -%}
+                  {%- assign id = 'Opt-' | append: opt_index | append: '-' | append: forloop.index0 -%}
+                  {%- assign soldout = false -%}
+                  {%- if product.options.size == 1 -%}
+                    {%- assign v = product.variants | where: 'title', value | first -%}
+                    {%- unless v.available -%}{%- assign soldout = true -%}{%- endunless -%}
+                  {%- endif -%}
+                  <input type="radio" id="{{ id }}" name="option-{{ opt_index }}" value="{{ value | escape }}"
+                    {% if value == current_value %}checked{% endif %}>
+                  {%- if is_color -%}
+                    <label for="{{ id }}" class="swatch--lg" style="{% render 'color-swatch-style', value: value %}" title="{{ value | escape }}"></label>
+                  {%- else -%}
+                    <label for="{{ id }}" class="size-pill{% if soldout %} soldout{% endif %}">{{ value }}</label>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="opt-group">
+          <span class="opt-label">Menge</span>
+          <div class="qty">
+            <button type="button" class="qty__btn" data-qty-step="#Quantity" aria-label="Menge verringern">−</button>
+            <span class="qty__val" data-qty-display>1</span>
+            <button type="button" class="qty__btn" data-qty-step="#Quantity" data-up aria-label="Menge erhöhen">+</button>
+          </div>
+          <input type="hidden" id="Quantity" name="quantity" value="1">
+        </div>
+
+        <div class="pdp__atc-row">
+          <button type="submit" class="btn btn--primary btn--full" data-pdp-atc data-label="In den Warenkorb"
+            {% unless current_variant.available %}disabled{% endunless %}>
+            {%- if current_variant.available -%}In den Warenkorb{%- else -%}Ausverkauft{%- endif -%}
+          </button>
+        </div>
+      {% endform %}
+
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h14v9H1zM15 11h4l3 3v3h-7z"/><circle cx="6" cy="19.5" r="1.8"/><circle cx="18" cy="19.5" r="1.8"/></svg>
+          Gratis Versand ab 100&nbsp;€
+        </div>
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          30 Tage Rückgabe
+        </div>
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Sicher bezahlen
+        </div>
+      </div>
+
+      <div class="pdp__accordions">
+        {%- if product.description != blank -%}
+          <div class="accordion open">
+            <button type="button" class="acc__head">Beschreibung
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="acc__body rte">{{ product.description }}</div>
+          </div>
+        {%- endif -%}
+        <div class="accordion">
+          <button type="button" class="acc__head">Material &amp; Pflege
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="acc__body">{{ section.settings.material_text | newline_to_br }}</div>
+        </div>
+        <div class="accordion">
+          <button type="button" class="acc__head">Versand &amp; Rückgabe
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="acc__body">{{ section.settings.shipping_text | newline_to_br }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="ProductJson" type="application/json">
+{
+  "variants": [
+    {%- for variant in product.variants -%}
+    {
+      "id": {{ variant.id }},
+      "options": {{ variant.options | json }},
+      "available": {{ variant.available | json }},
+      "price": {{ variant.price | json }},
+      "compare_at_price": {{ variant.compare_at_price | default: 0 | json }},
+      "price_formatted": {{ variant.price | money | json }},
+      "compare_at_formatted": {{ variant.compare_at_price | default: 0 | money | json }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Produktseite",
+  "settings": [
+    { "type": "text", "id": "promo_text", "label": "Promo-Hinweis", "default": "Bundle & Save — 15 % beim Kauf eines Sets" },
+    {
+      "type": "textarea",
+      "id": "material_text",
+      "label": "Material & Pflege",
+      "default": "Buttersoft-Stretch mit hoher Formstabilität: 76 % recyceltes Polyamid, 24 % Elasthan.\nKalt waschen, liegend trocknen — so bleibt die Passform perfekt."
+    },
+    {
+      "type": "textarea",
+      "id": "shipping_text",
+      "label": "Versand & Rückgabe",
+      "default": "Versand innerhalb von 2–4 Werktagen. Kostenloser Versand ab 100 €.\nKostenlose Rücksendung innerhalb von 30 Tagen."
+    }
+  ]
+}
+{% endschema %}

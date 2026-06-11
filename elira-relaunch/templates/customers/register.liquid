@@ -1,0 +1,29 @@
+<div class="auth-wrap">
+  <h1>Konto erstellen</h1>
+  <p>Werde Teil der Elira Community.</p>
+  {% form 'create_customer' %}
+    {%- if form.errors -%}
+      <div class="form-errors">
+        {{ form.errors | default_errors }}
+      </div>
+    {%- endif -%}
+    <div class="field">
+      <label for="FirstName">Vorname</label>
+      <input type="text" id="FirstName" name="customer[first_name]" autocomplete="given-name">
+    </div>
+    <div class="field">
+      <label for="LastName">Nachname</label>
+      <input type="text" id="LastName" name="customer[last_name]" autocomplete="family-name">
+    </div>
+    <div class="field">
+      <label for="Email">E-Mail</label>
+      <input type="email" id="Email" name="customer[email]" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="Password">Passwort</label>
+      <input type="password" id="Password" name="customer[password]" autocomplete="new-password" required>
+    </div>
+    <button type="submit" class="btn btn--primary btn--full">Konto erstellen</button>
+  {% endform %}
+  <p class="auth-links">Schon ein Konto? <a href="{{ routes.account_login_url }}">Anmelden</a></p>
+</div>

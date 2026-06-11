@@ -1,0 +1,37 @@
+<section class="nlx">
+  <div class="nlx__inner reveal">
+    <span class="eyebrow">{{ section.settings.eyebrow | default: 'Newsletter' }}</span>
+    <h2 class="nlx__title">{{ section.settings.heading | default: 'Join the Club' }}</h2>
+    <p class="nlx__text">{{ section.settings.text | default: 'Sichere dir 10 % auf deine erste Bestellung — plus exklusiven Zugang zu neuen Drops, Pop-Ups und Community-Events.' }}</p>
+
+    {% form 'customer', class: 'nlx__form-wrap' %}
+      {%- if form.posted_successfully? -%}
+        <p class="form-success">Danke! Du bist dabei. ✓</p>
+      {%- else -%}
+        {%- if form.errors -%}
+          <p class="form-errors">{{ form.errors.messages.email }}</p>
+        {%- endif -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="nlx__form">
+          <input type="email" name="contact[email]" class="nlx__input" placeholder="Deine E-Mail-Adresse" required aria-label="E-Mail-Adresse">
+          <button type="submit" class="btn">{{ section.settings.button_label | default: 'Anmelden' }}</button>
+        </div>
+      {%- endif -%}
+    {% endform %}
+
+    <p class="nlx__note">Abmeldung jederzeit möglich. Mehr in unserer <a href="/policies/privacy-policy">Datenschutzerklärung</a>.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Newsletter" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Join the Club" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Sichere dir 10 % auf deine erste Bestellung — plus exklusiven Zugang zu neuen Drops, Pop-Ups und Community-Events." },
+    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Anmelden" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

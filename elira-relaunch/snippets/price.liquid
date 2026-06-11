@@ -1,0 +1,12 @@
+{%- comment -%} Preis-Anzeige | Nutzung: render 'price', target: product {%- endcomment -%}
+{%- if target.compare_at_price > target.price -%}
+  <span class="price">
+    <span class="price__sale">{{ target.price | money }}</span>
+    <s class="price__compare">{{ target.compare_at_price | money }}</s>
+  </span>
+{%- else -%}
+  <span class="price">
+    {%- if target.price_varies %}ab {% endif -%}
+    {{ target.price | money }}
+  </span>
+{%- endif -%}

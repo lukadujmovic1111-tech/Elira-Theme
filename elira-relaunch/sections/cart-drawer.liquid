@@ -1,0 +1,77 @@
+<aside class="cdrawer" id="CartDrawer" data-item-count="{{ cart.item_count }}" aria-label="Warenkorb">
+  <div class="cdrawer__head">
+    <h3>Warenkorb ({{ cart.item_count }})</h3>
+    <button class="cdrawer__close" data-close-drawer aria-label="Warenkorb schließen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  {%- assign threshold = settings.free_shipping_threshold | default: 0 | times: 100 -%}
+  {%- if threshold > 0 and cart.item_count > 0 -%}
+    {%- assign remaining = threshold | minus: cart.total_price -%}
+    <div class="fship">
+      {%- if remaining > 0 -%}
+        <p>Noch <strong>{{ remaining | money }}</strong> bis zum kostenlosen Versand.</p>
+        {%- assign pct = cart.total_price | times: 100 | divided_by: threshold -%}
+        <div class="fship__track"><span class="fship__bar" style="width: {{ pct | at_most: 100 }}%"></span></div>
+      {%- else -%}
+        <p><strong>Kostenloser Versand</strong> — gesichert. ✓</p>
+        <div class="fship__track"><span class="fship__bar" style="width: 100%"></span></div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="cdrawer__body">
+    {%- if cart.item_count == 0 -%}
+      <div class="cdrawer__empty">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M5 8h14l-1.2 12a1.6 1.6 0 0 1-1.6 1.4H7.8A1.6 1.6 0 0 1 6.2 20Z"/><path d="M8.5 10V6.6a3.5 3.5 0 0 1 7 0V10"/></svg>
+        <p>Dein Warenkorb ist noch leer.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary btn--sm" data-close-drawer>Jetzt shoppen</a>
+      </div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="ci">
+          <a class="ci__img" href="{{ item.url }}">
+            {%- if item.image -%}
+              <img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}" loading="lazy" width="84" height="105">
+            {%- endif -%}
+          </a>
+          <div class="ci__info">
+            <a class="ci__name" href="{{ item.url }}">{{ item.product.title }}</a>
+            {%- unless item.product.has_only_default_variant -%}
+              <p class="ci__variant">{{ item.variant.title }}</p>
+            {%- endunless -%}
+            <div class="ci__row">
+              <div class="qty">
+                <button class="qty__btn" data-qty-change="{{ item.quantity | minus: 1 }}" data-line-key="{{ item.key }}" aria-label="Menge verringern">−</button>
+                <span class="qty__val">{{ item.quantity }}</span>
+                <button class="qty__btn" data-qty-change="{{ item.quantity | plus: 1 }}" data-line-key="{{ item.key }}" aria-label="Menge erhöhen">+</button>
+              </div>
+              <span class="ci__price">{{ item.final_line_price | money }}</span>
+            </div>
+            <button class="ci__remove" data-line-remove="{{ item.key }}" type="button">Entfernen</button>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <div class="cdrawer__foot">
+      <div class="cdrawer__subtotal">
+        <span>Zwischensumme</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+      <p class="cdrawer__note">{{ settings.cart_note_text | default: 'Versand & Steuern werden im Checkout berechnet.' }}</p>
+      <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary btn--full" style="margin-bottom: 8px;">Zur Kasse</a>
+      <a href="{{ routes.cart_url }}" class="btn btn--ghost btn--full btn--sm">Warenkorb ansehen</a>
+    </div>
+  {%- endif -%}
+</aside>
+
+{% schema %}
+{
+  "name": "Warenkorb-Drawer",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,120 @@
+{%- assign per_page = section.settings.per_page | default: 24 -%}
+{%- paginate collection.products by per_page -%}
+
+<div class="container">
+  <div class="coll-hero reveal">
+    <span class="eyebrow">Kollektion</span>
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p>{{ collection.description | strip_html | truncate: 220 }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="coll-toolbar">
+    <span class="coll-count">{{ collection.products_count }} Produkte</span>
+    <div class="coll-tools">
+      {%- if collection.filters.size > 0 -%}
+        <button class="filter-btn" data-open-drawer="#FilterDrawer" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="4" y1="7" x2="20" y2="7"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="17" x2="14" y2="17"/></svg>
+          Filter
+        </button>
+      {%- endif -%}
+      <div class="sort-wrap">
+        <select data-sort-select aria-label="Sortieren">
+          {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+          <option value="manual" {% if current_sort == 'manual' %}selected{% endif %}>Empfohlen</option>
+          <option value="best-selling" {% if current_sort == 'best-selling' %}selected{% endif %}>Bestseller</option>
+          <option value="created-descending" {% if current_sort == 'created-descending' %}selected{% endif %}>Neuheiten</option>
+          <option value="price-ascending" {% if current_sort == 'price-ascending' %}selected{% endif %}>Preis aufsteigend</option>
+          <option value="price-descending" {% if current_sort == 'price-descending' %}selected{% endif %}>Preis absteigend</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {%- if collection.products.size > 0 -%}
+    <div class="coll-grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', card_product: product %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <div class="coll-empty">
+      <p>In dieser Kollektion sind aktuell keine Produkte.</p>
+    </div>
+  {%- endif -%}
+
+  {%- if paginate.pages > 1 -%}
+    <nav class="pagination" aria-label="Seiten">
+      {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="Vorherige Seite">←</a>{%- endif -%}
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}
+          <a href="{{ part.url }}">{{ part.title }}</a>
+        {%- elsif part.title == paginate.current_page -%}
+          <span class="current">{{ part.title }}</span>
+        {%- else -%}
+          <span>{{ part.title }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="Nächste Seite">→</a>{%- endif -%}
+    </nav>
+  {%- endif -%}
+</div>
+
+{%- if collection.filters.size > 0 -%}
+  <aside class="fdrawer" id="FilterDrawer" aria-label="Filter">
+    <div class="fdrawer__head">
+      <h3>Filter</h3>
+      <button data-close-drawer aria-label="Filter schließen">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form id="FacetsForm" action="{{ collection.url }}" method="get">
+      {%- if collection.sort_by != blank -%}
+        <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+      {%- endif -%}
+      <div class="fdrawer__body">
+        {%- for filter in collection.filters -%}
+          <div class="facet">
+            <h4>{{ filter.label }}</h4>
+            {%- case filter.type -%}
+              {%- when 'price_range' -%}
+                <div class="facet__price">
+                  <input type="number" name="{{ filter.min_value.param_name }}" placeholder="Von (€)"
+                    {% if filter.min_value.value %}value="{{ filter.min_value.value | divided_by: 100 }}"{% endif %}
+                    min="0">
+                  <input type="number" name="{{ filter.max_value.param_name }}" placeholder="Bis (€)"
+                    {% if filter.max_value.value %}value="{{ filter.max_value.value | divided_by: 100 | ceil }}"{% endif %}
+                    min="0">
+                </div>
+              {%- else -%}
+                {%- for value in filter.values -%}
+                  <label{% if value.count == 0 and value.active == false %} class="is-empty"{% endif %}>
+                    <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                    {{ value.label }} <span style="color:var(--c-muted);">({{ value.count }})</span>
+                  </label>
+                {%- endfor -%}
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="fdrawer__foot">
+        <a href="{{ collection.url }}" class="btn btn--ghost btn--sm">Zurücksetzen</a>
+        <button type="submit" class="btn btn--primary btn--sm">Anwenden</button>
+      </div>
+    </form>
+  </aside>
+{%- endif -%}
+
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Kollektionsseite",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Produkte pro Seite", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

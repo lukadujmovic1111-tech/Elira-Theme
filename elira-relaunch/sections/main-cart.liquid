@@ -1,0 +1,62 @@
+<div class="container cartp">
+  {%- if cart.item_count == 0 -%}
+    <div class="cartp__empty">
+      <h2>Dein Warenkorb ist leer</h2>
+      <p>Entdecke unsere neuesten Styles und finde deinen Favoriten.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Jetzt shoppen</a>
+    </div>
+  {%- else -%}
+    <h1>Warenkorb <span style="color:var(--c-muted); font-size:.6em;">({{ cart.item_count }})</span></h1>
+
+    <div class="cartp__grid">
+      <div class="cartp__items">
+        {%- for item in cart.items -%}
+          <div class="ci">
+            <a class="ci__img" href="{{ item.url }}">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" loading="lazy" width="110" height="138">
+              {%- endif -%}
+            </a>
+            <div class="ci__info">
+              <a class="ci__name" href="{{ item.url }}">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}
+                <p class="ci__variant">{{ item.variant.title }}</p>
+              {%- endunless -%}
+              {%- if item.original_line_price != item.final_line_price -%}
+                <p class="ci__variant" style="color:var(--c-grape);">Rabatt angewendet</p>
+              {%- endif -%}
+              <div class="ci__row">
+                <div class="qty">
+                  <button class="qty__btn" data-qty-change="{{ item.quantity | minus: 1 }}" data-line-key="{{ item.key }}" aria-label="Menge verringern">−</button>
+                  <span class="qty__val">{{ item.quantity }}</span>
+                  <button class="qty__btn" data-qty-change="{{ item.quantity | plus: 1 }}" data-line-key="{{ item.key }}" aria-label="Menge erhöhen">+</button>
+                </div>
+                <span class="ci__price">{{ item.final_line_price | money }}</span>
+              </div>
+              <button class="ci__remove" data-line-remove="{{ item.key }}" type="button">Entfernen</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <aside class="cartp__summary">
+        <h3>Übersicht</h3>
+        <div class="sum-row"><span>Zwischensumme</span><span>{{ cart.items_subtotal_price | money }}</span></div>
+        {%- if cart.total_discount > 0 -%}
+          <div class="sum-row"><span>Rabatt</span><span>−{{ cart.total_discount | money }}</span></div>
+        {%- endif -%}
+        <div class="sum-row"><span>Versand</span><span>im Checkout</span></div>
+        <div class="sum-row sum-row--total"><span>Gesamt</span><span>{{ cart.total_price | money }}</span></div>
+        <a href="/checkout" class="btn btn--primary btn--full" style="margin-top: 18px;">Zur Kasse</a>
+        <p class="cartp__note">{{ settings.cart_note_text | default: 'Versand & Steuern werden im Checkout berechnet.' }}</p>
+      </aside>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Warenkorb",
+  "settings": []
+}
+{% endschema %}

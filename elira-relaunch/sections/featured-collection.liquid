@@ -1,0 +1,74 @@
+{%- liquid
+  assign coll = section.settings.collection
+  if coll == blank
+    assign coll = collections.all
+  endif
+  assign limit = section.settings.products_count | default: 8
+-%}
+
+<section class="fc-section">
+  <div class="container">
+    <div class="carousel" data-carousel>
+      <div class="section-head">
+        <h2 class="section-title">{{ section.settings.heading | default: coll.title }}</h2>
+        <div class="head-arrows">
+          <a href="{{ coll.url | default: routes.all_products_collection_url }}" class="section-link" style="margin-right: 10px;">{{ section.settings.link_label | default: 'Alle ansehen' }}</a>
+          <button class="car-arrow" data-car-prev aria-label="Zurück">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="car-arrow" data-car-next aria-label="Weiter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="carousel__track">
+        {%- if coll.products.size > 0 -%}
+          {%- for product in coll.products limit: limit -%}
+            <div class="carousel__item">
+              {% render 'product-card', card_product: product %}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign demo_names = 'Soft Sculpt Legging|Cloud Rib Bra|Studio Flow Tank|Drift Short|Aura Longsleeve|Form Flare Pant|Halo Zip Jacket|Breeze Onepiece' | split: '|' -%}
+          {%- assign demo_imgs = '1506629082955-511b1aa562c8,1583454155184-870a1f63aebc,1571019613454-1cb2f99b2d8b,1554284126-aa88f22d8b74,1584735935682-2f2b69dff9d2,1552196527-1b7fe3569e0d,1517836357463-d25dfeac3438,1534258936459-347d08ab1be8' | split: ',' -%}
+          {%- assign demo_colors = 'Black,Off-White,Stone,Black,Sand,Black,Grey,Off-White' | split: ',' -%}
+          {%- for name in demo_names -%}
+            <div class="carousel__item">
+              <article class="pcard">
+                <div class="pcard__media">
+                  <a href="{{ routes.all_products_collection_url }}">
+                    <img class="pcard__img pcard__img--main" src="https://images.unsplash.com/photo-{{ demo_imgs[forloop.index0] }}?auto=format&fit=crop&w=720&h=900&q=80" alt="{{ name }}" loading="lazy">
+                  </a>
+                  <div class="pcard__quick">
+                    <span class="qa-single">Quick add</span>
+                  </div>
+                </div>
+                <div class="pcard__info">
+                  <div class="pcard__text">
+                    <h3 class="pcard__name"><a href="{{ routes.all_products_collection_url }}">{{ name }}</a></h3>
+                    <p class="pcard__meta">{{ demo_colors[forloop.index0] }}</p>
+                  </div>
+                  <span class="price">{{ forloop.index | times: 10 | plus: 49 | times: 100 | money }}</span>
+                </div>
+              </article>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produkt-Carousel",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Soft Sculpt Collection" },
+    { "type": "text", "id": "link_label", "label": "Link-Text", "default": "Alle ansehen" },
+    { "type": "collection", "id": "collection", "label": "Kollektion" },
+    { "type": "range", "id": "products_count", "label": "Anzahl Produkte", "min": 4, "max": 16, "step": 1, "default": 8 }
+  ],
+  "presets": [{ "name": "Produkt-Carousel" }]
+}
+{% endschema %}

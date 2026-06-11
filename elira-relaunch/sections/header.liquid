@@ -1,0 +1,159 @@
+<header class="hdr" id="SiteHeader">
+  <div class="hdr__top">
+    <button class="hdr__act hdr__burger" data-open-drawer="#MenuDrawer" aria-label="Menü öffnen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="14" x2="15" y2="14"/></svg>
+    </button>
+
+    <a href="{{ routes.root_url }}" class="hdr__logo" aria-label="{{ shop.name }} — Startseite">
+      {%- if settings.logo -%}
+        <img src="{{ settings.logo | image_url: width: 480 }}" alt="{{ shop.name }}" style="--logo-w: {{ settings.logo_width | default: 120 }}px" width="{{ settings.logo_width | default: 120 }}">
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <div class="hdr__search">
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+        <input type="search" name="q" placeholder="Suchen …" autocomplete="off" aria-label="Suche">
+      </form>
+    </div>
+
+    <div class="hdr__acts">
+      <button class="hdr__act hdr__act--search-m" data-open-drawer="#SearchOverlay" aria-label="Suche öffnen">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+      </button>
+      <a href="{{ routes.account_url }}" class="hdr__act hdr__act--account" aria-label="Konto">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="hdr__act" data-open-drawer="#CartDrawer" aria-label="Warenkorb öffnen">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14l-1.2 12a1.6 1.6 0 0 1-1.6 1.4H7.8A1.6 1.6 0 0 1 6.2 20Z"/><path d="M8.5 10V6.6a3.5 3.5 0 0 1 7 0V10"/></svg>
+        <span class="bag-count{% if cart.item_count > 0 %} show{% endif %}">{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="hdr__nav" aria-label="Hauptnavigation">
+    <ul class="nav-list">
+      {%- if linklists[section.settings.menu].links.size > 0 -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li class="nav-item{% if link.links.size > 0 %} has-mega{% endif %}">
+            <a href="{{ link.url }}" class="nav-link{% if link.title contains 'Sale' %} nav-link--sale{% endif %}"
+              {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+
+            {%- if link.links.size > 0 -%}
+              <div class="mega">
+                <div class="mega__inner">
+                  {%- for child in link.links limit: 4 -%}
+                    <div class="mega__col">
+                      <h5>{% if child.links.size > 0 %}{{ child.title }}{% else %}Entdecken{% endif %}</h5>
+                      <ul>
+                        {%- if child.links.size > 0 -%}
+                          {%- for grandchild in child.links -%}
+                            <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                          {%- endfor -%}
+                        {%- else -%}
+                          <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                        {%- endif -%}
+                      </ul>
+                    </div>
+                  {%- endfor -%}
+
+                  <a href="{{ section.settings.mega_link | default: routes.all_products_collection_url }}" class="mega__feat">
+                    <div class="mf-img">
+                      {%- if section.settings.mega_image -%}
+                        <img src="{{ section.settings.mega_image | image_url: width: 460 }}" alt="{{ section.settings.mega_title | escape }}" loading="lazy">
+                      {%- else -%}
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=460&h=575&q=80" alt="" loading="lazy">
+                      {%- endif -%}
+                    </div>
+                    <small>{{ section.settings.mega_label | default: 'Jetzt neu' }}</small>
+                    <strong>{{ section.settings.mega_title | default: 'The Soft Edit' }}</strong>
+                  </a>
+                </div>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li class="nav-item"><a class="nav-link" href="/collections/new">New In</a></li>
+        <li class="nav-item"><a class="nav-link" href="/collections/bestseller">Bestseller</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ routes.all_products_collection_url }}">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ routes.collections_url }}">Kollektionen</a></li>
+        <li class="nav-item"><a class="nav-link" href="/pages/elira-world">Elira World</a></li>
+        <li class="nav-item"><a class="nav-link nav-link--sale" href="/collections/sale">Sale</a></li>
+      {%- endif -%}
+    </ul>
+  </nav>
+</header>
+
+{%- comment -%} Such-Overlay {%- endcomment -%}
+<div class="search-ov" id="SearchOverlay">
+  <form action="{{ routes.search_url }}" method="get" role="search">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+    <input type="search" name="q" placeholder="Wonach suchst du?" autocomplete="off" aria-label="Suche">
+    <button type="button" class="so-close" data-close-drawer aria-label="Suche schließen">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </form>
+</div>
+
+{%- comment -%} Mobiles Menü {%- endcomment -%}
+<div class="mdrawer" id="MenuDrawer" aria-label="Menü">
+  <div class="mdrawer__head">
+    <span class="mdrawer__logo">{{ shop.name }}</span>
+    <button data-close-drawer aria-label="Menü schließen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mdrawer__body">
+    {%- if linklists[section.settings.menu].links.size > 0 -%}
+      {%- for link in linklists[section.settings.menu].links -%}
+        <div class="mdrawer__row">
+          {%- if link.links.size > 0 -%}
+            <button class="mdrawer__toggle" type="button">
+              {{ link.title }}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="mdrawer__sub">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}">{{ child.title }}</a>
+                {%- for grandchild in child.links -%}
+                  <a href="{{ grandchild.url }}">&nbsp;&nbsp;{{ grandchild.title }}</a>
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <a class="mdrawer__link{% if link.title contains 'Sale' %} nav-link--sale{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="mdrawer__row"><a class="mdrawer__link" href="/collections/new">New In</a></div>
+      <div class="mdrawer__row"><a class="mdrawer__link" href="/collections/bestseller">Bestseller</a></div>
+      <div class="mdrawer__row"><a class="mdrawer__link" href="{{ routes.all_products_collection_url }}">Shop</a></div>
+      <div class="mdrawer__row"><a class="mdrawer__link" href="{{ routes.collections_url }}">Kollektionen</a></div>
+      <div class="mdrawer__row"><a class="mdrawer__link nav-link--sale" href="/collections/sale">Sale</a></div>
+    {%- endif -%}
+  </div>
+  <div class="mdrawer__foot">
+    <a href="{{ routes.account_url }}">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Anmelden / Konto erstellen
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Hauptmenü", "default": "main-menu" },
+    { "type": "header", "content": "Mega-Menü Highlight" },
+    { "type": "image_picker", "id": "mega_image", "label": "Bild" },
+    { "type": "text", "id": "mega_label", "label": "Label", "default": "Jetzt neu" },
+    { "type": "text", "id": "mega_title", "label": "Titel", "default": "The Soft Edit" },
+    { "type": "url", "id": "mega_link", "label": "Link" }
+  ]
+}
+{% endschema %}

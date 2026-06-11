@@ -1,0 +1,24 @@
+{%- comment -%}
+  Gibt einen Inline-Style für einen Farbnamen zurück.
+  Nutzung: render 'color-swatch-style', value: 'Salbei'
+{%- endcomment -%}
+{%- assign c = value | downcase | strip -%}
+{%- case c -%}
+  {%- when 'schwarz', 'black' -%}background:#111111;
+  {%- when 'weiß', 'weiss', 'white', 'ivory', 'creme', 'cream' -%}background:#FFFFFF;
+  {%- when 'grau', 'grey', 'gray', 'heather' -%}background:#A8A39B;
+  {%- when 'sand', 'beige', 'tan' -%}background:#C5B49C;
+  {%- when 'taupe', 'mocha', 'mokka', 'braun', 'brown', 'pecan' -%}background:#8A6F5C;
+  {%- when 'grape', 'pflaume', 'plum', 'aubergine', 'burgundy', 'bordeaux' -%}background:#4E3B49;
+  {%- when 'olive', 'oliv', 'salbei', 'sage', 'khaki' -%}background:#6C6C52;
+  {%- when 'rosa', 'rose', 'rosé', 'pink', 'blush' -%}background:#D8C2B4;
+  {%- when 'terracotta', 'clay', 'rust', 'rost' -%}background:#B0674A;
+  {%- when 'navy', 'marine', 'dunkelblau' -%}background:#2E3A4D;
+  {%- when 'blau', 'blue', 'denim' -%}background:#6B7E99;
+  {%- when 'grün', 'gruen', 'green', 'forest' -%}background:#4A5D4E;
+  {%- when 'gelb', 'yellow', 'butter' -%}background:#E3CD8F;
+  {%- when 'lavendel', 'lavender', 'lila', 'purple', 'flieder' -%}background:#A998B5;
+  {%- when 'rot', 'red' -%}background:#A4392F;
+  {%- when 'orange', 'apricot', 'peach' -%}background:#DCA273;
+  {%- else -%}background:linear-gradient(135deg,#DDDDDD,#9A9A9A);
+{%- endcase -%}
