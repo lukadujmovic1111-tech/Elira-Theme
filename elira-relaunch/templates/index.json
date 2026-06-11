@@ -7,106 +7,62 @@
           "type": "slide",
           "settings": {
             "fallback_id": "1518611012118-696072aa579a",
-            "eyebrow": "Now Live — Summer '26",
-            "heading": "The Soft\nSculpt Edit",
-            "subtext": "Federleichte Essentials für Studio, Straße und alles dazwischen.",
-            "position": "left",
-            "btn1_label": "Jetzt shoppen",
-            "btn2_label": "Kollektionen"
-          }
-        },
-        "slide-2": {
-          "type": "slide",
-          "settings": {
-            "fallback_id": "1571019614242-c5c5dee9f50b",
-            "eyebrow": "Studio Series",
-            "heading": "Form follows\nFlow.",
-            "subtext": "Buttersoft-Stoffe, die jede Bewegung mitmachen.",
-            "position": "left",
-            "btn1_label": "Neu entdecken",
-            "btn2_label": ""
+            "kicker": "Now Live",
+            "title": "Soft Sculpt",
+            "subtext": "",
+            "position": "center",
+            "btn_label": "Buy now"
           }
         }
       },
-      "block_order": ["slide-1", "slide-2"]
+      "block_order": ["slide-1"]
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Now Live",
-        "heading": "The Soft Sculpt Edit",
+        "heading": "Soft Sculpt Collection",
+        "link_label": "Alle ansehen",
         "products_count": 8
       }
     },
-    "statement": {
-      "type": "statement",
-      "settings": {
-        "eyebrow": "Die Marke"
-      }
-    },
-    "editorial": {
-      "type": "editorial-trio",
+    "bricks-editorial": {
+      "type": "bricks",
       "blocks": {
-        "card-1": {
-          "type": "card",
+        "brick-1": {
+          "type": "brick",
           "settings": {
-            "fallback_id": "1547592180-85f173990554",
-            "label": "Journal",
-            "title": "Studio Diaries",
-            "text": "Einblicke aus dem Elira Studio — Routinen, Rituale, Looks.",
-            "link_label": "Zum Journal"
-          }
-        },
-        "card-2": {
-          "type": "card",
-          "settings": {
+            "width": "half",
             "fallback_id": "1556906781-9a412961a28c",
-            "label": "Styling",
             "title": "Summer Looks",
-            "text": "Unsere Lieblings-Kombinationen für warme Tage.",
-            "link_label": "Looks entdecken"
+            "btn_label": "Explore"
           }
         },
-        "card-3": {
-          "type": "card",
+        "brick-2": {
+          "type": "brick",
           "settings": {
+            "width": "half",
             "fallback_id": "1536766820879-059fec98ec0a",
-            "label": "Event",
             "title": "Berlin Pop-Up",
-            "text": "Save the Date — wir kommen nach Berlin-Mitte.",
-            "link_label": "Mehr erfahren"
+            "btn_label": "Mehr erfahren"
           }
         }
       },
-      "block_order": ["card-1", "card-2", "card-3"],
-      "settings": {
-        "eyebrow": "Elira World",
-        "heading": "Mehr als Activewear"
-      }
+      "block_order": ["brick-1", "brick-2"]
     },
-    "showcase": {
-      "type": "collection-showcase",
+    "bricks-aura": {
+      "type": "bricks",
       "blocks": {
-        "banner-1": {
-          "type": "banner",
+        "brick-1": {
+          "type": "brick",
           "settings": {
+            "width": "full",
             "fallback_id": "1538805060514-97d9cc17730c",
-            "label": "Kollektion",
             "title": "Aura",
-            "cta": "Explore"
-          }
-        },
-        "banner-2": {
-          "type": "banner",
-          "settings": {
-            "fallback_id": "1588392382834-a891154bca4d",
-            "label": "Kollektion",
-            "title": "Drift",
-            "cta": "Explore"
+            "btn_label": "Explore"
           }
         }
       },
-      "block_order": ["banner-1", "banner-2"]
+      "block_order": ["brick-1"]
     },
     "by-activity": {
       "type": "shop-by",
@@ -120,7 +76,7 @@
       },
       "block_order": ["t1", "t2", "t3", "t4", "t5", "t6"],
       "settings": {
-        "eyebrow": "Finde deinen Flow",
+        "eyebrow": "",
         "heading": "Shop by Activity"
       }
     },
@@ -135,23 +91,24 @@
       },
       "block_order": ["c1", "c2", "c3", "c4", "c5"],
       "settings": {
-        "eyebrow": "Essentials",
+        "eyebrow": "",
         "heading": "Shop by Category"
       }
     },
     "community": {
       "type": "community-grid",
       "settings": {
-        "eyebrow": "Community",
-        "heading": "Elira + Du",
+        "eyebrow": "",
+        "heading": "Elira + You",
         "handle": "@elira"
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "eyebrow": "Newsletter",
+        "eyebrow": "",
         "heading": "Join the Club",
+        "text": "10 % auf deine erste Bestellung — und Zugang zu neuen Drops vor allen anderen.",
         "button_label": "Anmelden"
       }
     }
@@ -159,9 +116,8 @@
   "order": [
     "hero",
     "featured",
-    "statement",
-    "editorial",
-    "showcase",
+    "bricks-editorial",
+    "bricks-aura",
     "by-activity",
     "by-category",
     "community",

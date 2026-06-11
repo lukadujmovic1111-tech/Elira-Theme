@@ -1,13 +1,18 @@
 <section class="fc-section" style="padding-top: 0;">
   <div class="container">
-    <div class="section-head reveal">
-      <div>
-        <span class="eyebrow">Complete the Look</span>
+    <div class="carousel" data-carousel>
+      <div class="section-head">
         <h2 class="section-title">{{ section.settings.heading | default: 'Das könnte dir gefallen' }}</h2>
+        <div class="head-arrows">
+          <button class="car-arrow" data-car-prev aria-label="Zurück">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="car-arrow" data-car-next aria-label="Weiter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="carousel reveal" data-carousel>
       <div class="carousel__track">
         {%- if recommendations.performed and recommendations.products_count > 0 -%}
           {%- for rec in recommendations.products -%}
@@ -24,19 +29,6 @@
             {%- endunless -%}
           {%- endfor -%}
         {%- endif -%}
-      </div>
-      <div class="carousel__foot">
-        <div class="car-progress"><span class="car-progress__bar"></span></div>
-        <div class="car-meta">
-          <div class="car-arrows">
-            <button class="car-arrow" data-car-prev aria-label="Zurück">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
-            </button>
-            <button class="car-arrow" data-car-next aria-label="Weiter">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

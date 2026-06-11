@@ -36,8 +36,8 @@
         "type": "checkbox",
         "id": "bw_imagery",
         "label": "Editorial-Bilder in Schwarz-Weiß",
-        "info": "Wendet einen S/W-Filter auf Kampagnen-/Editorial-Bilder an. Produktbilder bleiben farbecht.",
-        "default": true
+        "info": "Optionaler S/W-Filter auf Kampagnen-/Editorial-Bilder. Produktbilder bleiben farbecht. (Exercere nutzt Farbfotos auf Schwarz-Weiß-UI.)",
+        "default": false
       }
     ]
   },
@@ -60,25 +60,25 @@
         "type": "color",
         "id": "color_ink",
         "label": "Text & Buttons (Schwarz)",
-        "default": "#111111"
+        "default": "#0B0B0B"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Akzent (Schwarz)",
-        "default": "#111111"
+        "default": "#0B0B0B"
       },
       {
         "type": "color",
         "id": "color_olive",
         "label": "Grau (dunkel)",
-        "default": "#3D3D3D"
+        "default": "#2E2E2E"
       },
       {
         "type": "color",
         "id": "color_sand",
         "label": "Grau (hell)",
-        "default": "#D6D6D6"
+        "default": "#DBDBDB"
       }
     ]
   },

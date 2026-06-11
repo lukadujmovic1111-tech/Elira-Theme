@@ -24,7 +24,7 @@
           </a>
         {%- endfor -%}
       {%- else -%}
-        {%- assign demo = '1518611012118-696072aa579a,1583454155184-870a1f63aebc,1571019614242-c5c5dee9f50b,1549476464-37392f717d84,1556906781-9a412961a28c,1601412436969-da06c7d40e1b' | split: ',' -%}
+        {%- assign demo = '1518611012118-696072aa579a,1583454155184-870a1f63aebc,1571019614242-c5c5dee9f50b,1601412436969-da06c7d40e1b' | split: ',' -%}
         {%- for id in demo -%}
           <a href="{{ settings.social_instagram | default: '#' }}" class="comm__item" target="_blank" rel="noopener">
             <img src="https://images.unsplash.com/photo-{{ id }}?auto=format&fit=crop&w=600&h=600&q=80" alt="" loading="lazy">

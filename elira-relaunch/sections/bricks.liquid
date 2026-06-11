@@ -1,0 +1,88 @@
+{%- comment -%}
+  Bricks — große Bild-/Video-Banner in voller oder halber Breite,
+  Inhalt klein & zentriert (Exercere-Muster: Matcha / Summer Looks / Aero).
+{%- endcomment -%}
+
+<section class="bricks">
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}
+      {%- assign coll = block.settings.collection -%}
+      {%- assign target_url = coll.url | default: block.settings.link | default: routes.all_products_collection_url -%}
+      <a href="{{ target_url }}" class="brick{% if block.settings.width == 'half' %} brick--half{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.video_url != blank -%}
+          <video class="brick__video" autoplay muted loop playsinline preload="metadata"
+            {% if block.settings.image %}poster="{{ block.settings.image | image_url: width: 1600 }}"{% endif %}>
+            <source src="{{ block.settings.video_url }}" type="video/mp4">
+          </video>
+        {%- elsif block.settings.image -%}
+          <img class="brick__img" src="{{ block.settings.image | image_url: width: 2200 }}"
+            srcset="{{ block.settings.image | image_url: width: 1100 }} 1100w, {{ block.settings.image | image_url: width: 2200 }} 2200w"
+            sizes="{% if block.settings.width == 'half' %}50vw{% else %}100vw{% endif %}"
+            alt="{{ block.settings.title | escape }}" loading="lazy">
+        {%- elsif coll.image -%}
+          <img class="brick__img" src="{{ coll.image | image_url: width: 2200 }}" alt="{{ coll.title | escape }}" loading="lazy">
+        {%- else -%}
+          <img class="brick__img" src="https://images.unsplash.com/photo-{{ block.settings.fallback_id | default: '1538805060514-97d9cc17730c' }}?auto=format&fit=crop&w=2200&q=80" alt="" loading="lazy">
+        {%- endif -%}
+        <div class="brick__veil"></div>
+        <div class="brick__content">
+          {%- if block.settings.kicker != blank -%}<span class="brick__kicker">{{ block.settings.kicker }}</span>{%- endif -%}
+          <h2 class="brick__title">{{ block.settings.title | default: coll.title }}</h2>
+          {%- if block.settings.text != blank -%}<p class="brick__text">{{ block.settings.text }}</p>{%- endif -%}
+          {%- if block.settings.btn_label != blank -%}
+            <span class="btn btn--light" style="margin-top: 4px;">{{ block.settings.btn_label }}</span>
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endfor -%}
+  {%- else -%}
+    <a href="{{ routes.all_products_collection_url }}" class="brick">
+      <img class="brick__img" src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=2200&q=80" alt="" loading="lazy">
+      <div class="brick__veil"></div>
+      <div class="brick__content">
+        <h2 class="brick__title">Aura</h2>
+        <span class="btn btn--light" style="margin-top: 4px;">Explore</span>
+      </div>
+    </a>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Bricks (Banner)",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "brick",
+      "name": "Brick",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Breite",
+          "options": [
+            { "value": "full", "label": "Volle Breite" },
+            { "value": "half", "label": "Halbe Breite" }
+          ],
+          "default": "full"
+        },
+        { "type": "collection", "id": "collection", "label": "Kollektion (optional)" },
+        { "type": "image_picker", "id": "image", "label": "Bild" },
+        { "type": "text", "id": "video_url", "label": "Video-URL (MP4, optional)" },
+        { "type": "text", "id": "fallback_id", "label": "Unsplash-Fallback-ID" },
+        { "type": "text", "id": "kicker", "label": "Kleine Zeile (optional)" },
+        { "type": "text", "id": "title", "label": "Titel" },
+        { "type": "text", "id": "text", "label": "Text (optional)" },
+        { "type": "text", "id": "btn_label", "label": "Button-Text", "default": "Explore" },
+        { "type": "url", "id": "link", "label": "Link (falls keine Kollektion)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bricks (Banner)",
+      "blocks": [{ "type": "brick" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,21 +1,22 @@
 # ELIRA — Soft Performance · Shopify Theme
 
-Kompletter Marken-Relaunch für **Elira**. Eigenständiges Online Store 2.0 Theme —
-clean, monochrom, editorial. Designsprache orientiert an moderner Premium-Activewear
-(Referenz: Exercere): **Schwarz & Weiß**, cleane Grotesk-Typografie, viel Weißraum,
-feine Hairlines, softe Animationen. Editorial-Bilder laufen standardmäßig durch
-einen S/W-Filter (abschaltbar), Produktbilder bleiben farbecht.
+Kompletter Marken-Relaunch für **Elira**. Eigenständiges Online Store 2.0 Theme,
+eng an der Referenz **Exercere** (Broadcast-Ästhetik): Schwarz-Weiß-UI mit Farbfotos,
+**Archivo**-Typografie ohne Letter-Spacing, kleine ruhige Buttons, enge Sections,
+Fullscreen-Bricks mit kleinem zentriertem Text, transparenter Header über dem Hero.
 
 ## Highlights
 
 - **Online Store 2.0** — JSON-Templates, Section Groups, alles im Theme-Editor anpassbar
-- **Homepage im Editorial-Aufbau**: Hero (Slider) → Produkt-Carousel mit Fortschrittsbalken → Marken-Statement → Editorial-Trio → Kollektions-Showcases → Shop by Activity → Shop by Category → Community-Grid → Newsletter
+- **Kompakte Homepage (Exercere-Aufbau)**: Fullscreen-Hero (Bild/Video) → Produkt-Carousel → Editorial-Bricks (halbe Breite) → Kollektions-Brick (volle Breite) → Shop by Activity → Shop by Category → Community-Grid → Newsletter
+- **Bricks-Section**: große Bild-/Video-Banner (volle/halbe Breite) mit kleinem zentriertem Titel + Button — für Kampagnen, Kollektionen, Pop-Ups
+- **Transparenter Header** über dem Hero, wird beim Scrollen fest & weiß
 - **AJAX-Warenkorb** mit Slide-in Drawer, Gratisversand-Fortschritt & Section Rendering API
-- **Quick-Add** direkt auf der Produktkarte (Größen-Pills), Hover-Bildwechsel, Farb-Swatches
-- **PDP** mit Sticky-Buy-Box, Varianten-Picker (Swatches + Größen-Pills), Accordions, Trust-Row, Bundle-Hinweis, Produkt-Empfehlungen
+- **Quick add** auf der Produktkarte (Größen-Pills bzw. Direkt-Add), Hover-Bildwechsel
+- **PDP** mit Sticky-Buy-Box, Varianten-Picker (Swatches + Größen-Pills), Accordions, Produkt-Empfehlungen
 - **Kollektionsseite** mit Sortierung, Filter-Drawer (Shopify-Facets) und Pagination
 - **Suche, 404, Blog/Journal, Kollektionsliste, komplettes Kundenkonto** (Login, Registrierung, Bestellungen, Adressen)
-- Mehrsprachen-fähig aufgebaut, deutsche Standardtexte; Mobile-first, A11y-Basics (Skip-Link, ARIA-Labels, Fokus-Zustände)
+- Deutsche Standardtexte; Mobile-first; A11y-Basics (Skip-Link, ARIA-Labels, Fokus-Zustände)
 
 ## Installation
 
